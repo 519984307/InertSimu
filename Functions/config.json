@@ -1,0 +1,10 @@
+﻿{
+	"path": {
+                "xmlPath": "F:/Programs/pv/Examples/CustomApplications/InertSim/CasePump_Def.xml",
+                "xmlSavePath": "F:/Programs/pv/Examples/CustomApplications/InertSim/CasePump_Def_Save.xml",
+                "sphBinPath": "D:/Tools/DualSPHysics_v5.0/bin/windows",
+                "sphWorkPath": "D:/Tools/DualSPHysics_v5.0/examples/main/01_DamBreak",
+                "sphOutPath": "D:/Tools/DualSPHysics_v5.0/examples/main/01_DamBreak/CaseDambreak_out",
+                "sphBatName": "wCaseDambreak_win64_GPU.bat"
+	}
+}

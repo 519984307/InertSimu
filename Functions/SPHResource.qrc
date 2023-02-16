@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>exception1.csv</file>
+        <file>config.json</file>
+    </qresource>
+</RCC>

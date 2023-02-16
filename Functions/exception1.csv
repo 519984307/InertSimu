@@ -1,0 +1,7 @@
+异常代码,阶段：Inlet/Outlet，mphase，main,类型: Run_Exception/Check_CudaErroor,类,严重程度,异常内容详情
+SphExcept-E001,main,Run_Exception,Functions.cpp,low,Output text is too long.
+SphExcept-E002,,Run_Exception,Functions.cpp,mid,"""Parameter \""%s\"" unrecognised or invalid. ""+""(Level cfg:%d, Parameter:%d)"""
+SphExcept-E003,main,Run_Exception,FunctionsCuda.cpp,low,StGpuInfo.sizep2pto is not enough.
+SphExcept-E004,main,Run_Exception,FunctionsCuda.cpp,mid,":"",attributes,attr)!=Nvalues+1)Run_Exceptioon(""Number of values does not match."
+SphExcept-E005,,Run_Exception,FunctionsCuda.cpp,high,Could not allocate the requested memory (np=%u)
+SphExcept-E006,main,Run_Exception,FunSphKernelsCfg.cpp,high,Kernel unknown.

@@ -1,10 +1,7 @@
 ﻿# InertSimulation
 Inerting Simulation
 
-** gitignore : exclude any loacl file to this repository. **
-
 ## Build
-------
 ### Paraview
 Paraview should be build and add to path.
 Paraview build Link : https://gitlab.kitware.com/paraview/paraview/-/blob/master/Documentation/dev/build.md#windows
@@ -22,10 +19,19 @@ This is a temporary file to config the absolute path for test. It will change so
 * sphBatName: windows script file to run sph core. it could change to cpu version, but some feature will disable to show.
 
 ### wCaseDambreak_win64_GPU.bat
-change this line.
+Change this line.
 ```
 echo StateCode-S4 : All done
 ```
+
+
+## .gitignore  !important
+Exclude any loacl build files or specific configure to this repository. Use this command to ignore the config.json
+```
+git update-index --assume-unchanged SPHResource.qrc
+git update-index --assume-unchanged config.json
+```
+
 
 ## current work
 ### 界面

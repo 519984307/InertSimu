@@ -58,6 +58,12 @@ SphDockWidget::SphDockWidget(QWidget *parent)
     });
 
 
+    // 暂时弹出出入口面板
+    QObject::connect(this->Internals->Ui.inout_btn_set, &QPushButton::clicked, this,[=](){
+        inoutSetting = new InoutSetting(this);
+        inoutSetting->show();
+    });
+
     sphThread = new SphThread();
 
     connect(sphThread, SIGNAL(threadSig_Text(QString)), this, SLOT(showText(QString)));
@@ -65,15 +71,13 @@ SphDockWidget::SphDockWidget(QWidget *parent)
     connect(sphThread, SIGNAL(threadSig_Progress(int)), this, SLOT(showProgress(int)));
     connect(sphThread, SIGNAL(threadSig_Endtime(QString)), this, SLOT(showEndtime(QString)));
 
-    QObject::connect(this->Internals->Ui.inout_btn_set, &QPushButton::clicked, this,[=](){
-        inoutSetting = new InoutSetting(this);
-        inoutSetting->show();
-    });
 
+    // SPH重新开始
     QObject::connect(this->Internals->Ui.sphtask_btn_restart, &QPushButton::clicked, this,[=](){
         (*sphThread).sphContinue();
     });
 
+    // 后处理
     QObject::connect(this->Internals->Ui.sphtask_btn_post, &QPushButton::clicked, this,[=](){
         (*sphThread).sphPostProcess();
     });

@@ -20,11 +20,12 @@ public:
         this->list = list;
     };
 
-    void setIdmax(int idmax){
-        this->idmax = idmax;
-    }
+//    void setIdmax(int idmax){
+//        this->idmax = idmax;
+//    }
     int getIdmax(){
-        return idmax;
+        this->idmax = this->idmax +1;
+        return this->idmax;
     }
 
     void setList(QList<InoutZone*> list){

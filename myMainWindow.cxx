@@ -64,43 +64,43 @@ myMainWindow::myMainWindow()
   mainToolBar->layout()->setSpacing(0);
   this->addToolBar(Qt::TopToolBarArea, mainToolBar);
 
-  // 工具栏：：olorTool.
+  // 工具栏：colorTool.
   QToolBar* colorToolbar = new pqColorToolbar(this);
   colorToolbar->layout()->setSpacing(0);
   this->addToolBar(Qt::TopToolBarArea, colorToolbar);
 
-  // 工具栏：：xesTool.
+  // 工具栏：axesTool.
   QToolBar* axesToolbar = new pqAxesToolbar(this);
   axesToolbar->layout()->setSpacing(0);
   this->addToolBar(Qt::TopToolBarArea, axesToolbar);
 
-  // 工具栏：：CRTool.
+  // 工具栏：VCRTool.
   QToolBar* vcrToolbar = new pqVCRToolbar(this);
   vcrToolbar->layout()->setSpacing(0);
   this->addToolBar(Qt::TopToolBarArea, vcrToolbar);
 
-  // 工具栏：：nimationTimeToolbar. Current Time
+  // 工具栏：AnimationTimeToolbar. Current Time
   QToolBar* animationTimeToolbar = new pqAnimationTimeToolbar(this);
   animationTimeToolbar->layout()->setSpacing(0);
   this->addToolBar(Qt::TopToolBarArea, animationTimeToolbar);
 
-  // 工具栏：：ameraToolbar.
+  // 工具栏：CameraToolbar.
   QToolBar* cameraToolbar = new pqCameraToolbar(this);
   cameraToolbar->layout()->setSpacing(0);
   this->addToolBar(Qt::TopToolBarArea, cameraToolbar);
 
-  // 工具栏：：ightToolbar.
+  // 工具栏：LightToolbar.
   QToolBar* lightToolbar = new pqLightToolbar(this);
   lightToolbar->layout()->setSpacing(0);
   this->addToolBar(Qt::TopToolBarArea, lightToolbar);
 
 #endif
 
-  // 目录：：iew. This must be setup after all toolbars and dockwidgets
+  // 目录：View. This must be setup after all toolbars and dockwidgets
   // have been created.
   pqParaViewMenuBuilders::buildViewMenu(*this->Internals->menuView, *this);
 
-  // Dock：：性面板. Enable help from the properties panel.
+  // Dock：属性面板. Enable help from the properties panel.
   // This is not really working as the documentation is not built in this app
   QObject::connect(this->Internals->proxyTabWidget, &pqPropertiesPanel::helpRequested,
     &pqHelpReaction::showProxyHelp);

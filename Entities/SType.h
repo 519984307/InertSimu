@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Kang on 2023/2/9.
 //
 
@@ -16,6 +16,16 @@ typedef struct{
     float y;
     float z;
 }Float3;
+
+typedef struct{
+    Double3 axis;
+    double angle;
+}AxisAngleD;
+
+typedef struct{
+    Float3 axis;
+    float angle;
+}AxisAngleF;
 
 typedef struct{
     int x;

@@ -55,4 +55,6 @@ git update-index --assume-unchanged config.json
 ### 其他功能
 * SPH数据流新增对异常码的匹配
 * 渲染模块自动显示（无需点击可见按钮）
+* Euler angles of XYZ axis rotations(degrees) 相互转换 Axis-angle(degrees)的代码支持
+* 
 

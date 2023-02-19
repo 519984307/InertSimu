@@ -3,14 +3,14 @@
 #include "Fluid.h"
 #ifndef UNTITLED1_INERTGAS_H
 #define UNTITLED1_INERTGAS_H
-class InterGas: public Fluid{
+class InertGas: public Fluid{
 private:
     double oxygenPercentage=0;
     double nitrogenPercentage=0;
 
 public:
-    InterGas(){};
-    InterGas(double oxygenPercentage, double nitrogenPercentage){
+    InertGas(){};
+    InertGas(double oxygenPercentage, double nitrogenPercentage){
         this->oxygenPercentage = oxygenPercentage;
         this->nitrogenPercentage = nitrogenPercentage;
     };

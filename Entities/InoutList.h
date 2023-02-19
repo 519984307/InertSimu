@@ -20,11 +20,10 @@ public:
         this->list = list;
     };
 
-//    void setIdmax(int idmax){
-//        this->idmax = idmax;
-//    }
+    void setIdmax(int idmax){
+        this->idmax = idmax;
+    }
     int getIdmax(){
-        this->idmax = this->idmax +1;
         return this->idmax;
     }
 

@@ -7,7 +7,7 @@ using namespace std;
 SphParameters::SphParameters(){
     airProperty = NULL;
     fuelProperty = NULL;
-    interGasProperty = NULL;
+    inertGasProperty = NULL;
     inoutList = NULL;
     simulationParam = NULL;
     InitVars();
@@ -16,7 +16,7 @@ SphParameters::SphParameters(){
 SphParameters::~SphParameters(){
     delete airProperty;         airProperty = NULL;
     delete fuelProperty;        fuelProperty = NULL;
-    delete interGasProperty;    interGasProperty = NULL;
+    delete inertGasProperty;    inertGasProperty = NULL;
     delete inoutList;           inoutList = NULL;
     delete simulationParam;     simulationParam = NULL;
 }
@@ -38,6 +38,7 @@ bool SphParameters::LoadAir(){
         if(node.tagName() == "cs0") airProperty->setCs(node.attribute("value").toDouble());
         if(node.tagName() == "visco") airProperty->setVisco(node.attribute("value").toDouble());
         if(node.tagName() == "phasetype") airProperty->setPhaseType(node.attribute("value").toInt());
+        if(node.tagName() == "oxygen") airProperty->setOxygenPercentage(node.attribute("value").toInt());
         node = node.nextSiblingElement();
     }
     return true;
@@ -64,8 +65,8 @@ bool SphParameters::LoadFuel(){
 }
 
 // "case.casedef.constantsdef" InterGas interGasProperty
-bool SphParameters::LoadInterGas() {
-    interGasProperty = new InterGas();
+bool SphParameters::LoadInertGas() {
+    inertGasProperty = new InertGas();
 
     QDomElement node = sxml.GetNodeSimple("case.casedef.constantsdef");
 
@@ -73,13 +74,14 @@ bool SphParameters::LoadInterGas() {
     else return false;
 
     while(!node.isNull()){
-        if(node.tagName() == "rhop1") interGasProperty->setRhop(node.attribute("value").toDouble());
-        if(node.tagName() == "gamma1") interGasProperty->setGamma(node.attribute("value").toDouble());
+        if(node.tagName() == "rhop1") inertGasProperty->setRhop(node.attribute("value").toDouble());
+        if(node.tagName() == "gamma1") inertGasProperty->setGamma(node.attribute("value").toDouble());
+        if(node.tagName() == "oxygen") inertGasProperty->setOxygenPercentage(node.attribute("value").toDouble());
         node = node.nextSiblingElement();
     }
-    interGasProperty->setCs(fuelProperty->getCs());
-    interGasProperty->setVisco(fuelProperty->getVisco());
-    interGasProperty->setPhaseType(fuelProperty->getPhaseType());
+    inertGasProperty->setCs(fuelProperty->getCs());
+    inertGasProperty->setVisco(fuelProperty->getVisco());
+    inertGasProperty->setPhaseType(fuelProperty->getPhaseType());
 
     return true;
 }
@@ -89,7 +91,7 @@ bool SphParameters::LoadFluid() {
     try {
         LoadAir();
         LoadFuel();
-        LoadInterGas();
+        LoadInertGas();
     } catch (...) {
         return false;
     }
@@ -108,7 +110,12 @@ bool SphParameters::LoadInoutList() {
         InoutZone *inoutZone = new InoutZone();
 
         while(!node.isNull()){
-            inoutZone->setId(inoutList->getIdmax()+1);
+            if(node.tagName() == "name") {
+                int id = inoutList->getIdmax() + 1;
+                inoutZone->setId(id);
+                inoutList->setIdmax(id);
+                inoutZone->setName(node.attribute("value"));
+            }
             if(node.tagName() == "inoutphase") inoutZone->setInoutPhase(node.attribute("value").toInt());
             if(node.tagName() == "inputtreatment") inoutZone->setInputTreatment(node.attribute("value").toInt());
             if(node.tagName() == "layers") inoutZone->setLayers(node.attribute("value").toInt());
@@ -266,6 +273,7 @@ bool SphParameters::SaveAir(){
         if(node.tagName() == "cs0") node.setAttribute("value", airProperty->getCs());
         if(node.tagName() == "visco") node.setAttribute("value", airProperty->getRhop());
         if(node.tagName() == "phasetype") node.setAttribute("value", airProperty->getPhaseType());
+        if(node.tagName() == "oxygen") node.setAttribute("value", airProperty->getOxygenPercentage());
         node = node.nextSiblingElement();
     }
     return true;
@@ -290,15 +298,16 @@ bool SphParameters::SaveFuel(){
 }
 
 // 将InterGas interGasProperty保存在XML中
-bool SphParameters::SaveInterGas(){
+bool SphParameters::SaveInertGas(){
     QDomElement node = sxml.GetNodeSimple("case.casedef.constantsdef");
 
     if(!node.isNull())  node = node.firstChildElement();
     else return false;
 
     while(!node.isNull()){
-        if(node.tagName() == "rhop1") node.setAttribute("value", interGasProperty->getRhop());
-        if(node.tagName() == "gamma1") node.setAttribute("value", interGasProperty->getGamma());
+        if(node.tagName() == "rhop1") node.setAttribute("value", inertGasProperty->getRhop());
+        if(node.tagName() == "gamma1") node.setAttribute("value", inertGasProperty->getGamma());
+        if(node.tagName() == "oxygen") node.setAttribute("value", inertGasProperty->getOxygenPercentage());
         node = node.nextSiblingElement();
     }
     return true;
@@ -306,7 +315,7 @@ bool SphParameters::SaveInterGas(){
 
 // 将多相属性保存在XML中
 bool SphParameters::SaveFluid(){
-    if(SaveAir() && SaveFuel() && SaveInterGas())
+    if(SaveAir() && SaveFuel() && SaveInertGas())
         return true;
     return false;
 }
@@ -331,7 +340,11 @@ bool SphParameters::SaveInoutList(){
     foreach (InoutZone *inoutZone, inoutList->getList()) {
         QDomElement zoneNode = sxml.doc.createElement("inoutzone");
 
-        QDomElement nnode = sxml.doc.createElement("refilling");
+        QDomElement nnode = sxml.doc.createElement("name");
+        nnode.setAttribute("value", inoutZone->getName());
+        zoneNode.appendChild(nnode);
+
+        nnode = sxml.doc.createElement("refilling");
         nnode.setAttribute("value", 0);
         zoneNode.appendChild(nnode);
 
@@ -489,13 +502,15 @@ void SphParameters::VisualFluidProperties(){
     qDebug() << "Cs:" << airProperty->getCs();
     qDebug() << "Visco:" << airProperty->getVisco();
     qDebug() << "PhaseType:" << airProperty->getPhaseType();
+    qDebug() << "Oxygen:" << airProperty->getOxygenPercentage();
 
     qDebug() << "\nInterGas Property";
-    qDebug() << "Rhop:" << interGasProperty->getRhop();
-    qDebug() << "Gamma:" << interGasProperty->getGamma();
-    qDebug() << "Cs:" << interGasProperty->getCs();
-    qDebug() << "Visco:" << interGasProperty->getVisco();
-    qDebug() << "PhaseType:" << interGasProperty->getPhaseType();
+    qDebug() << "Rhop:" << inertGasProperty->getRhop();
+    qDebug() << "Gamma:" << inertGasProperty->getGamma();
+    qDebug() << "Cs:" << inertGasProperty->getCs();
+    qDebug() << "Visco:" << inertGasProperty->getVisco();
+    qDebug() << "PhaseType:" << inertGasProperty->getPhaseType();
+    qDebug() << "Oxygen:" << inertGasProperty->getOxygenPercentage();
 }
 
 // 输出出入口信息
@@ -505,6 +520,8 @@ void SphParameters::VisualInoutProperties(){
 
     for(int i=0; i<inoutList->getList().size(); i++){
         qDebug() << "Inout " << i;
+        qDebug() << "Id:" << inoutList->getList().at(i)->getId();
+        qDebug() << "name:" << inoutList->getList().at(i)->getName();
         qDebug() << "inoutPhase:" << inoutList->getList().at(i)->getInoutPhase() << "\t\t(0:water, 1.air)";
         qDebug() << "inputtreatment:" << inoutList->getList().at(i)->getInputTreatment() << "\t\t(0.2.inlet, 1.outlet)";
         qDebug() << "layers:" << inoutList->getList().at(i)->getLayers();

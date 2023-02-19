@@ -12,7 +12,7 @@ class SphParameters{
 public:
     Air *airProperty;
     Fuel *fuelProperty;
-    InterGas *interGasProperty;
+    InertGas *inertGasProperty;
     InoutList *inoutList;
     SimulationParam *simulationParam;
 
@@ -39,14 +39,14 @@ private:
 
     bool LoadAir();
     bool LoadFuel();
-    bool LoadInterGas();
+    bool LoadInertGas();
     bool LoadFluid();
     bool LoadInoutList();
     bool LoadSimulationParam();
 
     bool SaveAir();
     bool SaveFuel();
-    bool SaveInterGas();
+    bool SaveInertGas();
     bool SaveFluid();
     bool SaveInoutList();
     bool SaveSimulationParam();

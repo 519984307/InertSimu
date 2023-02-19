@@ -35,7 +35,8 @@ private:
 
 public:
     InoutZone(){};
-    InoutZone(QString name, int inoutPhase, int inputTreatment, int layers, Circle circle, ImposeVelocity imposeVelocity){
+    InoutZone(int id, QString name, int inoutPhase, int inputTreatment, int layers, Circle circle, ImposeVelocity imposeVelocity){
+        this->id = id;
         this->name = name;
         this->inoutPhase = inoutPhase;
         this->inputTreatment = inputTreatment;

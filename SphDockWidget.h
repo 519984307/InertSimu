@@ -7,6 +7,7 @@
 #include "SphThread.h"
 #include "InoutSetting.h"
 #include <QWidget>
+#include <QFileDialog>
 
 namespace Ui {
 class SphDockWidget;
@@ -23,13 +24,12 @@ public:
     QList<QStringList> getLoadMultiDataPath(QString basePath, QString preFileName, QString suffix);
 
 private slots:
-    void showParam();
-    void widgetConstraint();
-    void saveParam();
     void showText(QString);
     void showState(QString);
     void showProgress(int);
     void showEndtime(QString);
+    void sphBtnReset();
+    void sphBtnStart();
 
 public:
     Ui::SphDockWidget *ui;
@@ -43,6 +43,13 @@ private:
   PathConfig *pathConfig;
   SphThread *sphThread;
   QPointer<InoutSetting> inoutSetting;
+
+  void showParam();
+  void saveParam();
+  void widgetConstraint();
+  void widgetRegExpValidat();
+  void btnEvent();
+  QString on_OpenModelFilePushButton_clicked();
 };
 
 #endif // SPHDOCKWIDGT_H

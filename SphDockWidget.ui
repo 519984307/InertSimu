@@ -379,7 +379,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="simulation_g_x_2">
+             <widget class="QLineEdit" name="simulation_stl_angy">
               <property name="minimumSize">
                <size>
                 <width>40</width>
@@ -671,7 +671,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_19">
             <item>
-             <widget class="QPushButton" name="btn_imp_mod_2">
+             <widget class="QPushButton" name="btn_simulation_stl">
               <property name="minimumSize">
                <size>
                 <width>80</width>
@@ -695,7 +695,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit">
+             <widget class="QLineEdit" name="simulation_stl_path">
               <property name="font">
                <font>
                 <bold>false</bold>
@@ -1649,7 +1649,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>体积配置</string>
+                 <string>油面高度</string>
                 </property>
                </widget>
               </item>
@@ -2508,7 +2508,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
-             <widget class="QPushButton" name="sphtask_btn_start">
+             <widget class="QPushButton" name="btn_sphtask_start">
               <property name="minimumSize">
                <size>
                 <width>70</width>
@@ -2741,7 +2741,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_29">
             <item>
-             <widget class="QPushButton" name="sphtask_btn_restart">
+             <widget class="QPushButton" name="btn_sphtask_restart">
               <property name="minimumSize">
                <size>
                 <width>70</width>
@@ -2791,7 +2791,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="sphtask_btn_end">
+             <widget class="QPushButton" name="btn_sphtask_end">
               <property name="minimumSize">
                <size>
                 <width>70</width>
@@ -2816,7 +2816,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="sphtask_btn_post">
+             <widget class="QPushButton" name="btn_sphtask_post">
               <property name="minimumSize">
                <size>
                 <width>70</width>

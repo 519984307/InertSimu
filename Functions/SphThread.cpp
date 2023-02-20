@@ -201,6 +201,10 @@ void SphThread::sphContinue()
     qDebug()<<"sph Continue";
 }
 
+void SphThread::sphStop(){
+    //this->process->close(); //关闭进程
+}
+
 void SphThread::sphPostProcess()
 {
     this->initParam();
@@ -276,4 +280,5 @@ void SphThread::run()
     this->process->waitForFinished(-1);
     sleep(2);//等待标准读结束
     this->process->close(); //关闭进程
+    threadSig_TaskOver();
 }

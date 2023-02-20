@@ -74,6 +74,7 @@ public slots:
     void sphFinished(int exitCode,QProcess::ExitStatus exitStatus);
     void sphStream();
     void sphContinue();
+    void sphStop();
     void sphPostProcess();
 
 
@@ -82,6 +83,8 @@ signals:
     void threadSig_State(QString);
     void threadSig_Progress(int);
     void threadSig_Endtime(QString);
+
+    void threadSig_TaskOver();
 };
 
 #endif // SPHTHREAD_H

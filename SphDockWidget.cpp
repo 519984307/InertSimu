@@ -30,62 +30,20 @@ SphDockWidget::SphDockWidget(QWidget *parent)
     : Superclass(parent)
     , Internals(new SphDockWidget::pqInternals(this))
 {
+    this->widgetConstraint();
+    this->widgetRegExpValidat();
+
     this->pathConfig = new PathConfig();
     this->pathConfig->init();
 
-    this->widgetConstraint();
-
-    // 导入XML配置
-    this->sphParam = new SphParameters();
-    QObject::connect(this->Internals->Ui.btn_imp_config, &QPushButton::clicked, this,[&](){
-        this->sphParam->LoadXml(this->pathConfig->getXmlParh());
-        //this->sphParam->VisualALLProperties();
-        emit this->showParam();
-    });
-
-    // 导出XML配置
-    QObject::connect(this->Internals->Ui.btn_save_config, &QPushButton::clicked, this,[&](){
-        emit this->saveParam();
-    });
-
-    // 一键VTK
-    QObject::connect(this->Internals->Ui.btn_imp_vtk, &QPushButton::clicked, this,[=](){
-        QString basePath = this->pathConfig->getSphOutPath() + "/surface";
-        QString preFileName = "Surface_";
-        QString suffix = "vtk";
-
-        QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath, preFileName, suffix);
-        if(files.size() > 0)
-            pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
-    });
-
     sphThread = new SphThread();
-
     connect(sphThread, SIGNAL(threadSig_Text(QString)), this, SLOT(showText(QString)));
     connect(sphThread, SIGNAL(threadSig_State(QString)), this, SLOT(showState(QString)));
     connect(sphThread, SIGNAL(threadSig_Progress(int)), this, SLOT(showProgress(int)));
     connect(sphThread, SIGNAL(threadSig_Endtime(QString)), this, SLOT(showEndtime(QString)));
+    connect(sphThread, SIGNAL(threadSig_TaskOver()), this, SLOT(sphBtnReset()));
 
-
-    // SPH重新开始
-    QObject::connect(this->Internals->Ui.sphtask_btn_restart, &QPushButton::clicked, this,[=](){
-        (*sphThread).sphContinue();
-    });
-
-    // 后处理
-    QObject::connect(this->Internals->Ui.sphtask_btn_post, &QPushButton::clicked, this,[=](){
-        (*sphThread).sphPostProcess();
-    });
-
-    // 运行SPH
-    QObject::connect(this->Internals->Ui.sphtask_btn_start, &QPushButton::clicked, this,[=](){
-        QString workPath = this->pathConfig->getSphWorkPath();
-        QString batName = this->pathConfig->getSphBatName();
-
-        // 设置bat路径
-        (*sphThread).setParameters(workPath, batName);
-        (*sphThread).start();
-    });
+    this->btnEvent();
 }
 
 void SphDockWidget::showParam(){
@@ -98,6 +56,11 @@ void SphDockWidget::showParam(){
         ui.simulation_dp->setText(QString::number(sim->getDp()));
         ui.simulation_timemax->setText(QString::number(sim->getTimeMax()));
         ui.simulation_timeout->setText(QString::number(sim->getTimeOut()));
+
+        ui.simulation_stl_path->setText(sim->getModelPath());
+        //ui.simulation_stl_angx->setText(QString::number(sim->getModelAngle().x));
+        ui.simulation_stl_angy->setText(QString::number(sim->getModelAngle().y));
+        //ui.simulation_stl_angz->setText(QString::number(sim->getModelAngle().z));
 
         ui.simulation_g_x->setText(QString::number(sim->getGravity().x));
         ui.simulation_g_y->setText(QString::number(sim->getGravity().y));
@@ -136,8 +99,6 @@ void SphDockWidget::showParam(){
 
     ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);  //设置表格内容不可编辑
     ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-//    ui.tableWidget->setSelectionMode(QAbstractItemView::NoSelection);		//设置不可选
-//    ui.tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
 
     for(int i=0; i<this->sphParam->inoutList->getList().size(); i++){
@@ -194,6 +155,13 @@ void SphDockWidget::saveParam(){
         sim->setTimeMax(ui.simulation_timemax->text().toDouble());
         sim->setTimeOut(ui.simulation_timeout->text().toDouble());
 
+        sim->setModelPath(ui.simulation_stl_path->text());
+        Int3 modelAngle;
+        //modelAngle.x = ui.simulation_stl_angx->text().toInt();
+        modelAngle.y = ui.simulation_stl_angy->text().toInt();
+        //modelAngle.z = ui.simulation_stl_angz->text().toInt();
+        sim->setModelAngle(modelAngle);
+
         Double3 gravity;
         gravity.x = ui.simulation_g_x->text().toDouble();
         gravity.y = ui.simulation_g_y->text().toDouble();
@@ -240,7 +208,101 @@ void SphDockWidget::saveParam(){
     this->sphParam->SaveXml(this->pathConfig->getXmlSaveParh());
 }
 
+void SphDockWidget::btnEvent(){
+
+    // 导入XML配置
+    this->sphParam = new SphParameters();
+    QObject::connect(this->Internals->Ui.btn_imp_config, &QPushButton::clicked, this,[&](){
+        this->sphParam->LoadXml(this->pathConfig->getXmlParh());
+        //this->sphParam->VisualALLProperties();
+        this->showParam();
+    });
+
+    // 导出XML配置
+    QObject::connect(this->Internals->Ui.btn_save_config, &QPushButton::clicked, this,[&](){
+        this->saveParam();
+    });
+
+    // 一键VTK
+    QObject::connect(this->Internals->Ui.btn_imp_vtk, &QPushButton::clicked, this,[=](){
+        QString basePath = this->pathConfig->getSphOutPath() + "/surface";
+        QString preFileName = "Surface_";
+        QString suffix = "vtk";
+
+        QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath, preFileName, suffix);
+        QVector<pqPipelineSource *> Qvtkpointer;
+        if(files.size() > 0) {
+            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
+
+        }
+
+
+    });
+
+    // 导入模型
+    QObject::connect(this->Internals->Ui.btn_simulation_stl, &QPushButton::clicked, this,[&](){
+        QString modelPath = this->on_OpenModelFilePushButton_clicked();
+        this->Internals->Ui.simulation_stl_path->setText(modelPath);
+    });
+
+    // SPH重新开始
+    QObject::connect(this->Internals->Ui.btn_sphtask_restart, &QPushButton::clicked, this,[=](){
+        (*sphThread).sphContinue();
+        this->Internals->Ui.btn_sphtask_restart->setEnabled(false);
+    });
+
+    // SPH中止
+    QObject::connect(this->Internals->Ui.btn_sphtask_end, &QPushButton::clicked, this,[=](){
+        (*sphThread).sphStop();
+        this->Internals->Ui.btn_sphtask_end->setEnabled(false);
+        this->Internals->Ui.btn_sphtask_start->setEnabled(true);
+    });
+
+    // 后处理
+    QObject::connect(this->Internals->Ui.btn_sphtask_post, &QPushButton::clicked, this,[=](){
+        this->Internals->Ui.btn_sphtask_restart->setEnabled(false);
+        this->Internals->Ui.btn_sphtask_end->setEnabled(false);
+        this->Internals->Ui.btn_sphtask_post->setEnabled(false);
+        (*sphThread).sphPostProcess();
+    });
+
+    // 运行SPH
+    QObject::connect(this->Internals->Ui.btn_sphtask_start, &QPushButton::clicked, this,[=](){
+        QString workPath = this->pathConfig->getSphWorkPath();
+        QString batName = this->pathConfig->getSphBatName();
+
+        this->sphBtnStart();
+
+        // 设置bat路径
+        (*sphThread).setParameters(workPath, batName);
+        (*sphThread).start();
+    });
+
+}
+
+
+void SphDockWidget::sphBtnReset(){
+    this->Internals->Ui.btn_sphtask_start->setEnabled(true);
+    this->Internals->Ui.btn_sphtask_restart->setEnabled(false);
+    this->Internals->Ui.btn_sphtask_end->setEnabled(false);
+    this->Internals->Ui.btn_sphtask_post->setEnabled(false);
+}
+
+void SphDockWidget::sphBtnStart(){
+    this->Internals->Ui.btn_sphtask_start->setEnabled(false);
+    this->Internals->Ui.btn_sphtask_restart->setEnabled(true);
+    this->Internals->Ui.btn_sphtask_end->setEnabled(true);
+    this->Internals->Ui.btn_sphtask_post->setEnabled(true);
+}
+
 void SphDockWidget::widgetConstraint(){
+    Ui::SphDockWidget ui = this->Internals->Ui;
+
+    ui.simulation_stl_path->setEnabled(false);
+    this->sphBtnReset();
+}
+
+void SphDockWidget::widgetRegExpValidat(){
     Ui::SphDockWidget ui = this->Internals->Ui;
 
     // RegExpValidator worked but didn't pass the test
@@ -284,6 +346,18 @@ void SphDockWidget::widgetConstraint(){
         ui.multiphase_inert_gamma->setValidator(reg100);
         ui.multiphase_inert_oxygen->setValidator(reg100);
     }
+}
+
+QString SphDockWidget::on_OpenModelFilePushButton_clicked()
+{
+    //文件夹路径
+    QString filePath;
+    filePath = QFileDialog::getOpenFileName(this, "选择模型文件","/","模型文件 (*.stl *.vtk);; 所有文件 (*.*);; ");
+
+    if(!filePath.isEmpty()) {
+        qDebug() << "path=" << filePath;
+    }
+    return filePath;
 }
 
 // textBrowser追加显示文本

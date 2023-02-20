@@ -229,11 +229,28 @@ bool SphParameters::LoadSimulationParam() {
         node = node.nextSiblingElement();
     }
 
-    node = sxml.GetNodeSimple("case.execution.parameters");
+    node = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist.drawfilestl");
+    if(!node.isNull()) {
+        simulationParam->setModelPath(node.attribute("file"));
+        node = node.firstChildElement();
+        while(!node.isNull()){
+            if(node.tagName() == "drawscale") {
+                //
+            }
+            if(node.tagName() == "drawrotate") {
+                Int3 modelAngle;
+                modelAngle.x = node.attribute("angx").toInt();
+                modelAngle.y = node.attribute("angy").toInt();
+                modelAngle.z = node.attribute("angz").toInt();
+                simulationParam->setModelAngle(modelAngle);
+            }
+            node = node.nextSiblingElement();
+        }
+    }
 
+    node = sxml.GetNodeSimple("case.execution.parameters");
     if(!node.isNull())  node = node.firstChildElement();
     else return false;
-
     while(!node.isNull()){
         if(node.attribute("key") == "TimeMax") simulationParam->setTimeMax(node.attribute("value").toDouble());
         if(node.attribute("key") == "TimeOut") simulationParam->setTimeOut(node.attribute("value").toDouble());
@@ -454,11 +471,28 @@ bool SphParameters::SaveSimulationParam(){
         node = node.nextSiblingElement();
     }
 
-    node = sxml.GetNodeSimple("case.execution.parameters");
+    node = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist.drawfilestl");
+    if(!node.isNull()) {
+        node.setAttribute("file", simulationParam->getModelPath());
+        node = node.firstChildElement();
+        while(!node.isNull()){
+            if(node.tagName() == "drawscale") {
+                node.setAttribute("x", 0.001);
+                node.setAttribute("y", 0.001);
+                node.setAttribute("z", 0.001);
+            }
+            if(node.tagName() == "drawrotate") {
+                node.setAttribute("angx", simulationParam->getModelAngle().x);
+                node.setAttribute("angy", simulationParam->getModelAngle().y);
+                node.setAttribute("angz", simulationParam->getModelAngle().z);
+            }
+            node = node.nextSiblingElement();
+        }
+    }
 
+    node = sxml.GetNodeSimple("case.execution.parameters");
     if(!node.isNull())  node = node.firstChildElement();
     else return false;
-
     while(!node.isNull()){
         if(node.attribute("key") == "TimeMax") node.setAttribute("value", simulationParam->getTimeMax());
         if(node.attribute("key") == "TimeOut") node.setAttribute("value", simulationParam->getTimeOut());
@@ -529,6 +563,9 @@ void SphParameters::VisualInoutProperties(){
         qDebug() << "position:" << "\tx:"<< inoutList->getList().at(i)->getCircle().point.x
         << "\ty:"<< inoutList->getList().at(i)->getCircle().point.y
         << "\tz:"<< inoutList->getList().at(i)->getCircle().point.z;
+        qDebug() << "velocity mode:" << inoutList->getList().at(i)->getImposeVelocity().mode;
+        qDebug() << "velocity path:" << inoutList->getList().at(i)->getImposeVelocity().filePath;
+        qDebug() << "velocity value:" << inoutList->getList().at(i)->getImposeVelocity().velocity;
         qDebug() << "direction:" << "\tx:"<< inoutList->getList().at(i)->getCircle().direction.x
         << "\ty:"<< inoutList->getList().at(i)->getCircle().direction.y
         << "\tz:"<< inoutList->getList().at(i)->getCircle().direction.z;
@@ -554,6 +591,9 @@ void SphParameters::VisualSimulationProperties(){
     << "\tz:"<< simulationParam->getPointMin().z;
     qDebug() << "PointMax" << "\tx:"<< simulationParam->getPointMax().x << "\ty:"<< simulationParam->getPointMax().y
     << "\tz:"<< simulationParam->getPointMax().z;
+    qDebug() << "FileStl:" << simulationParam->getModelPath();
+    qDebug() << "StlRotate" << "\tangx:"<< simulationParam->getModelAngle().x << "\tangy:"<< simulationParam->getModelAngle().y
+    << "\tangz:"<< simulationParam->getModelAngle().z;
     qDebug() << "TimeMax:" << simulationParam->getTimeMax();
     qDebug() << "TimeOut:" << simulationParam->getTimeOut();
 }

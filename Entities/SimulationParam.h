@@ -2,6 +2,7 @@
 #ifndef UNTITLED1_SIMULATIONPARAMETERS_H
 #define UNTITLED1_SIMULATIONPARAMETERS_H
 #include "SType.h"
+#include <QString>
 
 class SimulationParam{
 private:
@@ -13,15 +14,21 @@ private:
     Double3 pointMin; //Minimum boundary point
     Double3 pointMax; //Maximum boundary point
 
+    Int3 modelAngle;
+    QString modelPath;
+
 public:
     SimulationParam(){};
-    SimulationParam(double dp, double timeMax, double timeOut, Double3 gravity, Double3 pointMin, Double3 pointMax){
+    SimulationParam(double dp, double timeMax, double timeOut, Double3 gravity, Double3 pointMin,
+                    Double3 pointMax, Int3 modelAngle, QString modelPath){
         this->dp = dp;
         this->timeMax = timeMax;
         this->timeOut = timeOut;
         this->gravity = gravity;
         this->pointMin = pointMin;
         this->pointMax = pointMax;
+        this->modelAngle = modelAngle;
+        this->modelPath = modelPath;
     };
     void setDp(double dp){
         this->dp = dp;
@@ -63,6 +70,20 @@ public:
     };
     Double3 getPointMax() {
         return this->pointMax;
+    };
+
+    void setModelAngle(Int3 modelAngle){
+        this->modelAngle = modelAngle;
+    };
+    Int3 getModelAngle() {
+        return this->modelAngle;
+    };
+
+    void setModelPath(QString modelPath){
+        this->modelPath = modelPath;
+    };
+    QString getModelPath() {
+        return this->modelPath;
     };
 };
 

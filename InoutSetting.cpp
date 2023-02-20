@@ -31,11 +31,13 @@ void InoutSetting::showParam(){
 
 }
 
-Double3 InoutSetting::ToAxisAngle(Int3 EulerAngle){
-
+AxisAngleD InoutSetting::ToAxisAngle(Int3 EulerAngle){
+    AxisAngleD AxisAngle;
+    return AxisAngle;
 }
-Int3 InoutSetting::ToEulerAngle(Double3 AxisAngle){
-
+Int3 InoutSetting::ToEulerAngle(AxisAngleD AxisAngle){
+    Int3 EulerAngle;
+    return EulerAngle;
 }
 
 InoutSetting::~InoutSetting()

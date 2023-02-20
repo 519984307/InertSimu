@@ -22,8 +22,8 @@ private:
     InoutZone *zone;
     void showParam();
 
-    Double3 ToAxisAngle(Int3 EulerAngle);
-    Int3 ToEulerAngle(Double3 AxisAngle);
+    AxisAngleD ToAxisAngle(Int3 EulerAngle);
+    Int3 ToEulerAngle(AxisAngleD AxisAngle);
 };
 
 #endif // INOUTSETTING_H

@@ -171,6 +171,7 @@ void SphDockWidget::showParam(){
 
         {
             QPushButton *btDel = new QPushButton("删除");
+            btDel->setEnabled(false);
             btDel->setMaximumWidth(80);
             QWidget *widget = new QWidget;
             QHBoxLayout *layout = new QHBoxLayout;
@@ -181,38 +182,6 @@ void SphDockWidget::showParam(){
             ui.tableWidget->setCellWidget(RowCont, Col++, widget);
         }
     }
-
-    /**
-    {
-
-        for(int i=0; i<this->sphParam->inoutList->getList().size(); i++){
-            InoutZone* iz = this->sphParam->inoutList->getList().at(i);
-            QString id = QString("%2").arg(iz->getId());
-            QString name = QString("%10").arg(iz->getName());
-            QString layers = QString("%1").arg(iz->getLayers());
-            QString inputTreatment = QString("%1").arg(iz->getInputTreatment());
-            QString inoutPhase = QString("%2").arg(iz->getInoutPhase());
-            QString radius = QString("%2").arg(iz->getCircle().radius);
-            QString direction_x = QString("%4").arg(iz->getCircle().direction.x);
-            QString direction_y = QString("%4").arg(iz->getCircle().direction.y);
-            QString direction_z = QString("%4").arg(iz->getCircle().direction.z);
-
-            QString point_x = QString("%4").arg(iz->getCircle().point.x);
-            QString point_y = QString("%4").arg(iz->getCircle().point.y);
-            QString point_z = QString("%4").arg(iz->getCircle().point.z);
-
-            QString angle = QString("%2").arg(iz->getCircle().rotateAxis.angle);
-            QString point1_x = QString("%4").arg(iz->getCircle().rotateAxis.point1.x);
-            QString point1_y = QString("%4").arg(iz->getCircle().rotateAxis.point1.y);
-            QString point1_z = QString("%4").arg(iz->getCircle().rotateAxis.point1.z);
-
-            QString point2_x = QString("%4").arg(iz->getCircle().rotateAxis.point2.x);
-            QString point2_y = QString("%4").arg(iz->getCircle().rotateAxis.point2.y);
-            QString point2_z = QString("%4").arg(iz->getCircle().rotateAxis.point2.z);
-        }
-    }
-    **/
-
 }
 
 void SphDockWidget::saveParam(){

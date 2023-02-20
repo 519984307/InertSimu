@@ -423,7 +423,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="inout_v_btn_path">
+        <widget class="QPushButton" name="btn_inout_v_path">
          <property name="minimumSize">
           <size>
            <width>60</width>
@@ -538,7 +538,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="inout_view">
+        <widget class="QPushButton" name="btn_inout_view">
          <property name="minimumSize">
           <size>
            <width>60</width>
@@ -732,19 +732,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="label_37">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
@@ -918,19 +905,6 @@
          </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_18">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </item>

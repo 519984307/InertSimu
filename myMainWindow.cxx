@@ -41,17 +41,17 @@ myMainWindow::myMainWindow()
     "COLOR_EDITOR_PANEL", this->Internals->colorMapEditorDock);
   this->Internals->colorMapEditorDock->hide();
 
-  // 目录：：件. Create a custom file menu with only Open and close
+  // 目录：文件. Create a custom file menu with only Open and close
   QList<QAction*> actionList = this->Internals->menu_File->actions();
   QAction* action = actionList.at(0);
   new pqLoadDataReaction(action);
   QObject::connect(
     actionList.at(1), SIGNAL(triggered()), QApplication::instance(), SLOT(closeAllWindows()));
 
-  // 目录：：滤器. Build the filters menu
+  // 目录：过滤器. Build the filters menu
   pqParaViewMenuBuilders::buildFiltersMenu(*this->Internals->menuFilters, this);
 
-  // Dock：：染列表浏览器. Setup the context menu for the pipeline browser.
+  // Dock：渲染列表浏览器. Setup the context menu for the pipeline browser.
   pqParaViewMenuBuilders::buildPipelineBrowserContextMenu(
     *this->Internals->pipelineBrowser->contextMenu());
 
@@ -95,6 +95,9 @@ myMainWindow::myMainWindow()
   this->addToolBar(Qt::TopToolBarArea, lightToolbar);
 
 #endif
+
+  // information
+  this->tabifyDockWidget(this->Internals->proxyTabDock, this->Internals->informationDock);
 
   // 目录：View. This must be setup after all toolbars and dockwidgets
   // have been created.

@@ -1,7 +1,635 @@
-异常代码,阶段：Inlet/Outlet，mphase，main,类型: Run_Exception/Check_CudaErroor,类,严重程度,异常内容详情
-SphExcept-E001,main,Run_Exception,Functions.cpp,low,Output text is too long.
-SphExcept-E002,,Run_Exception,Functions.cpp,mid,"""Parameter \""%s\"" unrecognised or invalid. ""+""(Level cfg:%d, Parameter:%d)"""
-SphExcept-E003,main,Run_Exception,FunctionsCuda.cpp,low,StGpuInfo.sizep2pto is not enough.
-SphExcept-E004,main,Run_Exception,FunctionsCuda.cpp,mid,":"",attributes,attr)!=Nvalues+1)Run_Exceptioon(""Number of values does not match."
-SphExcept-E005,,Run_Exception,FunctionsCuda.cpp,high,Could not allocate the requested memory (np=%u)
-SphExcept-E006,main,Run_Exception,FunSphKernelsCfg.cpp,high,Kernel unknown.
+ExceptCode,Stage,Type,ClassName,Priority,Details
+SphExcept-E1001,main,Run_Exception,Functions.cpp,low,Output text is too long.
+SphExcept-E1002,main,Run_Exception,Functions.cpp,,Error generation new file name
+SphExcept-E1003,main,Run_Exception,FunctionsCuda.cpp,,StGpuInfo.sizep2pto is not enough.
+SphExcept-E1004,main,Run_Exception,FunctionsCuda.cpp,,There is no agreement between to and from peer access.
+SphExcept-E1005,main,Run_Exception,FunctionsCuda.cpp,,Could not allocate the requested memory (np=%u)
+SphExcept-E1006,main,Run_Exception,FunSphKernelsCfg.cpp,,Kernel unknown.
+SphExcept-E1007,main,Run_Exception,JArraysCpu.cpp,,Cannot allocate the requested memory
+SphExcept-E1008,main,Run_Exception,JArraysCpu.cpp,,The elementsize value is invalid
+SphExcept-E1009,main,Run_Exception,JArraysGpu.cpp,,Number of requested arrays exceeds the maximum.
+SphExcept-E1010,main,Run_Exception,JArraysGpu.cpp,,Unable to free arrays in use.
+SphExcept-E1011,main,Run_Exception,JArraysGpu.cpp,,Unable to change the dimension of the arrays because some are in use.
+SphExcept-E1012,main,Run_Exception,JArraysCpu.cpp,,There are no arrays available with %u bytes
+SphExcept-E1013,main,Run_Exception,JArraysGpu.cpp,,The pointer indicated was not reserved.
+SphExcept-E1014,main,Run_Exception,JBinaryData.cpp,,There is already a value with the name given.
+SphExcept-E1015,main,Run_Exception,JBinaryData.cpp,,There is already an array with the name given.
+SphExcept-E1016,main,Run_Exception,JBinaryData.cpp,,There is already an item with the name given.
+SphExcept-E1017,main,Run_Exception,JBinaryData.cpp,,Type of array invalid.
+SphExcept-E1018,main,Run_Exception,JBinaryData.cpp,,Cannot allocate the requested memory.
+SphExcept-E1019,main,Run_Exception,JBinaryData.cpp,,Memory no allocated.
+SphExcept-E1020,main,Run_Exception,JBinaryData.cpp,,Allocated memory in external pointer is not enough.
+SphExcept-E1021,main,Run_Exception,JBinaryData.cpp,,Allocated memory is not enough.
+SphExcept-E1022,main,Run_Exception,JBinaryData.cpp,,Overflow in reading data.
+SphExcept-E1023,main,Run_Exception,JBinaryData.cpp,,External pointer can not be resized.
+SphExcept-E1024,main,Run_Exception,JBinaryData.cpp,,The file with data is not available.
+SphExcept-E1025,main,Run_Exception,JBinaryData.cpp,,The access information to data file is not available.
+SphExcept-E1026,main,Run_Exception,JBinaryData.cpp,,Type of array is not Text.
+SphExcept-E1027,main,Run_Exception,JBinaryData.cpp,,There are not available data in pointer.
+SphExcept-E1028,main,Run_Exception,JBinaryData.cpp,,There are not available data in Pointer or FileData.
+SphExcept-E1029,main,Run_Exception,JBinaryData.cpp,,Type of array is invalid for this function.
+SphExcept-E1030,main,Run_Exception,JBinaryData.cpp,,The file with data is not available.
+SphExcept-E1031,main,Run_Exception,JBinaryData.cpp,,Size of array is not enough to store all data.
+SphExcept-E1032,main,Run_Exception,JBinaryData.cpp,,The value +name+ is an array.
+SphExcept-E1033,main,Run_Exception,JBinaryData.cpp,,Value +name+ not found.
+SphExcept-E1034,main,Run_Exception,JBinaryData.cpp,,Type of value +name+ invalid.
+SphExcept-E1035,main,Run_Exception,JBinaryData.cpp,,The value +name+ is an item.
+SphExcept-E1036,main,Run_Exception,JBinaryData.cpp,,The name of value +name+  is too large.
+SphExcept-E1037,main,Run_Exception,JBinaryData.cpp,,The name of value +name+  is empty.
+SphExcept-E1038,main,Run_Exception,JBinaryData.cpp,,Name of type invalid.
+SphExcept-E1039,main,Run_Exception,JBinaryData.cpp,,Type of value invalid.
+SphExcept-E1040,main,Run_Exception,JBinaryData.cpp,,Overflow in reading data.
+SphExcept-E1041,main,Run_Exception,JBinaryData.cpp,,The byte-order in file is invalid
+SphExcept-E1042,main,Run_Exception,JBinaryData.cpp,,Insufficient memory for data.
+SphExcept-E1043,main,Run_Exception,JBinaryData.cpp,,Size of data is too huge.
+SphExcept-E1044,main,Run_Exception,JBinaryData.cpp,,Pointer of array with data is invalid.
+SphExcept-E1045,main,Run_Exception,JBinaryData.cpp,,Validation code is invalid.
+SphExcept-E1046,main,Run_Exception,JBinaryData.cpp,,Size of data is invalid.
+SphExcept-E1047,main,Run_Exception,JBinaryData.cpp,,Overflow in reading data.
+SphExcept-E1048,main,Run_Exception,JBinaryData.cpp,,Pointer of array with data is invalid.
+SphExcept-E1049,main,Run_Exception,JBinaryData.cpp,,Name of type invalid.
+SphExcept-E1050,main,Run_Exception,JBinaryData.cpp,,The pointer is invalid.
+SphExcept-E1051,main,Run_Exception,JBinaryData.cpp,,Item is not root.
+SphExcept-E1052,main,Run_Exception,JBinaryData.cpp,,The format file JBinaryData is invalid
+SphExcept-E1053,main,Run_Exception,JBinaryData.cpp,,The file code is invalid
+SphExcept-E1054,main,Run_Exception,JBinaryData.cpp,,The size of file is not supported as it is higher than 4GB
+SphExcept-E1055,main,Run_Exception,JBinaryData.cpp,,The pointer is invalid
+SphExcept-E1056,main,Run_Exception,JBinaryData.cpp,,File writing failure
+SphExcept-E1057,main,Run_Exception,JBinaryData.cpp,,Cannot open the file
+SphExcept-E1058,main,Run_Exception,JBinaryData.cpp,,Item is not root
+SphExcept-E1059,main,Run_Exception,JBinaryData.cpp,,Failed writing to file
+SphExcept-E1060,main,Run_Exception,JBinaryData.cpp,,File could not be opened
+SphExcept-E1061,main,Run_Exception,JBinaryData.cpp,,Array '%s' is not available
+SphExcept-E1062,main,Run_Exception,JBinaryData.cpp,,Type of array '%s' is not %s
+SphExcept-E1063,main,Run_Exception,JBinaryData.cpp,,Size of array '%s' does not match
+SphExcept-E1064,main,Run_Exception,JBinaryData.cpp,,There is already an item with the name given.
+SphExcept-E1065,main,Run_Exception,JBinaryData.cpp,,There is already an array with the name given.
+SphExcept-E1066,main,Run_Exception,JCaseCtes.cpp,,Only one constant must be defined (coefh or hdp)
+SphExcept-E1067,main,Run_Exception,JCaseCtes.cpp,,The item is not found '
+SphExcept-E1068,main,Run_Exception,JCaseCtes.cpp,,The item is not found '+place+'.
+SphExcept-E1069,main,Run_Exception,JCaseCtes.h,,Value cannot be zero.
+SphExcept-E1070,main,Run_Exception,JCaseCtes.h,,Value cannot be greater than 1.
+SphExcept-E1071,main,Run_Exception,JCaseEParms.cpp,,The parameter to modify does not exist.
+SphExcept-E1072,main,Run_Exception,JCaseEParms.cpp,,The value posmin.x="%s" is invalid
+SphExcept-E1073,main,Run_Exception,JCaseEParms.cpp,,The value posmin.y="%s" is invalid.
+SphExcept-E1074,main,Run_Exception,JCaseEParms.cpp,,The value posmin.z="%s" is invalid.
+SphExcept-E1075,main,Run_Exception,JCaseEParms.cpp,,The value posmax.x="%s" is invalid.
+SphExcept-E1076,main,Run_Exception,JCaseEParms.cpp,,The value posmax.y="%s" is invalid.
+SphExcept-E1077,main,Run_Exception,JCaseEParms.cpp,,The value posmax.z="%s" is invalid.
+SphExcept-E1078,main,Run_Exception,JCaseEParms.cpp,,Key value '%c' is invalid.
+SphExcept-E1079,main,Run_Exception,JCaseEParms.cpp,,The requested value '+key+' is not a valid integer number.
+SphExcept-E1080,main,Run_Exception,JCaseEParms.cpp,,The requested value '+key+' does not exist.
+SphExcept-E1081,main,Run_Exception,JCaseEParms.cpp,,The requested value '+key+' is not a valid real number.
+SphExcept-E1082,main,Run_Exception,JCaseEParms.cpp,,The requested value '+key+' does not exist.
+SphExcept-E1083,main,Run_Exception,JCaseEParms.cpp,,The requested value '+key+' does not exist.
+SphExcept-E1084,main,Run_Exception,JCaseEParms.cpp,,The resquested parameter does not exist.
+SphExcept-E1085,main,Run_Exception,JCaseEParms.cpp,,Cannot find the element '
+SphExcept-E1086,main,Run_Exception,JCaseEParms.cpp,,The use of default %s
+SphExcept-E1087,main,Run_Exception,JCaseEParms.cpp,,The use of %% %s
+SphExcept-E1088,main,Run_Exception,JCaseEParms.cpp,,Number %s
+SphExcept-E1089,main,Run_Exception,JCaseEParms.cpp,,The sign + %s to increase the domain
+SphExcept-E1090,main,Run_Exception,JCaseEParms.cpp,,The sign - %s to increase the domain
+SphExcept-E1091,main,Run_Exception,JCaseEParms.cpp,,Format error %s
+SphExcept-E1092,main,Run_Exception,JCaseEParms.cpp,,The requested value '+key+' is not a valid integer number.
+SphExcept-E1093,main,Run_Exception,JCaseEParms.cpp,,The resquested parameter does not exist.
+SphExcept-E1094,main,Run_Exception,JCaseEParms.cpp,,The requested value '+key+' is not a valid real number.
+SphExcept-E1095,main,Run_Exception,JCaseEParms.cpp,,Cannot find the element '+place+'.
+SphExcept-E1096,main,Run_Exception,JCaseParts.cpp,,Only 'translation' or 'translationDOF' must be defined.
+SphExcept-E1097,main,Run_Exception,JCaseParts.cpp,,Only 'rotation' or 'rotationDOF' must be defined
+SphExcept-E1098,main,Run_Exception,JCaseParts.cpp,,Type of block is unknown.
+SphExcept-E1099,main,Run_Exception,JCaseParts.cpp,,The requested particles block is missing.
+SphExcept-E1100,main,Run_Exception,JCaseParts.cpp,,Cannot add a block with a existing mk.
+SphExcept-E1101,main,Run_Exception,JCaseParts.cpp,,The block type is invalid after the last type added.
+SphExcept-E1102,main,Run_Exception,JCaseParts.cpp,,Cannot find the element '+place+'.
+SphExcept-E1103,main,Run_Exception,JCaseParts.cpp,,The amount of particles does not match the header.
+SphExcept-E1104,main,Run_Exception,JCaseParts.cpp,,Property information of mk=+fun::IntStr(Blocks[c]->GetMk())+ does not correspond to Links configuration.
+SphExcept-E1105,main,Run_Exception,JCaseParts.cpp,,The amount of particles does not match the header.
+SphExcept-E1106,main,Run_Exception,JCaseParts.cpp,,The requested particles block is missing.
+SphExcept-E1107,main,Run_Exception,JCaseProperties.cpp,,Name-Value already exists.
+SphExcept-E1108,main,Run_Exception,JCaseProperties.cpp,,Value has one or more several subvalues.
+SphExcept-E1109,main,Run_Exception,JCaseProperties.cpp,,SubName not found.
+SphExcept-E1110,main,Run_Exception,JCaseProperties.cpp,,Index of subvalue is invalid.
+SphExcept-E1111,main,Run_Exception,JCaseProperties.cpp,,The name of value cannot be 'name'.
+SphExcept-E1112,main,Run_Exception,JCaseProperties.cpp,,Value already exists.
+SphExcept-E1113,main,Run_Exception,JCaseProperties.cpp,,Index of value is invalid.
+SphExcept-E1114,main,Run_Exception,JCaseProperties.cpp,,Index of subvalue is invalid.
+SphExcept-E1115,main,Run_Exception,JCaseProperties.cpp,,Type of links (mkbound or mkfluid) is invalid.
+SphExcept-E1116,main,Run_Exception,JCaseProperties.cpp,,Property '+name+' not found.
+SphExcept-E1117,main,Run_Exception,JCaseProperties.cpp,,"Cannot find the element '+path+'.,file"
+SphExcept-E1118,main,Run_Exception,JCaseProperties.cpp,,Property '+name+' not found.
+SphExcept-E1119,main,Run_Exception,JCaseProperties.cpp,,Cannot find the element '+path+'.
+SphExcept-E1120,main,Run_Exception,JCaseProperties.cpp,,Property '"+pro+' not found.
+SphExcept-E1121,main,Run_Exception,JCaseUserVars.cpp,,Cannot find the element '+place+'.
+SphExcept-E1122,main,Run_Exception,JCaseUserVars.cpp,,"""Index %d of variable is invalid."
+SphExcept-E1123,main,Run_Exception,JCaseUserVars.cpp,,"Cannot find the element '+path+'.,file"
+SphExcept-E1124,main,Run_Exception,JCaseVtkOut.cpp,,Number of requested file name is invalid.
+SphExcept-E1125,main,Run_Exception,JCaseVtkOut.cpp,,Number of requested file info is invalid.
+SphExcept-E1126,main,Run_Exception,JCaseVtkOut.cpp,,Cannot find the element '+place+'.
+SphExcept-E1127,main,Run_Exception,JCellDivCpu.cpp,,Failed memory allocation for 
+SphExcept-E1128,main,Run_Exception,JCellDivCpu.cpp,,The number of cells is too big.
+SphExcept-E1129,main,Run_Exception,JCellDivCpuSingle.cpp,,The number of cells is too big.
+SphExcept-E1130,main,Run_Exception,JCellDivCpu.cpp,,Failed CPU memory allocation of %.1f MB for %u particles.
+SphExcept-E1131,main,Run_Exception,JCellDivCpu.cpp,,Failed GPU memory allocation for +fun::UlongStr(nct)+ cells.
+SphExcept-E1132,main,Run_Exception,JCellDivCpu.cpp,,Failed CPU memory allocation of %.1f MB for %u cells
+SphExcept-E1133,main,Run_Exception,JCellDivGpu.cpp,,Failed GPU memory allocation for 
+SphExcept-E1134,main,Run_Exception,JCellDivGpu.cpp,,Failed CPU memory allocation of %.1f MB for %u particles.
+SphExcept-E1135,main,Run_Exception,JCellDivGpu.cpp,,The number of cells is too big.
+SphExcept-E1136,main,Run_Exception,JCellDivGpu.cpp,,The requested memory is not available.
+SphExcept-E1137,main,Run_Exception,JCellDivGpuSingle.cpp,,The number of cells is too big.
+SphExcept-E1138,main,Run_Exception,JCellDivGpu_ker.cu,,Error en LimitsPos()...
+SphExcept-E1139,main,Run_Exception,JCellDivGpu_ker.cu,,Error en GetRangeParticlesCells()...
+SphExcept-E1140,main,Run_Exception,JCellDivGpu_ker.cu,,Error en GetParticlesCells()...
+SphExcept-E1141,main,Run_Exception,JCfgRunBase.cpp,,Has exceeded the maximum configuration options.
+SphExcept-E1142,main,Run_Exception,JCfgRunBase.cpp,,Error reading data from the file.
+SphExcept-E1143,main,Run_Exception,JCfgRunBase.cpp,,The file can not be opened.
+SphExcept-E1144,main,Run_Exception,JCfgRunBase.cpp,,File with too many lines (Maximum=%d)
+SphExcept-E1145,main,Run_Exception,JCfgRunBase.cpp,,"""Parameter \""%s\"" unrecognised or invalid. ""+""(Level cfg:%d, Parameter:%d)"""
+SphExcept-E1146,main,Run_Exception,JCfgRunBase.cpp,,"(Level cfg:%d, Parameter:%d)"
+SphExcept-E1147,main,Run_Exception,JComputeMotionRef.cpp,,Mkbound is already defined.
+SphExcept-E1148,main,Run_Exception,JComputeMotionRef.cpp,,No MK data defined.
+SphExcept-E1149,main,Run_Exception,JComputeMotionRef.cpp,,Mkbound value is was not found.
+SphExcept-E1150,main,Run_Exception,JDataArrays.cpp,,The minimum data count does not match the maximum data count.
+SphExcept-E1151,main,Run_Exception,JDataArrays.cpp,,Array idx is invalid.
+SphExcept-E1152,main,Run_Exception,JDataArrays.cpp,,Value number is invalid.
+SphExcept-E1153,main,Run_Exception,JDataArrays.cpp,,All arrays must have the same number of values.
+SphExcept-E1154,main,Run_Exception,JDataArrays.cpp,,Number of values of '%s' does not match size of filter
+SphExcept-E1155,main,Run_Exception,JDataArrays.cpp,,Array '%s' is missing in source data.
+SphExcept-E1156,main,Run_Exception,JDataArrays.cpp,,Type of array '%s' does not match.
+SphExcept-E1157,main,Run_Exception,JDataArrays.cpp,,Size of array '%s' does not match.
+SphExcept-E1158,main,Run_Exception,JDataArrays.cpp,,Array '%s' of source is missing in target data.
+SphExcept-E1159,main,Run_Exception,JDataArrays.cpp,,Type of pointer '%s' is invalid.
+SphExcept-E1160,main,Run_Exception,JDataArrays.cpp,,The minimum data count does not match the maximum data count.
+SphExcept-E1161,main,Run_Exception,JDataArrays.cpp,,Array name '%s' is invalid
+SphExcept-E1162,main,Run_Exception,JDataArrays.cpp,,Array '%s' already exists.
+SphExcept-E1163,main,Run_Exception,JDataArrays.cpp,,Array idx is invalid
+SphExcept-E1164,main,Run_Exception,JDataArrays.cpp,,Array '%s' is missing.
+SphExcept-E1165,main,Run_Exception,JDataArrays.cpp,,Type of data '%s' is invalid.
+SphExcept-E1166,main,Run_Exception,JDataArrays.cpp,,Type '%s' without output-format.
+SphExcept-E1167,main,Run_Exception,JDataArrays.cpp,,Could not allocate the requested memory (size=%u).
+SphExcept-E1168,main,Run_Exception,JDataArrays.cpp,,Value number is invalid.
+SphExcept-E1169,main,Run_Exception,JDataArrays.cpp,,Type of pointer '%s' is invalid.
+SphExcept-E1170,main,Run_Exception,JDebugSphGpu.cpp,,Invalid data (pini:%u >= pfin:%u).
+SphExcept-E1171,main,Run_Exception,JDebugSphGpu.cpp,,The variable '%s' is unknown.
+SphExcept-E1172,main,Run_Exception,JDebugSphGpu.cpp,,The variable Arg is NULL.
+SphExcept-E1173,main,Run_Exception,JDebugSphGpu.cpp,,The variable Arg is NULL
+SphExcept-E1174,main,Run_Exception,JDebugSphGpu.cpp,,The variable PosCellg is NULL.
+SphExcept-E1175,main,Run_Exception,JDataArrays.cpp,,Size of list is higher than number of values.
+SphExcept-E1176,main,Run_Exception,JDsAccInput.cpp,,Cannot find the element '+place+'.
+SphExcept-E1177,main,Run_Exception,JDsAccInput.cpp,,Element <mkfluid> is invalid for current version. Update the XML file.
+SphExcept-E1178,main,Run_Exception,JDsAccInput.cpp,,Element <datafile> is invalid for current version. Update the XML file.
+SphExcept-E1179,main,Run_Exception,JDsAccInput.cpp,,Only mkbound or mkfluid values is valid but not both
+SphExcept-E1180,main,Run_Exception,JDsAccInput.cpp,,The mkbound is invalid.: "The mkfluid is invalid.
+SphExcept-E1181,main,Run_Exception,JDsAccInput.cpp,,The MkBound %u with imposed acceleration is not floating body.
+SphExcept-E1182,main,Run_Exception,JDsAccInput.cpp,,The MkFluid %u with imposed acceleration is not present in the simulation.
+SphExcept-E1183,main,Run_Exception,JDsAccInput.cpp,,Cannot be less than two registers in variable acceleration data.
+SphExcept-E1184,main,Run_Exception,JDsAccInput.cpp,,The MkBound %u with imposed acceleration is not present in the simulation.
+SphExcept-E1185,main,Run_Exception,JDsAccInput.cpp,,Only <acctimes> or <acctimesfile> is valid but not both.
+SphExcept-E1186,main,Run_Exception,JDsAccInput.cpp,,"An input already exists for the same %s=%u.,(bound? ""mkbound"": ""mkfluid"
+SphExcept-E1187,main,Run_Exception,JDsAccInput.cpp,,Cannot be less than two registers in variable acceleration data.
+SphExcept-E1188,main,Run_Exception,JDsAccInput.cpp,,The number of input data for variable acceleration is invalid.
+SphExcept-E1189,main,Run_Exception,JDsDamping.cpp,,OverLimit must be higher than 1.
+SphExcept-E1190,main,Run_Exception,JDsDamping.cpp,,LimitMin box is not inside of LimitMax box.
+SphExcept-E1191,main,Run_Exception,JDsDamping.cpp,,Begin of LimitMax is higher than end of LimitMax.
+SphExcept-E1192,main,Run_Exception,JDsDamping.cpp,,Begin of LimitMin is higher than end of LimitMin.
+SphExcept-E1193,main,Run_Exception,JDsDamping.cpp,,LimitMin radius is higher than LimitMax radius.
+SphExcept-E1194,main,Run_Exception,JDsDamping.cpp,,Cannot find the element '+place+'.
+SphExcept-E1195,main,Run_Exception,JDsExtraData.cpp,,CaseNbound value does not match.
+SphExcept-E1196,main,Run_Exception,JDsExtraData.cpp,,The array 'Normals' is missing or type invalid.
+SphExcept-E1197,main,Run_Exception,JDsExtraData.cpp,,CaseNfloat value does not match.
+SphExcept-E1198,main,Run_Exception,JDsFixedDt.cpp,,Cannot be less than two values.
+SphExcept-E1199,main,Run_Exception,JDsFtForcePoints.cpp,,Number of floatings is invalid.
+SphExcept-E1200,main,Run_Exception,JDsFtForcePoints.cpp,,Could not allocate the requested memory.
+SphExcept-E1201,main,Run_Exception,JDsFtForcePoints.cpp,,Id of floating is invalid.
+SphExcept-E1202,main,Run_Exception,JDsFtForcePoints.cpp,,Value ptid is invalid.
+SphExcept-E1203,main,Run_Exception,JDsFtForcePoints.cpp,,Number of floating is invalid.
+SphExcept-E1204,main,Run_Exception,JDsFtForcePoints.cpp,,Floating body is missing.
+SphExcept-E1205,main,Run_Exception,JDsGaugeItem.cpp,,Type unknown.
+SphExcept-E1206,main,Run_Exception,JDsGaugeItem.cpp,,Kernel unknown.
+SphExcept-E1207,main,Run_Exception,JDsGaugeSystem.cpp,,Constants of kernel Wendland are not defined.
+SphExcept-E1208,main,Run_Exception,JDsGaugeSystem.cpp,,Cannot find the element '+place+'.
+SphExcept-E1209,main,Run_Exception,JDsGaugeSystem.cpp,,The line length is less than the indicated dp.
+SphExcept-E1210,main,Run_Exception,JDsGaugeSystem.cpp,,"Only 'coefdp' or 'count' definition are valid, but not both."
+SphExcept-E1211,main,Run_Exception,JDsGaugeSystem.cpp,,The masslimit (%f) is invalid.
+SphExcept-E1212,main,Run_Exception,JDsGaugeSystem.cpp,,The name '%s' already exists.
+SphExcept-E1213,main,Run_Exception,JDsGaugeSystem.cpp,,Type of boundary particles (Mkbound=%u) is invalid. Only fixed or moving particles are allowed.
+SphExcept-E1214,main,Run_Exception,JDsGaugeSystem.cpp,,Gauge type '%s' is invalid.
+SphExcept-E1215,main,Run_Exception,JDsGaugeSystem.cpp,,The requested gauge is not valid
+SphExcept-E1216,main,Run_Exception,JDsGaugeSystem.cpp,,Requested gauge '%s' is missing.
+SphExcept-E1217,main,Run_Exception,JDsGaugeSystem.cpp,,Input state to compute gauge '%s' is not available.
+SphExcept-E1218,main,Run_Exception,JDsGaugeSystem.cpp,,Input state to compute gauge '%s' is not available.
+SphExcept-E1219,main,Run_Exception,JDsGaugeSystem.cpp,,The pointdp (%f) is invalid.
+SphExcept-E1220,main,Run_Exception,JDsGaugeSystem.cpp,,The object is not yet configured.
+SphExcept-E1221,main,Run_Exception,JDsGaugeSystem.cpp,,The requested gauge is not valid.
+SphExcept-E1222,main,Run_Exception,JDsGpuInfo.cpp,,Requested GPU is not available.
+SphExcept-E1223,main,Run_Exception,JDsGpuInfo.cpp,,There are no available CUDA devices.
+SphExcept-E1224,main,Run_Exception,JDsInitialize.cpp,,Velocity profile is unknown.
+SphExcept-E1225,main,Run_Exception,JDsInitialize.cpp,,Point definition is invalid in execution parameter '%s'.
+SphExcept-E1226,main,Run_Exception,JDsInitialize.cpp,,Normal definition is invalid in execution parameter '%s'.
+SphExcept-E1227,main,Run_Exception,JDsInitialize.cpp,,OnlyPosMax definition is invalid in execution parameter '%s'.
+SphExcept-E1228,main,Run_Exception,JDsInitialize.cpp,,OnlyPosMin definition is invalid in execution parameter '%s'.
+SphExcept-E1229,main,Run_Exception,JDsInitialize.cpp,,Key '%s' is unknown in execution parameter '%s'.
+SphExcept-E1230,main,Run_Exception,JDsInitialize.cpp,,Execution parameter '%s' is invalid.
+SphExcept-E1231,main,Run_Exception,JDsInitialize.cpp,,Initialize option BoundNormalParts is not supported for 3D simulations.
+SphExcept-E1232,main,Run_Exception,JDsInitialize.cpp,,Cannot find the element '+place+'.
+SphExcept-E1233,main,Run_Exception,JDsMooredFloatings.cpp,,Floating has already configured.
+SphExcept-E1234,main,Run_Exception,JDsMooredFloatings.cpp,,The requested fairlead is invalid.
+SphExcept-E1235,main,Run_Exception,JDsMooredFloatings.cpp,,Error releasing moorings in MoorDyn library.
+SphExcept-E1236,main,Run_Exception,JDsMooredFloatings.cpp,,Floating body used in mooring not found.
+SphExcept-E1237,main,Run_Exception,JDsMooredFloatings.cpp,,There are not moored floatings.
+SphExcept-E1238,main,Run_Exception,JDsMooredFloatings.cpp,,Error calculating forces by MoorDyn.
+SphExcept-E1239,main,Run_Exception,JDsMooredFloatings.cpp,,Gravity.z equal to zero is not allowed.
+SphExcept-E1240,main,Run_Exception,JDsMooredFloatings.cpp,,Cannot find the element '+place+'.
+SphExcept-E1241,main,Run_Exception,JDsMooredFloatings.cpp,,Floating mkbound=%d is already configured.
+SphExcept-E1242,main,Run_Exception,JDsMooredFloatings.cpp,,"Error: File could not be created.,MoordynDir+""lines.txt"
+SphExcept-E1243,main,Run_Exception,JDsMooredFloatings.cpp,,Cannot find the element '+place+'.
+SphExcept-E1244,main,Run_Exception,JDsMooredFloatings.cpp,,Floating body used in mooring not found.
+SphExcept-E1245,main,Run_Exception,JDsMooredFloatings.cpp,,MoorDyn only supports one moored floating.
+SphExcept-E1246,main,Run_Exception,JDsMotion.cpp,,The number of mobile objects exceeds the maximum.
+SphExcept-E1247,main,Run_Exception,JDsMotion.cpp,,The number of mobile objects exceeds the expected maximum.
+SphExcept-E1248,main,Run_Exception,JDsMotion.cpp,,The number of mobile objects is invalid.
+SphExcept-E1249,main,Run_Exception,JDsMotion.cpp,,The number of mobile objects do not match the predefined motions in XML file.
+SphExcept-E1250,main,Run_Exception,JDsMotion.cpp,,Moving object does not exist.
+SphExcept-E1251,main,Run_Exception,JDsOutputTime.cpp,,Value timeout by default is invalid. It is not greater than zero.
+SphExcept-E1252,main,Run_Exception,JDsOutputTime.cpp,,Cannot find the element '+place+'.
+SphExcept-E1253,main,Run_Exception,JDsPartsInit.cpp,,Could not allocate the requested memory.
+SphExcept-E1254,main,Run_Exception,JDsPartsOut.cpp,,Could not allocate the requested memory.
+SphExcept-E1255,main,Run_Exception,JDsphConfig.cpp,,Cannot find the element '+place+'.
+SphExcept-E1256,main,Run_Exception,JDsPips.cpp,,Auxiliary memory is not enough for 1st calculation level.
+SphExcept-E1257,main,Run_Exception,JDsPips.cpp,,Auxiliary memory is not enough for 2nd calculation level.
+SphExcept-E1258,main,Run_Exception,JDsPips.cpp,,Auxiliary memory is not enough for 3th calculation level.
+SphExcept-E1259,main,Run_Exception,JDsSaveDt.cpp,,Cannot find the element '+place+'.
+SphExcept-E1260,main,Run_Exception,JDsTimers.cpp,,Timer Id exceeds the allowed limit.
+SphExcept-E1261,main,Run_Exception,JDsTimers.cpp,,Timer Id is already defined.
+SphExcept-E1262,main,Run_Exception,JDsViscoInput.cpp,,Cannot be less than two values.
+SphExcept-E1263,main,Run_Exception,JFtMotionSave.cpp,,No floating bodies available.
+SphExcept-E1264,main,Run_Exception,JLinearValue.cpp,,Options SpecialValues and OptionalValues at the same time are invalid.
+SphExcept-E1265,main,Run_Exception,JLinearValue.cpp,,Cannot be less than two values.
+SphExcept-E1266,main,Run_Exception,JLinearValue.cpp,,The copy is invalid since Nvalues does not match.
+SphExcept-E1267,main,Run_Exception,JLinearValue.cpp,,The copy is invalid since SpecialValues does not match.
+SphExcept-E1268,main,Run_Exception,JLinearValue.cpp,,The copy is invalid since OptionalValues does not match.
+SphExcept-E1269,main,Run_Exception,JLinearValue.cpp,,It has reached the maximum size allowed.
+SphExcept-E1270,main,Run_Exception,JLinearValue.cpp,,Index is invalid.
+SphExcept-E1271,main,Run_Exception,JLinearValue.cpp,,New time values is lower than previous time or it is higher than next time.
+SphExcept-E1272,main,Run_Exception,JLinearValue.cpp,,Idx is not valid.
+SphExcept-E1273,main,Run_Exception,JLinearValue.cpp,,Number of value is not valid.
+SphExcept-E1274,main,Run_Exception,JLinearValue.cpp,,There are not times.
+SphExcept-E1275,main,Run_Exception,JLinearValue.cpp,,Number of value is not valid.
+SphExcept-E1276,main,Run_Exception,JLinearValue.cpp,,Number of value3 is not valid.
+SphExcept-E1277,main,Run_Exception,JLinearValue.cpp,,Number of values does not match.
+SphExcept-E1278,main,Run_Exception,JLinearValue.cpp,,Number of values does not match.
+SphExcept-E1279,main,Run_Exception,JLog2.cpp,,Method is not available for dependent log.
+SphExcept-E1280,main,Run_Exception,JLog3.cpp,,Cannot open the file.
+SphExcept-E1281,main,Run_Exception,JMotion.cpp,,Invalid method in execution mode.
+SphExcept-E1282,main,Run_Exception,JMotion.cpp,,Cannot add an object with an existing id=%u.
+SphExcept-E1283,main,Run_Exception,JMotion.cpp,,Cannot add a new object with an existing real reference (ref=%d) (higher than or equal to zero).
+SphExcept-E1284,main,Run_Exception,JMotion.cpp,,Cannot add an object with zero id.
+SphExcept-E1285,main,Run_Exception,JMotion.cpp,,Could not allocate the requested memory.
+SphExcept-E1286,main,Run_Exception,JMotion.cpp,,Cannot allocate the requested memory.
+SphExcept-E1287,main,Run_Exception,JMotion.cpp,,Invalid method in execution mode.
+SphExcept-E1288,main,Run_Exception,JMotion.cpp,,Cannot allocated the requested memory.
+SphExcept-E1289,main,Run_Exception,JMotion.cpp,,Parent object with id=%u is missing.
+SphExcept-E1290,main,Run_Exception,JMotion.cpp,,Missing object with id=%u.
+SphExcept-E1291,main,Run_Exception,JMotion.cpp,,Missing movement (id=%u) inside the object with id=%u.
+SphExcept-E1292,main,Run_Exception,JMotion.cpp,,The previous timestep+dt is higher than the requested timestep. It is invalid for simple mode.
+SphExcept-E1293,main,Run_Exception,JMotion.cpp,,The requested movement is invalid.
+SphExcept-E1294,main,Run_Exception,JMotion.cpp,,The movement id must be greater than zero.
+SphExcept-E1295,main,Run_Exception,JMotion.cpp,,Missing object.
+SphExcept-E1296,main,Run_Exception,JMotion.cpp,,Cannot add a movement with a existing id inside the object.
+SphExcept-E1297,main,Run_Exception,JMotion.cpp,,Wating times lenght lower than zero are not allowed.
+SphExcept-E1298,main,Run_Exception,JMotion.cpp,,The 'time' is not defined.
+SphExcept-E1299,main,Run_Exception,JMotion.cpp,,the position of field 'time' is invalid.
+SphExcept-E1300,main,Run_Exception,JMotion.cpp,,You need at least one position field.
+SphExcept-E1301,main,Run_Exception,JMotion.cpp,,the position of field 'x' is invalid.
+SphExcept-E1302,main,Run_Exception,JMotion.cpp,,the position of field 'y' is invalid.
+SphExcept-E1303,main,Run_Exception,JMotion.cpp,,the position of field 'z' is invalid.
+SphExcept-E1304,main,Run_Exception,JMotion.cpp,,Motion references are no consecutives.
+SphExcept-E1305,main,Run_Exception,JMotion.cpp,,The previous timestep+dt is higher than the requested timestep. It is invalid for simple mode.
+SphExcept-E1306,main,Run_Exception,JMotion.cpp,,Invalid method in initialization mode.
+SphExcept-E1307,main,Run_Exception,JMotion.cpp,,The requested movement is invalid.
+SphExcept-E1308,main,Run_Exception,JMotion.cpp,,End of invalid requested movement.
+SphExcept-E1309,main,Run_Exception,JMotion.cpp,,Cannot fin the element '
+SphExcept-E1310,main,Run_Exception,JMotionMov.cpp,,Cannot be less than two angles.
+SphExcept-E1311,main,Run_Exception,JMotionMov.cpp,,Cannot be less than two positions.
+SphExcept-E1312,main,Run_Exception,JMotionList.cpp,,Reference is invalid.
+SphExcept-E1313,main,Run_Exception,JMotionObj.cpp,,Cannot find the requested movement.
+SphExcept-E1314,main,Run_Exception,JMotionObj.cpp,,Cannot allocate the requested memory.
+SphExcept-E1315,main,Run_Exception,JMotionObj.cpp,,The movement with id=%u refers to another non-existent movement (id=%u) within the object.
+SphExcept-E1316,main,Run_Exception,JMotionObj.cpp,,Unrecognised movement type.
+SphExcept-E1317,main,Run_Exception,JNormalsMarrone.cpp,,Could not allocate the requested memory.
+SphExcept-E1318,main,Run_Exception,JNormalsMarrone.cpp,,File of the particles was not found.
+SphExcept-E1319,main,Run_Exception,JNormalsMarrone.cpp,,Normal data for more particles than expected in NBI4 file.
+SphExcept-E1320,main,Run_Exception,JNormalsMarrone.cpp,,Only Idp (32 bits) is valid at the moment.
+SphExcept-E1321,main,Run_Exception,JNormalsMarrone.cpp,,Number of particles is invalid to calculates Y in 2D simulations.
+SphExcept-E1322,main,Run_Exception,JNormalsMarrone.cpp,,Some postion of bound particles is invalid.
+SphExcept-E1323,main,Run_Exception,JOutputCsv.cpp,,Type of array is invalid.
+SphExcept-E1324,main,Run_Exception,JOutputCsv.cpp,,The number of values in arrays is not the same.
+SphExcept-E1325,main,Run_Exception,JOutputCsv.cpp,,Dimension %d of array '%s' is invalid.
+SphExcept-E1326,main,Run_Exception,JOutputCsv.cpp,,Type of array '%s' is invalid.
+SphExcept-E1327,main,Run_Exception,JOutputCsv.cpp,,File writing failure.
+SphExcept-E1328,main,Run_Exception,JOutputCsv.cpp,,Cannot open the file.
+SphExcept-E1329,main,Run_Exception,JPartDataBi4.cpp,,Error in the number of particles.
+SphExcept-E1330,main,Run_Exception,JPartDataBi4.cpp,,The pointer data is invalid.
+SphExcept-E1331,main,Run_Exception,JPartDataBi4.cpp,,Part information is invalid.
+SphExcept-E1332,main,Run_Exception,JPartDataBi4.cpp,,Type of pointer is unknown.
+SphExcept-E1333,main,Run_Exception,JPartDataBi4.cpp,,The id of particles is invalid.
+SphExcept-E1334,main,Run_Exception,JPartDataBi4.cpp,,The position of particles is invalid.
+SphExcept-E1335,main,Run_Exception,JPartDataBi4.cpp,,Part information is invalid.
+SphExcept-E1336,main,Run_Exception,JPartDataBi4.cpp,,The pointer data is invalid.
+SphExcept-E1337,main,Run_Exception,JPartDataBi5.cpp,,Array '%s' is not available.
+SphExcept-E1338,main,Run_Exception,JPartDataBi4.cpp,,Splitting is not configured.
+SphExcept-E1339,main,Run_Exception,JPartDataBi4.cpp,,There is not array of particles data.
+SphExcept-E1340,main,Run_Exception,JPartDataBi4.cpp,,PART configuration is invalid.
+SphExcept-E1341,main,Run_Exception,JPartDataBi4.cpp,,PART data is invalid.
+SphExcept-E1342,main,Run_Exception,JPartDataBi4.cpp,,The data object is not available.
+SphExcept-E1343,main,Run_Exception,JPartDataBi5.cpp,,Type of array '%s' is not %s.
+SphExcept-E1344,main,Run_Exception,JPartDataBi4.cpp,,Array is not available.
+SphExcept-E1345,main,Run_Exception,JPartDataBi4.cpp,,Number of particles is invalid to calculates Y in 2D simulations.
+SphExcept-E1346,main,Run_Exception,JPartDataHead.cpp,,Type of new particles block is invalid.
+SphExcept-E1347,main,Run_Exception,JPartDataHead.cpp,,Begin of new particles block is invalid.
+SphExcept-E1348,main,Run_Exception,JPartDataHead.cpp,,Mk is already defined.
+SphExcept-E1349,main,Run_Exception,JPartDataHead.cpp,,MkBound is already defined.
+SphExcept-E1350,main,Run_Exception,JPartDataHead.cpp,,MkFluid is already defined.
+SphExcept-E1351,main,Run_Exception,JPartDataHead.cpp,,Begin of first particles block is invalid.
+SphExcept-E1352,main,Run_Exception,JPartDataHead.cpp,,Count of new particles block is invalid.
+SphExcept-E1353,main,Run_Exception,JPartDataHead.cpp,,Item 'MkBlock_%03u' is missing.
+SphExcept-E1354,main,Run_Exception,JPartDataHead.cpp,,Type is unknown.
+SphExcept-E1355,main,Run_Exception,JPartFloatBi4.cpp,,Number of floating is invalid.
+SphExcept-E1356,main,Run_Exception,JPartFloatBi4.cpp,,"""The array +name+ is missing."
+SphExcept-E1357,main,Run_Exception,JPartFloatBi4.cpp,,The type of array +name+ does not match.
+SphExcept-E1358,main,Run_Exception,JPartFloatBi4.cpp,,The size of array +name+ does not match.
+SphExcept-E1359,main,Run_Exception,JPartFloatBi4.cpp,,Loaded data is corrupted. The data could have been modified by several simultaneous executions.
+SphExcept-E1360,main,Run_Exception,JPartFloatBi4.cpp,,The head item is missing.
+SphExcept-E1361,main,Run_Exception,JPartFloatBi4.cpp,,The data format version '%u' is not valid. Version '%u' required.
+SphExcept-E1362,main,Run_Exception,JPartFloatBi4.cpp,,Number of floating is invalid.
+SphExcept-E1363,main,Run_Exception,JPartFloatBi4.cpp,,The mkbound does not match.
+SphExcept-E1364,main,Run_Exception,JPartFloatBi4.cpp,,The begin does not match.
+SphExcept-E1365,main,Run_Exception,JPartFloatBi4.cpp,,The count does not match.
+SphExcept-E1366,main,Run_Exception,JPartFloatBi4.cpp,,The mass does not match.
+SphExcept-E1367,main,Run_Exception,JPartFloatBi4.cpp,,The massp does not match.
+SphExcept-E1368,main,Run_Exception,JPartFloatBi4.cpp,,No loaded data.
+SphExcept-E1369,main,Run_Exception,JPartFloatBi4.cpp,,Number of PART is invalid.
+SphExcept-E1370,main,Run_Exception,JPartFloatBi4.cpp,,No loaded data.
+SphExcept-E1371,main,Run_Exception,JPartFloatBi4.cpp,,PART not found.
+SphExcept-E1372,main,Run_Exception,JPartNormalData.cpp,,Could not allocate the requested memory.
+SphExcept-E1373,main,Run_Exception,JPartNormalData.cpp,,Array '%s' is not available.
+SphExcept-E1374,main,Run_Exception,JPartNormalData.cpp,,Type of array '%s' is not %s.
+SphExcept-E1375,main,Run_Exception,JPartOutBi4Save.cpp,,Error in the number of particles.
+SphExcept-E1376,main,Run_Exception,JPartOutBi4Save.cpp,,The id of particles is invalid.
+SphExcept-E1377,main,Run_Exception,JPartOutBi4Save.cpp,,The position of particles is invalid.
+SphExcept-E1378,main,Run_Exception,JPartsLoad4.cpp,,Could not allocate the requested memory.
+SphExcept-E1379,main,Run_Exception,JPartsLoad4.cpp,,Order of boundary (fixed and moving) particles is invalid.
+SphExcept-E1380,main,Run_Exception,JPartsLoad4.cpp,,Only Idp (32 bits) is valid at the moment.
+SphExcept-E1381,main,Run_Exception,JPartsLoad5.cpp,,File of the particles was not found.
+SphExcept-E1382,main,Run_Exception,JPartsLoad4.cpp,,Number of particles is invalid to calculates Y in 2D simulations.
+SphExcept-E1383,main,Run_Exception,JPartsLoad4.cpp,,Data file does not match the dimension of the case (2D/3D).
+SphExcept-E1384,main,Run_Exception,JPartsLoad4.cpp,,Data file does not match the periodic configuration of the case.
+SphExcept-E1385,main,Run_Exception,JPartsLoad4.cpp,,Particle number does not match the configuration of the case.
+SphExcept-E1386,main,Run_Exception,JPartsLoad4.cpp,,The MapSize information is invalid.
+SphExcept-E1387,main,Run_Exception,JPartsLoad4.cpp,,The limits of the initial case cannot be calculated from a file PART.
+SphExcept-E1388,main,Run_Exception,JRadixSort.cpp,,Number of values is invalid.
+SphExcept-E1389,main,Run_Exception,JRadixSort.cpp,,Cannot allocate the requested memory.
+SphExcept-E1390,main,Run_Exception,JRadixSort.cpp,,There is no index to sort data.
+SphExcept-E1391,main,Run_Exception,JRadixSort.cpp,,The size of data is invalid.
+SphExcept-E1392,main,Run_Exception,JRadixSort.cpp,,The order is not correct
+SphExcept-E1393,main,Run_Exception,JReadDatafile.cpp,,Error counting lines.
+SphExcept-E1394,main,Run_Exception,JReadDatafile.cpp,,Cannot open the file.
+SphExcept-E1395,main,Run_Exception,JReadDatafile.cpp,,File exceeds the maximum size allowed (%u bytes).
+SphExcept-E1396,main,Run_Exception,JReadDatafile.cpp,,Line number is invalid.
+SphExcept-E1397,main,Run_Exception,JReadDatafile.cpp,,Value %d does not exist in line %d.
+SphExcept-E1398,main,Run_Exception,JReadDatafile.cpp,,The KEY '%s' was not found.
+SphExcept-E1399,main,Run_Exception,JSaveCsv2.cpp,,Error in JSaveCsv2::ToStr(): Output text is too long.
+SphExcept-E1400,main,Run_Exception,JSaveCsv2.cpp,,File could not be opened.
+SphExcept-E1401,main,Run_Exception,JSaveCsv2.cpp,,File writing failure.
+SphExcept-E1402,main,Run_Exception,JSimpleNeigs.cpp,,Nummber of positions is zero.
+SphExcept-E1403,main,Run_Exception,JSimpleNeigs.cpp,,Size of cells is invalid.
+SphExcept-E1404,main,Run_Exception,JSimpleNeigs.cpp,,Could not allocate the requested memory.
+SphExcept-E1405,main,Run_Exception,JSimpleNeigs.cpp,,Some position is outside the defined domain.
+SphExcept-E1406,main,Run_Exception,JSph.cpp,,Key for limit is invalid.
+SphExcept-E1407,main,Run_Exception,JSph.cpp,,Axis value is invalid.
+SphExcept-E1408,main,Run_Exception,JSph.cpp,,Key value is invalid.
+SphExcept-E1409,main,Run_Exception,JSph.cpp,,Name of the case for execution was not indicated.
+SphExcept-E1410,main,Run_Exception,JSph.cpp,,Kernel choice is not valid.
+SphExcept-E1411,main,Run_Exception,JSph.cpp,,Flow type is not valid.
+SphExcept-E1412,main,Run_Exception,JSph.cpp,,Rigid algorithm is not valid.
+SphExcept-E1413,main,Run_Exception,JSph.cpp,,Step algorithm is not valid.
+SphExcept-E1414,main,Run_Exception,JSph.cpp,,Viscosity treatment is not valid.
+SphExcept-E1415,main,Run_Exception,JSph.cpp,,Boundary Condition method is not valid.
+SphExcept-E1416,main,Run_Exception,JSph.cpp,,Slip mode is not valid.
+SphExcept-E1417,main,Run_Exception,JSph.cpp,,The parameters 'DeltaSPH' and 'DensityDT' cannot be combined. Only 'DensityDT' should be used.
+SphExcept-E1418,main,Run_Exception,JSph.cpp,,Density Diffusion Term mode is not valid.
+SphExcept-E1419,main,Run_Exception,JSph.cpp,,Shifting mode in <execution><parameters> is not valid.
+SphExcept-E1420,main,Run_Exception,JSph.cpp,,The parameters 'DtFixed' and 'DtFixedFile' cannot be used at the same time.
+SphExcept-E1421,main,Run_Exception,JSph.cpp,,Combination of <simulationdomain> with IncZ or DomainFixedXXX in <parameters> section of XML is not allowed.
+SphExcept-E1422,main,Run_Exception,JSph.cpp,,"The reference density value %f is outside the defined limits [%f,%f]."
+SphExcept-E1423,main,Run_Exception,JSph.cpp,,Case configuration was not found.
+SphExcept-E1424,main,Run_Exception,JSph.cpp,,Chrono configuration in XML file is missing.
+SphExcept-E1425,main,Run_Exception,JSph.cpp,,The XML section 'boundextrap' is obsolete.
+SphExcept-E1426,main,Run_Exception,JSph.cpp,,Code for moorings and MoorDyn+ coupling is not included in the current compilation.
+SphExcept-E1427,main,Run_Exception,JSph.cpp,,Cannot use periodic conditions in Y with 2D simulations
+SphExcept-E1428,main,Run_Exception,JSph.cpp,,Boundary method is not valid.
+SphExcept-E1429,main,Run_Exception,JSph.cpp,,Slip mode for mDBC is not valid.
+SphExcept-E1430,main,Run_Exception,JSph.cpp,,Only the slip mode velocity=0 is allowed with mDBC conditions.
+SphExcept-E1431,main,Run_Exception,JSph.cpp,,Slip mode for mDBC is not valid.
+SphExcept-E1432,main,Run_Exception,JSph.cpp,,Shifting mode is not valid.
+SphExcept-E1433,main,Run_Exception,JSph.cpp,,Error loading multiphase data.
+SphExcept-E1434,main,Run_Exception,JSph.cpp,,Object mk=%u - Value of rhop0 is invalid.
+SphExcept-E1435,main,Run_Exception,JSph.cpp,,Object mk=%u - Value of gamma is invalid.
+SphExcept-E1436,main,Run_Exception,JSph.cpp,,Object mk=%u - Value of cs0 is invalid.
+SphExcept-E1437,main,Run_Exception,JSph.cpp,,Object mk=%u - Value of visco is invalid.
+SphExcept-E1438,main,Run_Exception,JSph.cpp,,Object mk=%u - Phase is invalid.
+SphExcept-E1439,main,Run_Exception,JSph.cpp,,DSPHChronoLib to use Chrono is not included in the current compilation.
+SphExcept-E1440,main,Run_Exception,JSph.cpp,,Code for Wave-Paddles is not included in the current compilation.
+SphExcept-E1441,main,Run_Exception,JSph.cpp,,Code for Multi-Layer Pistons is not included in the current compilation.
+SphExcept-E1442,main,Run_Exception,JSph.cpp,,Code for Relaxation Zones is not included in the current compilation.
+SphExcept-E1443,main,Run_Exception,JSph.cpp,,The number of floating objects exceeds the maximum.
+SphExcept-E1444,main,Run_Exception,JSph.cpp,,Inlet/Outlet with ReuseIds is not a valid option for now...
+SphExcept-E1445,main,Run_Exception,JSph.cpp,,The XML section 'boundextrap' is obsolete.
+SphExcept-E1446,main,Run_Exception,JSph.cpp,,Code for moorings and MoorDyn+ coupling is not included in the current compilation.
+SphExcept-E1447,main,Run_Exception,JSph.cpp,,Symmetry is not allowed with 2-D simulations.
+SphExcept-E1448,main,Run_Exception,JSph.cpp,,Symmetry is not allowed with periodic conditions in axis Y.
+SphExcept-E1449,main,Run_Exception,JSph.cpp,,Symmetry is not allowed with floating bodies.
+SphExcept-E1450,main,Run_Exception,JSph.cpp,,Symmetry is not allowed with Chrono objects.
+SphExcept-E1451,main,Run_Exception,JSph.cpp,,Symmetry is not allowed with BoundCor.
+SphExcept-E1452,main,Run_Exception,JSph.cpp,,Symmetry is only allowed with Artificial viscosity.
+SphExcept-E1453,main,Run_Exception,JSph.cpp,,objdesc+ - Value of Kfric is invalid.
+SphExcept-E1454,main,Run_Exception,JSph.cpp,,objdesc+ - Value of Restitution_Coefficient is invalid.
+SphExcept-E1455,main,Run_Exception,JSph.cpp,,objdesc+ - Value of Young_Modulus is invalid.
+SphExcept-E1456,main,Run_Exception,JSph.cpp,,objdesc+ - Value of PoissonRatio is invalid.
+SphExcept-E1457,main,Run_Exception,JSph.cpp,,he number of final normals does not match fixed and moving particles.
+SphExcept-E1458,main,Run_Exception,JSph.cpp,,No extra data available to restart at PART_%04d with mDBC.
+SphExcept-E1459,main,Run_Exception,JSph.cpp,,Domain limits %s are not valid.
+SphExcept-E1460,main,Run_Exception,JSph.cpp,,Kernel unknown.
+SphExcept-E1461,main,Run_Exception,JSph.cpp,,Only Wendland kernel was compiled in this binary distribution.
+SphExcept-E1462,main,Run_Exception,JSph.cpp,,StepAlgorithm value is invalid.
+SphExcept-E1463,main,Run_Exception,JSph.cpp,,Constant 'b' cannot be zero.\n'b' is zero when fluid height is zero (or fluid particles were not created)
+SphExcept-E1464,main,Run_Exception,JSph.cpp,,Found new particles out.
+SphExcept-E1465,main,Run_Exception,JSph.cpp,,The CellMode is invalid.
+SphExcept-E1466,main,Run_Exception,JSph.cpp,,DomCelIni is invalid.
+SphExcept-E1467,main,Run_Exception,JSph.cpp,,DomCelFin is invalid.
+SphExcept-E1468,main,Run_Exception,JSph.cpp,,The domain of cells is invalid.
+SphExcept-E1469,main,Run_Exception,JSph.cpp,,Failed to select a valid CellCode for +fun::UintStr(DomCells.x)+"x"+fun::UintStr(DomCells.y)+"x"+fun::UintStr(DomCells.z)+ cells (CellMode="+GetNameCellMode(CellMode)+.
+SphExcept-E1470,main,Run_Exception,JSph.cpp,,Number of bits for cells is not 32.
+SphExcept-E1471,main,Run_Exception,JSph.cpp,,Mask for cell-X is wrong.
+SphExcept-E1472,main,Run_Exception,JSph.cpp,,Mask for cell-Y is wrong.
+SphExcept-E1473,main,Run_Exception,JSph.cpp,,Mask for cell-Z is wrong.
+SphExcept-E1474,main,Run_Exception,JSph.cpp,,The number of cells is too large for a 32-bit PosCell configuration. The number of cells should be reduced.
+SphExcept-E1475,main,Run_Exception,JSph.cpp,,Current configuration for PosCell on GPU is invalid. More information above.
+SphExcept-E1476,main,Run_Exception,JSph.cpp,,There are floating particles not found.
+SphExcept-E1477,main,Run_Exception,JSph.cpp,,Number of Mk blocks is invalid.
+SphExcept-E1478,main,Run_Exception,JSph.cpp,,Type of Mk block %u does not match.
+SphExcept-E1479,main,Run_Exception,JSph.cpp,,Mk value of Mk block %u does not match.
+SphExcept-E1480,main,Run_Exception,JSph.cpp,,MkType value of Mk block %u does not match.
+SphExcept-E1481,main,Run_Exception,JSph.cpp,,Count value of Mk block %u does not match.
+SphExcept-E1482,main,Run_Exception,JSph.cpp,,Initial fluid density is out of limits. *** To change the limits modify the value of 'RhopOutMin' and 'RhopOutMax' in the XML file (parameters section).
+SphExcept-E1483,main,Run_Exception,JSph.cpp,,Simulation restart not allowed when Chrono is used.
+SphExcept-E1484,main,Run_Exception,JSph.cpp,,Simulation restart not allowed when moorings are used.
+SphExcept-E1485,main,Run_Exception,JSph.cpp,,Simulation restart not allowed when FtForces is used.
+SphExcept-E1486,main,Run_Exception,JSph.cpp,,Simulation restart not allowed when BoundCorr is used.
+SphExcept-E1487,main,Run_Exception,JSph.cpp,,Viscosity type is unknown.
+SphExcept-E1488,main,Run_Exception,JSph.cpp,,The division configuration is invalid.
+SphExcept-E1489,main,Run_Exception,JSph.cpp,,"Fixed, moving or floating particles were excluded. Check VTK file Error_BoundaryOut.vtk with excluded particles."
+SphExcept-E1490,main,Run_Exception,JSph.cpp,,Failed writing to file.
+SphExcept-E1491,main,Run_Exception,JSph.cpp,,File could not be opened.
+SphExcept-E1492,main,Run_Exception,JSphBoundCorr.cpp,,Excluded particles with unknown reason.
+SphExcept-E1493,main,Run_Exception,JSphBoundCorr.cpp,,BoundCode was already configured for mkbound=%u.
+SphExcept-E1494,main,Run_Exception,JSphBoundCorr.cpp,,MkBound value (%u) is not a Mk boundary valid.
+SphExcept-E1495,main,Run_Exception,JSphBoundCorr.cpp,,It was not possible to calculate the limit position for MkBound=%u automatically.
+SphExcept-E1496,main,Run_Exception,JSphBoundCorr.cpp,,Cannot find the element '+place+'.
+SphExcept-E1497,main,Run_Exception,JSphBoundCorr.cpp,,An input already exists for the same mkbound=%u.
+SphExcept-E1498,main,Run_Exception,JSphBoundCorr.cpp,,MkBound value (%u) is not a Mk fixed boundary valid.
+SphExcept-E1499,main,Run_Exception,JSphCfgRun.cpp,,Cannot find the element '+place+'.
+SphExcept-E1500,main,Run_Exception,JSphCfgRun.cpp,,No more than 10 levels of recursive configuration.
+SphExcept-E1501,main,Run_Exception,JSphGpu.cpp,,No more than 10 levels of recursive configuration.
+SphExcept-E1502,main,Run_Exception,JSphGpu.cpp,,Error: FtoForcesg does not match float3*2.
+SphExcept-E1503,main,Run_Exception,JSphGpu.cpp,,Error: FtoInertiainig does not match float*9.
+SphExcept-E1504,main,Run_Exception,JSphGpu.cpp,,Could not allocate the requested memory.
+SphExcept-E1505,main,Run_Exception,JSphGpu.cpp,,Could not allocate the requested memory.
+SphExcept-E1506,main,Run_Exception,JSphGpu.cpp,,CellMode unrecognised.
+SphExcept-E1507,main,Run_Exception,JSphGpu.cpp,,"The computed Dt=%f (from AceMax=%f, VelMax=%f, ViscDtMax=%f) is NaN or infinity at nstep=%u."
+SphExcept-E1508,main,Run_Exception,JSphGpu.cpp,,Failed writing to file.
+SphExcept-E1509,main,Run_Exception,JSphGpu.cpp,,File could not be opened.
+SphExcept-E1510,main,Run_Exception,JSphGpuSingle.cpp,,CellMode unrecognised.
+SphExcept-E1511,main,Run_Exception,JSphGpuSingle.cpp,,The number of particles is too big.
+SphExcept-E1512,main,Run_Exception,JSphGpuSingle.cpp,,Symplectic data is invalid.
+SphExcept-E1513,main,Run_Exception,JSphGpuSingle.cpp,,Symplectic data is invalid.
+SphExcept-E1514,Inlet/Outlet,Run_Exception,JSphGpuSingle_InOut.cpp,,The number of particles is invalid.
+SphExcept-E1515,Inlet/Outlet,Run_Exception,JSphGpuSingle_InOut.cpp,,Simulation restart not allowed when Inlet/Outlet is used.
+SphExcept-E1516,Inlet/Outlet,Run_Exception,JSphGpuSingle_InOut.cpp,,Symmetry is not allowed with inlet/outlet conditions when extrapolate option is enabled.
+SphExcept-E1517,Inlet/Outlet,Run_Exception,JSphGpuSingle_InOut.cpp,,Allocated memory is not enough and resizing is not allowed by XML configuration (check the value inout.memoryresize.size).
+SphExcept-E1518,main,Run_Exception,JSphGpuSingle,,The number of particles is too big
+SphExcept-E1519,main,Run_Exception,JSphGpuSingle,,Symplectic data is invalid
+SphExcept-E1520,Inlet/Outlet,Run_Exception,JSphInOut,,The number of particles is invalid
+SphExcept-E1521,Inlet/Outlet,Run_Exception,JSphInOut,,Cannot find the element '
+SphExcept-E1522,Inlet/Outlet,Run_Exception,JSphInOut,,"Inlet/outlet: <userefilling> is not supported by current inlet/outlet version.,sxml->ErrGetFileRow(ele,""userefilling"
+SphExcept-E1523,Inlet/Outlet,Run_Exception,JSphInOut,,Value of memoryresize.size0 lower than zero is invalid.
+SphExcept-E1524,Inlet/Outlet,Run_Exception,JSphInOut,,Value of memoryresize.size lower than zero is invalid.
+SphExcept-E1525,Inlet/Outlet,Run_Exception,JSphInOut,,Mkfluid=%u is used in several <inoutzone> definitions.
+SphExcept-E1526,Inlet/Outlet,Run_Exception,JSphInOut,,Cannot find the element '
+SphExcept-E1527,Inlet/Outlet,Run_Exception,JSphInOut,,Maximum number of inlet/outlet zones is invalid.
+SphExcept-E1528,Inlet/Outlet,Run_Exception,JSphInOut,,Maximum number of inlet/outlet zones has been reached.
+SphExcept-E1529,Inlet/Outlet,Run_Exception,JSphInOut,,Could not allocate the requested memory.
+SphExcept-E1530,Inlet/Outlet,Run_Exception,JSphInOut,,"FreeCentre position (%g,%g,%g) is within the inout zone %d. FreeCentre must be changed in XML file."
+SphExcept-E1531,Inlet/Outlet,Run_Exception,JSphInOut,,RefillAdvanced mask does not match.
+SphExcept-E1532,Inlet/Outlet,Run_Exception,JSphInOut,,Number of initial inlet/outlet particles is invalid.
+SphExcept-E1533,Inlet/Outlet,Run_Exception,JSphInOut,,There are inout fluid or boundary particles too close to inout particles. Check VTK file CfgInOut_ErrorParticles.vtk with excluded particles.
+SphExcept-E1534,Inlet/Outlet,Run_Exception,JSphInOut,,GPU memory allocated is not enough.
+SphExcept-E1535,Inlet/Outlet,Run_Exception,JSphInOut,,%d> [%s] Value izone %d is invalid of cp=%d idp[%d]=%d.
+SphExcept-E1536,Inlet/Outlet,Run_Exception,JSphInOut,,%d>> Value izone %d is invalid of idp[%d]=%d.
+SphExcept-E1537,Inlet/Outlet,Run_Exception,JSphInOutGridData,,Allocated memory is not enough for new particles inlet.
+SphExcept-E1538,Inlet/Outlet,Run_Exception,JSphInOutGridData,,Unknown file extension.
+SphExcept-E1539,Inlet/Outlet,Run_Exception,JSphInOutGridData,,Number of rows is invalid.
+SphExcept-E1540,Inlet/Outlet,Run_Exception,JSphInOutGridData,,fmtversion is missing.
+SphExcept-E1541,Inlet/Outlet,Run_Exception,JSphInOutGridData,,fmtversion value (%u) is invalid. The expected format version is %u.
+SphExcept-E1542,Inlet/Outlet,Run_Exception,JSphInOutGridData,,Number of data rows is invalid.
+SphExcept-E1543,Inlet/Outlet,Run_Exception,JSphInOutGridData,,First line is invalid.
+SphExcept-E1544,Inlet/Outlet,Run_Exception,JSphInOutGridData,,Head value 'vars' is invalid.
+SphExcept-E1545,Inlet/Outlet,Run_Exception,JSphInOutGridData,,NOT IMPLEMENTED…
+SphExcept-E1546,Inlet/Outlet,Run_Exception,JSphInOutGridData,,Grid configuration is invalid.
+SphExcept-E1547,Inlet/Outlet,Run_Exception,JSphInOutGridData,,New time of data is not higher than previous one.
+SphExcept-E1548,Inlet/Outlet,Run_Exception,JSphInOutGridData,,The number of points does not match.
+SphExcept-E1549,Inlet/Outlet,Run_Exception,JSphInOutPoints,,Number of DataTime is invalid.
+SphExcept-E1550,Inlet/Outlet,Run_Exception,JSphInOutPoints,,Could not allocate the requested memory.
+SphExcept-E1551,Inlet/Outlet,Run_Exception,JSphInOutPoints,,There are previous definitions of inout points.
+SphExcept-E1552,Inlet/Outlet,Run_Exception,JSphInOutPoints,,No particles data to define inout points.
+SphExcept-E1553,Inlet/Outlet,Run_Exception,JSphInOutPoints,,Error in number of particles.
+SphExcept-E1554,Inlet/Outlet,Run_Exception,JSphInOutPoints,,Only one description zone is allowed for inlet/outlet points.
+SphExcept-E1555,Inlet/Outlet,Run_Exception,JSphInOutPoints,,Error calculating number of points.
+SphExcept-E1556,Inlet/Outlet,Run_Exception,JSphInOutPoints,,Configuration is invalid to calculate domain.
+SphExcept-E1557,Inlet/Outlet,Run_Exception,JSphInOutPoints,,There are not defined points.
+SphExcept-E1558,Inlet/Outlet,Run_Exception,JSphInOutPoints,,The direction is invalid.
+SphExcept-E1559,Inlet/Outlet,Run_Exception,JSphInOutPoints,,Direction.y is not zero.
+SphExcept-E1560,Inlet/Outlet,Run_Exception,JSphInOutPoints,,Direction vector is zero.
+SphExcept-E1561,Inlet/Outlet,Run_Exception,JSphInOutPoints,,There are not defined points.
+SphExcept-E1562,Inlet/Outlet,Run_Exception,JSphInOutVel,,"Point for inlet conditions with position (%g,%g,%g) is outside the domain. Checks the VTK file '%s'."
+SphExcept-E1563,Inlet/Outlet,Run_Exception,JSphInOutVel,,There are not inlet/outlet velocity values.
+SphExcept-E1564,Inlet/Outlet,Run_Exception,JSphInOutVel,,Inlet/outlet velocity profile is unknown.
+SphExcept-E1565,Inlet/Outlet,Run_Exception,JSphInOutVel,,Velocity profile is unknown.
+SphExcept-E1566,Inlet/Outlet,Run_Exception,JSphInOutVel,,Velocity mode is unknown.
+SphExcept-E1567,Inlet/Outlet,Run_Exception,JSphInOutVelAwas,,GPU code was not implemented for nx>1.
+SphExcept-E1568,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: Direction is invalid for AWAS. Only X-direction is valid.
+SphExcept-E1569,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: RefillingMode==SimpleFull/SimpleZsurf is invalid for reverse flows.
+SphExcept-E1570,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: InputTreatment==Free is invalid for reverse flows (inlet & outlet).
+SphExcept-E1571,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: InputTreatment==Remove is invalid for reverse flows (inlet & outlet).
+SphExcept-E1572,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: InputTreatment==Free is invalid for outlet flows.
+SphExcept-E1573,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: InputTreatment==Remove is invalid for outlet flows.
+SphExcept-E1574,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: Z-Surface is undefined for hydrostatic density calculation.
+SphExcept-E1575,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: RefillingMode==SimpleZsurf is invalid with ZSurface==Variable.
+SphExcept-E1576,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: RefillingMode==SimpleFull is invalid with ZSurface==Variable and RemoveZsurf==true.
+SphExcept-E1577,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: RefillingMode==SimpleZsurf is invalid with ZSurface==Calculated.
+SphExcept-E1578,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet %d: RefillingMode==SimpleFull is invalid with ZSurface==Calculated and RemoveZsurf==true.
+SphExcept-E1579,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet zone %d: <userefilling> is not supported by current inlet/outlet version.
+SphExcept-E1580,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet zone %d: <convertfluid> is not supported by current inlet/outlet version.
+SphExcept-E1581,Inlet/Outlet,Run_Exception,JSphInOutZone,,Reference point in inout plane is invalid.
+SphExcept-E1582,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet zone %d: <zsurf> is not supported by current inlet/outlet version.
+SphExcept-E1583,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet zone %d: <zbottom> is not supported by current inlet/outlet version.
+SphExcept-E1584,Inlet/Outlet,Run_Exception,JSphInOutZone,,Inlet/outlet zone %d: The use of flow velocity is only supported by fixed zsurf configuration.
+SphExcept-E1585,Inlet/Outlet,Run_Exception,JSphInOutZone,,VelProfile value is invalid to code using mask.
+SphExcept-E1586,Inlet/Outlet,Run_Exception,JSphInOutZone,,VelMode value is invalid to code using mask.
+SphExcept-E1587,Inlet/Outlet,Run_Exception,JSphInOutZone,,RhopMode value is invalid to code using mask.
+SphExcept-E1588,Inlet/Outlet,Run_Exception,JSphInOutZone,,Coded configuration is not right.
+SphExcept-E1589,Inlet/Outlet,Run_Exception,JSphInOutZsurf,,Number of initial particles does not match.
+SphExcept-E1590,Inlet/Outlet,Run_Exception,JSphInOutZsurf,,Inlet/outlet %d: Initial Zsurf is invalid.
+SphExcept-E1591,Inlet/Outlet,Run_Exception,JSphInOutZsurf,,Inlet/outlet %d: Direction is invalid for Zsurf calulation. Only horizontal direction is valid.
+SphExcept-E1592,main,Run_Exception,JSphMk,,Valid non-uniform zsurf is missing.
+SphExcept-E1593,main,Run_Exception,JSphMk,,The number of fixed particle blocks exceeds the maximum.
+SphExcept-E1594,main,Run_Exception,JSphMk,,The number of moving particle blocks exceeds the maximum
+SphExcept-E1595,main,Run_Exception,JSphMk,,The number of floating particle blocks exceeds the maximum.
+SphExcept-E1596,main,Run_Exception,JSphMk,,The number of fluid particle blocks exceeds the maximum.
+SphExcept-E1597,main,Run_Exception,JSphMk,,There are not free fluid codes for new particles created during the simulation.
+SphExcept-E1598,main,Run_Exception,JSphMk,,Mk block of particle (idp=%u) was not found.
+SphExcept-E1599,main,Run_Exception,JSphMk,,Type of particle is invalid.
+SphExcept-E1600,main,Run_Exception,JSphMk,,The value is invalid.
+SphExcept-E1601,main,Run_Exception,JSphShifting,,Type of particle block is invalid.
+SphExcept-E1602,main,Run_Exception,JSphShifting,,Cannot find the element '
+SphExcept-E1603,main,Run_Exception,JXml,,The use of AWAS must begin after initial ramp for waves generation.
+SphExcept-E1604,main,Run_Exception,JXml,,Error reading xml - can not find the element '
+SphExcept-E1605,main,Run_Exception,JXml,,Error reading xml - Some element is missing '
+SphExcept-E1606,main,Run_Exception,JXml,,Error reading xml -Attribute '"+atrib+' is missing.
+SphExcept-E1607,main,Run_Exception,JXml,,Error reading xml -Attribute '"+atrib+' is unknown.
+SphExcept-E1608,main,Run_Exception,JXml,,Element '"+name+' appears several times.
+SphExcept-E1609,main,Run_Exception,JXml,,Several definitions (+severaldefs+ for '
+SphExcept-E1610,main,Run_Exception,JXml,,Cannot save the xml document.
+SphExcept-E1611,main,Run_Exception,JXml,,Cannot load the xml file:(row:%d col:%d)
+SphExcept-E1612,main,Run_Exception,JXml,,File size is larger than 100 Mb.
+SphExcept-E1613,main,Run_Exception,JXml,,Cannot load the xml file.
+SphExcept-E1614,main,Run_Exception,JXml,,Cannot modify the xml file.
+SphExcept-E2001,main,Check_CudaErroor,FunctionsCuda.cpp,,Failed selecting device.
+SphExcept-E2002,main,Check_CudaErroor,FunctionsCuda.cpp,,Failed getting selected device info.
+SphExcept-E2003,main,Check_CudaErroor,FunctionsCuda.cpp,,Failed getting devices info.
+SphExcept-E2004,main,Check_CudaErroor,FunctionsCuda.cpp,,At the beginning.
+SphExcept-E2005,main,Check_CudaErroor,JArraysGpu.cpp,,After cudaMemcpy().
+SphExcept-E2006,main,Check_CudaErroor,JCellDivGpuSingle.cpp,,Failed GPU memory allocation.
+SphExcept-E2007,main,Check_CudaErroor,JReduSum_ker.cu,,Error in NL construction.
+SphExcept-E2008,main,Check_CudaErroor,JReduSum_ker.cu,,DgReduSumDouble
+SphExcept-E2009,main,Check_CudaErroor,JReduSum_ker.cu,,DgReduSumFloat
+SphExcept-E2010,main,Check_CudaErroor,JReduSum_ker.cu,,DgReduSumUint
+SphExcept-E2011,main,Check_CudaErroor,JSphGpu.cpp,high,DgReduSumFloat3
+SphExcept-E2012,main,Check_CudaErroor,JSphGpu.cpp,high,Failed copying constants to GPU.
+SphExcept-E2013,main,Check_CudaErroor,JSphGpu.cpp,high,Failed copying data to GPU.
+SphExcept-E2014,main,Check_CudaErroor,JSphGpu.cpp,high,Failed copying data from GPU.
+SphExcept-E2015,main,Check_CudaErroor,JSphGpu.cpp,high,Failed initializing variables for execution.
+SphExcept-E2016,main,Check_CudaErroor,JSphGpu.cpp,,Failed calculating VelMax.
+SphExcept-E2017,main,Check_CudaErroor,JSphGpuSingle.cpp,high,Failed GPU memory allocation.
+SphExcept-E2018,main,Check_CudaErroor,JSphGpuSingle.cpp,high,Failed in creation of periodic particles.
+SphExcept-E2019,main,Check_CudaErroor,JSphGpuSingle.cpp,high,Failed while executing kernels of interaction.
+SphExcept-E2020,main,Check_CudaErroor,JSphGpuSingle.cpp,,Failed in reduction of viscdt.

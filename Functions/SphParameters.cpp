@@ -89,9 +89,11 @@ bool SphParameters::LoadInertGas() {
 // 从xml获取airProperty. fuelProperty. interGasProperty的变量值
 bool SphParameters::LoadFluid() {
     try {
-        LoadAir();
-        LoadFuel();
-        LoadInertGas();
+        bool res1 = LoadAir();
+        bool res2 = LoadFuel();
+        bool res3 = LoadInertGas();
+        if(!(res1 && res2 && res3))
+            return false;
     } catch (...) {
         return false;
     }
@@ -265,9 +267,12 @@ bool SphParameters::LoadXml(const QString &path){
     try {
         sxml.LoadXmlFile(path);
 
-        LoadFluid();
-        LoadInoutList();
-        LoadSimulationParam();
+        bool res1 = LoadFluid();
+        bool res2 = LoadInoutList();
+        bool res3 = LoadSimulationParam();
+        if(!(res1 && res2 && res3))
+            return false;
+
     } catch (...) {
         qDebug() << "Load Xml failed!";
         return false;

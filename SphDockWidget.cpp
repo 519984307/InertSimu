@@ -253,7 +253,7 @@ void SphDockWidget::btnEvent(){
 
     // SPH中止
     QObject::connect(this->Internals->Ui.btn_sphtask_end, &QPushButton::clicked, this,[=](){
-        (*sphThread).sphStop();
+        (*sphThread).sphAbort();
         this->Internals->Ui.btn_sphtask_end->setEnabled(false);
         this->Internals->Ui.btn_sphtask_start->setEnabled(true);
     });

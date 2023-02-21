@@ -201,8 +201,19 @@ void SphThread::sphContinue()
     qDebug()<<"sph Continue";
 }
 
-void SphThread::sphStop(){
-    //this->process->close(); //关闭进程
+void SphThread::sphAbort(){
+    QProcess *abortProcess = new QProcess();
+    QStringList arguments;
+    arguments << "-t" << "-f" << "/pid" << QString::number(process->processId());
+
+    abortProcess->setArguments(arguments);
+    abortProcess->setProgram("taskkill");
+    bool result = abortProcess->startDetached();
+
+    if(result)
+        qDebug()<< "sph abort success";
+    else
+        qDebug()<< "sph abort failed";
 }
 
 void SphThread::sphPostProcess()
@@ -280,5 +291,5 @@ void SphThread::run()
     this->process->waitForFinished(-1);
     sleep(2);//等待标准读结束
     this->process->close(); //关闭进程
-    threadSig_TaskOver();
+    emit threadSig_TaskOver();
 }

@@ -74,7 +74,7 @@ public slots:
     void sphFinished(int exitCode,QProcess::ExitStatus exitStatus);
     void sphStream();
     void sphContinue();
-    void sphStop();
+    void sphAbort();
     void sphPostProcess();
 
 

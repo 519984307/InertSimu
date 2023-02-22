@@ -59,14 +59,18 @@ SphException* ExceptionTool::getSphException(QString exceptionCode){
     QString excep_type = qlineArray[2];
     QString excep_className = qlineArray[3];
     QString excep_degree = qlineArray[4];
-    QString excep_message = qlineArray[5];
 
+    // details may splite by ","
+    QString excep_details = qlineArray[5];
     for(int i=6; i<qlineArray.size(); i++){
-        excep_message.append(","+qlineArray[i]);
+        excep_details.append(","+qlineArray[i]);
     }
 
-    // variable to entity
-    SphException *sphException = new SphException(exceptionCode, excep_stage, excep_type, excep_className, excep_degree, excep_message);
+    SphException *sphException = new SphException(excep_code, excep_details);
+    sphException->setClassName(excep_className);
+    sphException->setDegree(excep_degree);
+    sphException->setClassName(excep_className);
+    sphException->setType(excep_type);
 
     return sphException;
 }

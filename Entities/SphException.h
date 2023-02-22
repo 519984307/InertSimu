@@ -12,18 +12,18 @@ private:
     QString type;
     QString degree;
     QString code;       //异常代码
-    QString message;    //异常内容
+    QString details;    //异常内容
     QString className;  //异常类
 
 public:
     SphException();
-    SphException(QString code, QString message){
+    SphException(QString code, QString details){
         this->code = code;
-        this->message = message;
+        this->details = details;
     };
-    SphException(QString code, QString stage, QString type, QString className, QString degree, QString message){
+    SphException(QString code, QString stage, QString type, QString className, QString degree, QString details){
         this->code = code;
-        this->message = message;
+        this->details = details;
         this->className = className;
         this->stage = stage;
         this->type = type;
@@ -58,11 +58,11 @@ public:
         return this->code;
     };
 
-    void setMessage(QString message){
-        this->message = message;
+    void setDetails(QString details){
+        this->details = details;
     };
-    QString getMessage(){
-        return this->message;
+    QString getDetails(){
+        return this->details;
     };
 
     void setClassName(QString className){
@@ -75,7 +75,7 @@ public:
     QString outputMessage(){
         QString excepInfo;
         excepInfo.append("Exception Code:"+this->code).append("\n");
-        excepInfo.append("Message:"+this->message).append("\n");
+        excepInfo.append("Details:"+this->details).append("\n");
         if(!this->type.isNull()) excepInfo.append("Type:"+this->type).append("\t\t");
         if(!this->type.isNull()) excepInfo.append("Stage:"+this->stage).append("\n");
         if(!this->type.isNull()) excepInfo.append("ClassName:"+this->className).append("\t\t");

@@ -14,8 +14,8 @@ private:
     Double3 pointMin; //Minimum boundary point
     Double3 pointMax; //Maximum boundary point
 
-    Int3 modelAngle;
-    QString modelPath;
+//    Int3 modelAngle;
+//    QString modelPath;
 
 public:
     SimulationParam(){};
@@ -27,8 +27,8 @@ public:
         this->gravity = gravity;
         this->pointMin = pointMin;
         this->pointMax = pointMax;
-        this->modelAngle = modelAngle;
-        this->modelPath = modelPath;
+//        this->modelAngle = modelAngle;
+//        this->modelPath = modelPath;
     };
     void setDp(double dp){
         this->dp = dp;
@@ -72,19 +72,19 @@ public:
         return this->pointMax;
     };
 
-    void setModelAngle(Int3 modelAngle){
-        this->modelAngle = modelAngle;
-    };
-    Int3 getModelAngle() {
-        return this->modelAngle;
-    };
+//    void setModelAngle(Int3 modelAngle){
+//        this->modelAngle = modelAngle;
+//    };
+//    Int3 getModelAngle() {
+//        return this->modelAngle;
+//    };
 
-    void setModelPath(QString modelPath){
-        this->modelPath = modelPath;
-    };
-    QString getModelPath() {
-        return this->modelPath;
-    };
+//    void setModelPath(QString modelPath){
+//        this->modelPath = modelPath;
+//    };
+//    QString getModelPath() {
+//        return this->modelPath;
+//    };
 };
 
 #endif //UNTITLED1_SIMULATIONPARAMETERS_H

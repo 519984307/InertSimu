@@ -66,11 +66,6 @@ void SphDockWidget::showParam(){
         ui.simulation_timemax->setText(QString::number(sim->getTimeMax()));
         ui.simulation_timeout->setText(QString::number(sim->getTimeOut()));
 
-        ui.simulation_stl_path->setText(sim->getModelPath());
-        //ui.simulation_stl_angx->setText(QString::number(sim->getModelAngle().x));
-        ui.simulation_stl_angy->setText(QString::number(sim->getModelAngle().y));
-        //ui.simulation_stl_angz->setText(QString::number(sim->getModelAngle().z));
-
         ui.simulation_g_x->setText(QString::number(sim->getGravity().x));
         ui.simulation_g_y->setText(QString::number(sim->getGravity().y));
         ui.simulation_g_z->setText(QString::number(sim->getGravity().z));
@@ -84,6 +79,29 @@ void SphDockWidget::showParam(){
         ui.simulation_pointmax_z->setText(QString::number(sim->getPointMax().z));
     }
 
+    {
+        // only one model
+        Model *model = this->sphParam->mainList->getModelList().at(0);
+
+        ui.simulation_stl_path->setText(model->getFilePath());
+        //ui.simulation_stl_angx->setText(QString::number(sim->getModelAngle().x));
+        ui.simulation_stl_angy->setText(QString::number(model->getRotate().y));
+        //ui.simulation_stl_angz->setText(QString::number(sim->getModelAngle().z));
+    }
+
+    {
+        FillBox *fuelbox = this->sphParam->mainList->getFillBoxList().at(0);
+
+        double size_z = fuelbox->getBoxsize().z;
+        if(size_z==0.8)
+            ui.multiphase_fuel_comboBox->setCurrentText("50%");
+        else if(size_z==1.0)
+            ui.multiphase_fuel_comboBox->setCurrentText("55%");
+        else if(size_z==1.2)
+            ui.multiphase_fuel_comboBox->setCurrentText("67%");
+        else if(size_z==1.35)
+            ui.multiphase_fuel_comboBox->setCurrentText("75%");
+    }
 
     {
         Air *air = this->sphParam->airProperty;
@@ -164,13 +182,6 @@ void SphDockWidget::saveParam(){
         sim->setTimeMax(ui.simulation_timemax->text().toDouble());
         sim->setTimeOut(ui.simulation_timeout->text().toDouble());
 
-        sim->setModelPath(ui.simulation_stl_path->text());
-        Int3 modelAngle;
-        //modelAngle.x = ui.simulation_stl_angx->text().toInt();
-        modelAngle.y = ui.simulation_stl_angy->text().toInt();
-        //modelAngle.z = ui.simulation_stl_angz->text().toInt();
-        sim->setModelAngle(modelAngle);
-
         Double3 gravity;
         gravity.x = ui.simulation_g_x->text().toDouble();
         gravity.y = ui.simulation_g_y->text().toDouble();
@@ -188,6 +199,52 @@ void SphDockWidget::saveParam(){
         pointmax.y = ui.simulation_pointmax_y->text().toDouble();
         pointmax.z = ui.simulation_pointmax_z->text().toDouble();
         sim->setPointMax(pointmax);
+    }
+
+    {
+        Model *model = this->sphParam->mainList->getModelList().at(0);
+
+        Int3 rotate;
+        //rotate.x = ui.simulation_stl_angx->text().toInt();
+        rotate.y = ui.simulation_stl_angy->text().toInt();
+        //rotate.z = ui.simulation_stl_angz->text().toInt();
+        model->setRotate(rotate);
+    }
+
+    {
+        FillBox *fuelbox = this->sphParam->mainList->getFillBoxList().at(0);
+        FillBox *airbox = this->sphParam->mainList->getFillBoxList().at(1);
+
+        Double3 fuelsize = fuelbox->getBoxsize();
+        Double3 airsize = airbox->getBoxsize();
+
+        // Temporary set.
+        // z = modelHeight(1.6) while model lay flatly.
+        // z > modelHeight(1.6) while model lay at an angle.
+        int index = ui.multiphase_fuel_comboBox->currentIndex();
+        switch (index) {
+        case 0:
+                fuelsize.z = 0.8;
+                airsize.z = 1.0;
+            break;
+        case 1:
+                fuelsize.z = 1.0;
+                airsize.z = 0.8;
+            break;
+        case 2:
+                fuelsize.z = 1.2;
+                airsize.z = 0.6;
+            break;
+        case 3:
+                fuelsize.z = 1.35;
+                airsize.z = 0.5;
+            break;
+        default:
+            break;
+        }
+
+        fuelbox->setBoxsize(fuelsize);
+        airbox->setBoxsize(airsize);
     }
 
     {
@@ -230,6 +287,7 @@ void SphDockWidget::btnEvent(){
     // 导出XML配置
     QObject::connect(this->Internals->Ui.btn_save_config, &QPushButton::clicked, this,[&](){
         this->saveParam();
+        this->sphParam->VisualALLProperties();
     });
 
     // 一键VTK

@@ -1661,7 +1661,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox">
+               <widget class="QComboBox" name="multiphase_fuel_comboBox">
                 <property name="maximumSize">
                  <size>
                   <width>60</width>

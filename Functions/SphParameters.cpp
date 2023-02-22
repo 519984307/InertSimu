@@ -231,24 +231,24 @@ bool SphParameters::LoadSimulationParam() {
         node = node.nextSiblingElement();
     }
 
-    node = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist.drawfilestl");
-    if(!node.isNull()) {
-        simulationParam->setModelPath(node.attribute("file"));
-        node = node.firstChildElement();
-        while(!node.isNull()){
-            if(node.tagName() == "drawscale") {
-                //
-            }
-            if(node.tagName() == "drawrotate") {
-                Int3 modelAngle;
-                modelAngle.x = node.attribute("angx").toInt();
-                modelAngle.y = node.attribute("angy").toInt();
-                modelAngle.z = node.attribute("angz").toInt();
-                simulationParam->setModelAngle(modelAngle);
-            }
-            node = node.nextSiblingElement();
-        }
-    }
+//    node = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist.drawfilestl");
+//    if(!node.isNull()) {
+//        simulationParam->setModelPath(node.attribute("file"));
+//        node = node.firstChildElement();
+//        while(!node.isNull()){
+//            if(node.tagName() == "drawscale") {
+//                //
+//            }
+//            if(node.tagName() == "drawrotate") {
+//                Int3 modelAngle;
+//                modelAngle.x = node.attribute("angx").toInt();
+//                modelAngle.y = node.attribute("angy").toInt();
+//                modelAngle.z = node.attribute("angz").toInt();
+//                simulationParam->setModelAngle(modelAngle);
+//            }
+//            node = node.nextSiblingElement();
+//        }
+//    }
 
     node = sxml.GetNodeSimple("case.execution.parameters");
     if(!node.isNull())  node = node.firstChildElement();
@@ -261,27 +261,64 @@ bool SphParameters::LoadSimulationParam() {
     return true;
 }
 
-bool SphParameters::LoadFillboxGeoList(){
-    geoList = new FillboxGeoList();
+// "case.casedef.geometry.commands.mainlist" 几何配置
+bool SphParameters::LoadMainList(){
+    mainList = new MainList();
 
     QDomElement node = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist");
     if(!node.isNull())  node = node.firstChildElement();
     else return false;
     while(!node.isNull()){
+        if(node.tagName() == "setmkbound") {
+            // this node only for sph work
+        }
+        if(node.tagName() == "drawfilestl") {
+            Model *model = new Model();
+
+            model->setFilePath(node.attribute("file"));
+            model->setMk(node.attribute("mk").toInt());
+
+            QDomElement subnode = node.firstChildElement();
+            while(!subnode.isNull()){
+                if(subnode.tagName() == "drawscale"){
+                    Double3 scale;
+                    scale.x = subnode.attribute("x").toDouble();
+                    scale.y = subnode.attribute("y").toDouble();
+                    scale.z = subnode.attribute("z").toDouble();
+                    model->setScale(scale);
+                }
+                if(subnode.tagName() == "drawrotate"){
+                    Int3 rotate;
+                    rotate.x = subnode.attribute("angx").toInt();
+                    rotate.y = subnode.attribute("angy").toInt();
+                    rotate.z = subnode.attribute("angz").toInt();
+                    model->setRotate(rotate);
+                }
+                if(subnode.tagName() == "drawmove"){
+                    Double3 move;
+                    move.x = subnode.attribute("x").toDouble();
+                    move.y = subnode.attribute("y").toDouble();
+                    move.z = subnode.attribute("z").toDouble();
+                    model->setMove(move);
+                }
+                subnode = subnode.nextSiblingElement();
+            }
+            mainList->appendModel(model);
+        }
         if(node.tagName() == "setmkfluid") {
             // this node only for sph work
         }
         if(node.tagName() == "fillbox") {
-            FillboxGeo *geo = new FillboxGeo();
+            FillBox *box = new FillBox();
 
             Double3 seed;
             seed.x = node.attribute("x").toDouble();
             seed.y = node.attribute("y").toDouble();
             seed.z = node.attribute("z").toDouble();
-            geo->setSeed(seed);
+            box->setSeed(seed);
 
-            geo->setMk(node.attribute("mk").toInt());
-            geo->setName(node.attribute("name"));
+            box->setMk(node.attribute("mk").toInt());
+            box->setName(node.attribute("name"));
 
             QDomElement subnode = node.firstChildElement();
             while(!subnode.isNull()){
@@ -290,18 +327,18 @@ bool SphParameters::LoadFillboxGeoList(){
                     position.x = subnode.attribute("x").toDouble();
                     position.y = subnode.attribute("y").toDouble();
                     position.z = subnode.attribute("z").toDouble();
-                    geo->setPosition(position);
+                    box->setPosition(position);
                 }
                 if(subnode.tagName() == "size"){
                     Double3 size;
                     size.x = subnode.attribute("x").toDouble();
                     size.y = subnode.attribute("y").toDouble();
                     size.z = subnode.attribute("z").toDouble();
-                    geo->setBoxsize(size);
+                    box->setBoxsize(size);
                 }
                 subnode = subnode.nextSiblingElement();
             }
-            geoList->appendGeo(geo);
+            mainList->appendFillBox(box);
         }
         node = node.nextSiblingElement();
     }
@@ -318,7 +355,8 @@ bool SphParameters::LoadXml(const QString &path){
         bool res1 = LoadFluid();
         bool res2 = LoadInoutList();
         bool res3 = LoadSimulationParam();
-        if(!(res1 && res2 && res3))
+        bool res4 = LoadMainList();
+        if(!(res1 && res2 && res3 && res4))
             return false;
 
     } catch (...) {
@@ -524,24 +562,24 @@ bool SphParameters::SaveSimulationParam(){
         node = node.nextSiblingElement();
     }
 
-    node = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist.drawfilestl");
-    if(!node.isNull()) {
-        node.setAttribute("file", simulationParam->getModelPath());
-        node = node.firstChildElement();
-        while(!node.isNull()){
-            if(node.tagName() == "drawscale") {
-                node.setAttribute("x", 0.001);
-                node.setAttribute("y", 0.001);
-                node.setAttribute("z", 0.001);
-            }
-            if(node.tagName() == "drawrotate") {
-                node.setAttribute("angx", simulationParam->getModelAngle().x);
-                node.setAttribute("angy", simulationParam->getModelAngle().y);
-                node.setAttribute("angz", simulationParam->getModelAngle().z);
-            }
-            node = node.nextSiblingElement();
-        }
-    }
+//    node = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist.drawfilestl");
+//    if(!node.isNull()) {
+//        node.setAttribute("file", simulationParam->getModelPath());
+//        node = node.firstChildElement();
+//        while(!node.isNull()){
+//            if(node.tagName() == "drawscale") {
+//                node.setAttribute("x", 0.001);
+//                node.setAttribute("y", 0.001);
+//                node.setAttribute("z", 0.001);
+//            }
+//            if(node.tagName() == "drawrotate") {
+//                node.setAttribute("angx", simulationParam->getModelAngle().x);
+//                node.setAttribute("angy", simulationParam->getModelAngle().y);
+//                node.setAttribute("angz", simulationParam->getModelAngle().z);
+//            }
+//            node = node.nextSiblingElement();
+//        }
+//    }
 
     node = sxml.GetNodeSimple("case.execution.parameters");
     if(!node.isNull())  node = node.firstChildElement();
@@ -554,7 +592,8 @@ bool SphParameters::SaveSimulationParam(){
     return true;
 }
 
-bool SphParameters::SaveFillboxGeoList(){
+// 将几何配置保存在XML中
+bool SphParameters::SaveMainList(){
     QDomElement node_mainlist = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist");
     QDomElement subnode_mainlist;
 
@@ -574,8 +613,35 @@ bool SphParameters::SaveFillboxGeoList(){
     node_mainlist.appendChild(nnode);
 
     // stl move to Geo...
+    foreach (Model *model, mainList->getModelList()) {
+        nnode = sxml.doc.createElement("setmkbound");
+        nnode.setAttribute("mk", model->getMk());
+        node_mainlist.appendChild(nnode);
 
-    foreach (FillboxGeo *box, geoList->getList()) {
+        nnode = sxml.doc.createElement("drawfilestl");
+        nnode.setAttribute("file", model->getFilePath());
+
+        QDomElement sub_nnode = sxml.doc.createElement("drawscale");
+        sub_nnode.setAttribute("x", model->getScale().x);
+        sub_nnode.setAttribute("y", model->getScale().y);
+        sub_nnode.setAttribute("z", model->getScale().z);
+        nnode.appendChild(sub_nnode);
+
+        sub_nnode = sxml.doc.createElement("drawrotate");
+        sub_nnode.setAttribute("angx", model->getRotate().x);
+        sub_nnode.setAttribute("angy", model->getRotate().y);
+        sub_nnode.setAttribute("angz", model->getRotate().z);
+        nnode.appendChild(sub_nnode);
+
+        sub_nnode = sxml.doc.createElement("drawmove");
+        sub_nnode.setAttribute("x", model->getScale().x);
+        sub_nnode.setAttribute("y", model->getScale().y);
+        sub_nnode.setAttribute("z", model->getScale().z);
+        nnode.appendChild(sub_nnode);
+
+        node_mainlist.appendChild(nnode);
+    }
+    foreach (FillBox *box, mainList->getFillBoxList()) {
         nnode = sxml.doc.createElement("setmkfluid");
         nnode.setAttribute("mk", box->getMk());
         nnode.setAttribute("name", box->getName());
@@ -593,20 +659,33 @@ bool SphParameters::SaveFillboxGeoList(){
         nnode.appendChild(sub_nnode);
 
         sub_nnode = sxml.doc.createElement("point");
-        nnode.setAttribute("x", box->getPosition().x);
-        nnode.setAttribute("y", box->getPosition().y);
-        nnode.setAttribute("z", box->getPosition().z);
+        sub_nnode.setAttribute("x", box->getPosition().x);
+        sub_nnode.setAttribute("y", box->getPosition().y);
+        sub_nnode.setAttribute("z", box->getPosition().z);
         nnode.appendChild(sub_nnode);
 
         sub_nnode = sxml.doc.createElement("size");
-        nnode.setAttribute("x", box->getPosition().x);
-        nnode.setAttribute("y", box->getPosition().y);
-        nnode.setAttribute("z", box->getPosition().z);
+        sub_nnode.setAttribute("x", box->getBoxsize().x);
+        sub_nnode.setAttribute("y", box->getBoxsize().y);
+        sub_nnode.setAttribute("z", box->getBoxsize().z);
         nnode.appendChild(sub_nnode);
 
         node_mainlist.appendChild(nnode);
     }
 
+    nnode = sxml.doc.createElement("setmkbound");
+    nnode.setAttribute("mk", 1);
+    node_mainlist.appendChild(nnode);
+
+    nnode = sxml.doc.createElement("redrawnear");
+    nnode.setAttribute("targettp", "void");
+    nnode.setAttribute("bordertp", "bound");
+    nnode.setAttribute("bordermk", "0");
+    node_mainlist.appendChild(nnode);
+
+    nnode = sxml.doc.createElement("shapeout");
+    nnode.setAttribute("file", "");
+    node_mainlist.appendChild(nnode);
 
     return true;
 }
@@ -618,6 +697,7 @@ bool SphParameters::SaveXml(const QString &path){
         SaveFluid();
         SaveInoutList();
         SaveSimulationParam();
+        SaveMainList();
 
         sxml.SaveXmlFile(path);
     } catch (...) {
@@ -701,11 +781,41 @@ void SphParameters::VisualSimulationProperties(){
     << "\tz:"<< simulationParam->getPointMin().z;
     qDebug() << "PointMax" << "\tx:"<< simulationParam->getPointMax().x << "\ty:"<< simulationParam->getPointMax().y
     << "\tz:"<< simulationParam->getPointMax().z;
-    qDebug() << "FileStl:" << simulationParam->getModelPath();
-    qDebug() << "StlRotate" << "\tangx:"<< simulationParam->getModelAngle().x << "\tangy:"<< simulationParam->getModelAngle().y
-    << "\tangz:"<< simulationParam->getModelAngle().z;
+//    qDebug() << "FileStl:" << simulationParam->getModelPath();
+//    qDebug() << "StlRotate" << "\tangx:"<< simulationParam->getModelAngle().x << "\tangy:"<< simulationParam->getModelAngle().y
+//    << "\tangz:"<< simulationParam->getModelAngle().z;
     qDebug() << "TimeMax:" << simulationParam->getTimeMax();
     qDebug() << "TimeOut:" << simulationParam->getTimeOut();
+}
+
+void SphParameters::VisualMainList(){
+    qDebug() << "\nModel Info";
+    qDebug() << "---------------------------------------------------";
+
+    Model *model = mainList->getModelList().at(0);
+    qDebug() << "mk:" << model->getMk();
+    qDebug() << "filePath:" << model->getFilePath();
+    qDebug() << "model scale" << "\tx:"<< model->getScale().x << "\ty:"<< model->getScale().y
+    << "\tz:"<< model->getScale().z;
+    qDebug() << "model rotate" << "\tx:"<< model->getRotate().x << "\ty:"<< model->getRotate().y
+    << "\tz:"<< model->getRotate().z;
+    qDebug() << "model move" << "\tx:"<< model->getMove().x << "\ty:"<< model->getMove().y
+    << "\tz:"<< model->getMove().z;
+
+    qDebug() << "\nFillBox Info";
+    qDebug() << "---------------------------------------------------";
+
+    for(int i=0; i<mainList->getFillBoxList().size(); i++){
+        FillBox *fuelbox = mainList->getFillBoxList().at(i);
+        qDebug() << "mk:" << fuelbox->getMk();
+        qDebug() << "name:" << fuelbox->getName();
+        qDebug() << "fill seed" << "\tx:"<< fuelbox->getSeed().x << "\ty:"<< fuelbox->getSeed().y
+        << "\tz:"<< fuelbox->getSeed().z;
+        qDebug() << "position" << "\tx:"<< fuelbox->getPosition().x << "\ty:"<< fuelbox->getPosition().y
+        << "\tz:"<< fuelbox->getPosition().z;
+        qDebug() << "boxsize" << "\tx:"<< fuelbox->getBoxsize().x << "\ty:"<< fuelbox->getBoxsize().y
+        << "\tz:"<< fuelbox->getBoxsize().z;
+    }
 }
 
 // 输出所有变量信息
@@ -715,6 +825,7 @@ void SphParameters::VisualALLProperties(){
         VisualFluidProperties();
         VisualInoutProperties();
         VisualSimulationProperties();
+        VisualMainList();
 
         qDebug() << "---------------------------------------------------";
         qDebug() << "Properties Visual Over...\n";

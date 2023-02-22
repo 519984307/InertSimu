@@ -261,6 +261,54 @@ bool SphParameters::LoadSimulationParam() {
     return true;
 }
 
+bool SphParameters::LoadFillboxGeoList(){
+    geoList = new FillboxGeoList();
+
+    QDomElement node = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist");
+    if(!node.isNull())  node = node.firstChildElement();
+    else return false;
+    while(!node.isNull()){
+        if(node.tagName() == "setmkfluid") {
+            // this node only for sph work
+        }
+        if(node.tagName() == "fillbox") {
+            FillboxGeo *geo = new FillboxGeo();
+
+            Double3 seed;
+            seed.x = node.attribute("x").toDouble();
+            seed.y = node.attribute("y").toDouble();
+            seed.z = node.attribute("z").toDouble();
+            geo->setSeed(seed);
+
+            geo->setMk(node.attribute("mk").toInt());
+            geo->setName(node.attribute("name"));
+
+            QDomElement subnode = node.firstChildElement();
+            while(!subnode.isNull()){
+                if(subnode.tagName() == "point"){
+                    Double3 position;
+                    position.x = subnode.attribute("x").toDouble();
+                    position.y = subnode.attribute("y").toDouble();
+                    position.z = subnode.attribute("z").toDouble();
+                    geo->setPosition(position);
+                }
+                if(subnode.tagName() == "size"){
+                    Double3 size;
+                    size.x = subnode.attribute("x").toDouble();
+                    size.y = subnode.attribute("y").toDouble();
+                    size.z = subnode.attribute("z").toDouble();
+                    geo->setBoxsize(size);
+                }
+                subnode = subnode.nextSiblingElement();
+            }
+            geoList->appendGeo(geo);
+        }
+        node = node.nextSiblingElement();
+    }
+
+    return true;
+}
+
 // 从xml获取值，存储在各个类的实例中
 bool SphParameters::LoadXml(const QString &path){
 
@@ -503,6 +551,63 @@ bool SphParameters::SaveSimulationParam(){
         if(node.attribute("key") == "TimeOut") node.setAttribute("value", simulationParam->getTimeOut());
         node = node.nextSiblingElement();
     }
+    return true;
+}
+
+bool SphParameters::SaveFillboxGeoList(){
+    QDomElement node_mainlist = sxml.GetNodeSimple("case.casedef.geometry.commands.mainlist");
+    QDomElement subnode_mainlist;
+
+    // 删除mainlist下的所有node
+    if(!node_mainlist.isNull()) {
+        subnode_mainlist = node_mainlist.firstChildElement();
+        while(!subnode_mainlist.isNull()){
+            QDomElement temp = subnode_mainlist.nextSiblingElement();
+            node_mainlist.removeChild(subnode_mainlist);
+            subnode_mainlist = temp;
+        }
+    }
+
+    // save in order!
+    QDomElement nnode = sxml.doc.createElement("setshapemode");
+    nnode.setNodeValue("actual | bound | dp");
+    node_mainlist.appendChild(nnode);
+
+    // stl move to Geo...
+
+    foreach (FillboxGeo *box, geoList->getList()) {
+        nnode = sxml.doc.createElement("setmkfluid");
+        nnode.setAttribute("mk", box->getMk());
+        nnode.setAttribute("name", box->getName());
+        node_mainlist.appendChild(nnode);
+
+        nnode = sxml.doc.createElement("fillbox");
+        nnode.setAttribute("x", box->getSeed().x);
+        nnode.setAttribute("y", box->getSeed().y);
+        nnode.setAttribute("z", box->getSeed().z);
+        nnode.setAttribute("mk", box->getMk());
+        nnode.setAttribute("name", box->getName());
+
+        QDomElement sub_nnode = sxml.doc.createElement("modefill");
+        sub_nnode.setNodeValue(box->getModefill());
+        nnode.appendChild(sub_nnode);
+
+        sub_nnode = sxml.doc.createElement("point");
+        nnode.setAttribute("x", box->getPosition().x);
+        nnode.setAttribute("y", box->getPosition().y);
+        nnode.setAttribute("z", box->getPosition().z);
+        nnode.appendChild(sub_nnode);
+
+        sub_nnode = sxml.doc.createElement("size");
+        nnode.setAttribute("x", box->getPosition().x);
+        nnode.setAttribute("y", box->getPosition().y);
+        nnode.setAttribute("z", box->getPosition().z);
+        nnode.appendChild(sub_nnode);
+
+        node_mainlist.appendChild(nnode);
+    }
+
+
     return true;
 }
 

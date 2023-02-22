@@ -4,6 +4,7 @@
 #include "InertGas.h"
 #include "InoutList.h"
 #include "SimulationParam.h"
+#include "FillboxGeoList.h"
 #include "SXml.h"
 
 #ifndef ENTITY_SPHPARAMETER_H
@@ -15,6 +16,7 @@ public:
     InertGas *inertGasProperty;
     InoutList *inoutList;
     SimulationParam *simulationParam;
+    FillboxGeoList *geoList;
 
 public:
     SphParameters();
@@ -43,6 +45,7 @@ private:
     bool LoadFluid();
     bool LoadInoutList();
     bool LoadSimulationParam();
+    bool LoadFillboxGeoList();
 
     bool SaveAir();
     bool SaveFuel();
@@ -50,5 +53,6 @@ private:
     bool SaveFluid();
     bool SaveInoutList();
     bool SaveSimulationParam();
+    bool SaveFillboxGeoList();
 };
 #endif //ENTITY_SPHPARAMETER_H

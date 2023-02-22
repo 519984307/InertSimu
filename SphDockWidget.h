@@ -6,6 +6,7 @@
 #include "PathConfig.h"
 #include "SphThread.h"
 #include "InoutSetting.h"
+#include "TaskOperation.h"
 #include <QWidget>
 #include <QFileDialog>
 
@@ -28,8 +29,11 @@ private slots:
     void showState(QString);
     void showProgress(int);
     void showEndtime(QString);
-    void sphBtnReset();
-    void sphBtnStart();
+    void sphStateChange(StateType);
+    void sphOperation(int);
+
+signals:
+    void showTaskOperation();
 
 public:
     Ui::SphDockWidget *ui;
@@ -43,6 +47,7 @@ private:
   PathConfig *pathConfig;
   SphThread *sphThread;
   QPointer<InoutSetting> inoutSetting;
+  QPointer<TaskOperation> taskOperation;
 
   void showParam();
   void saveParam();

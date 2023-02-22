@@ -9,11 +9,12 @@
 
 typedef enum{
     state_noWork=0,         //任务未开始
-    state_init=1,           //正在初始化
-    state_compute=2,        //正在计算
-    state_postProcess=3,    //正在后处理
-    state_finish=4,         //任务结束
-    state_exception=5       //异常状态
+    state_waitSignal=1,      //等待指令
+    state_init=2,           //正在初始化
+    state_compute=3,        //正在计算
+    state_postProcess=4,    //正在后处理
+    state_finish=5,         //任务结束
+    state_exception=6      //异常状态
 }StateType;
 
 #define StateCode "StateCode-S"
@@ -35,6 +36,7 @@ public:
     void extractProgress(QString);
     void detectState(QString);
     void detectError(QString);
+    void detectOperation(QString);
 
     //getter and setter
     int getProgress() const{ return progress; };
@@ -43,7 +45,6 @@ public:
     QString getEndtime() const { return endtime; };
     int getCurStep() const{ return curStep; };
     int getMaxStep() const{ return maxStep; };
-
 
 private:
     QProcess *process;
@@ -80,11 +81,10 @@ public slots:
 
 signals:
     void threadSig_Text(QString);
+    void threadSig_TaskStateChange(StateType);
     void threadSig_State(QString);
     void threadSig_Progress(int);
     void threadSig_Endtime(QString);
-
-    void threadSig_TaskOver();
 };
 
 #endif // SPHTHREAD_H

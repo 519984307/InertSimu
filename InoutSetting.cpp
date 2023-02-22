@@ -12,7 +12,6 @@ InoutSetting::InoutSetting(QWidget *parent, InoutZone *iz) :
     this->widgetRegExpValidat();
     this->btnEvent();
     this->showParam();
-
 }
 
 void InoutSetting::showParam(){

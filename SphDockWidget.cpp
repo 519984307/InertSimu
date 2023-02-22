@@ -1,10 +1,15 @@
 ﻿#pragma execution_character_set("utf-8")
+
 #include "SphDockWidget.h"
 #include "ui_SphDockWidget.h"
 #include "QDebug"
 #include "FileTools.h"
 #include "QRegExpValidator"
 #include "QRegExp"
+
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 #include <pqLoadDataReaction.h>
 #include <io.h>
@@ -30,6 +35,8 @@ SphDockWidget::SphDockWidget(QWidget *parent)
     : Superclass(parent)
     , Internals(new SphDockWidget::pqInternals(this))
 {
+    //_ASSERTE(_CrtCheckMemory());
+
     this->widgetConstraint();
     this->widgetRegExpValidat();
 
@@ -41,7 +48,9 @@ SphDockWidget::SphDockWidget(QWidget *parent)
     connect(sphThread, SIGNAL(threadSig_State(QString)), this, SLOT(showState(QString)));
     connect(sphThread, SIGNAL(threadSig_Progress(int)), this, SLOT(showProgress(int)));
     connect(sphThread, SIGNAL(threadSig_Endtime(QString)), this, SLOT(showEndtime(QString)));
-    connect(sphThread, SIGNAL(threadSig_TaskOver()), this, SLOT(sphBtnReset()));
+
+    qRegisterMetaType<StateType>("StateType");
+    connect(sphThread, SIGNAL(threadSig_TaskStateChange(StateType)), this, SLOT(sphStateChange(StateType)));
 
     this->btnEvent();
 }
@@ -224,7 +233,7 @@ void SphDockWidget::btnEvent(){
     });
 
     // 一键VTK
-    QObject::connect(this->Internals->Ui.btn_imp_vtk, &QPushButton::clicked, this,[=](){
+    QObject::connect(this->Internals->Ui.btn_imp_vtk, &QPushButton::clicked, this,[&](){
         QString basePath = this->pathConfig->getSphOutPath() + "/surface";
         QString preFileName = "Surface_";
         QString suffix = "vtk";
@@ -233,10 +242,7 @@ void SphDockWidget::btnEvent(){
         QVector<pqPipelineSource *> Qvtkpointer;
         if(files.size() > 0) {
             Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
-
         }
-
-
     });
 
     // 导入模型
@@ -245,61 +251,82 @@ void SphDockWidget::btnEvent(){
         this->Internals->Ui.simulation_stl_path->setText(modelPath);
     });
 
-    // SPH重新开始
-    QObject::connect(this->Internals->Ui.btn_sphtask_restart, &QPushButton::clicked, this,[=](){
-        (*sphThread).sphContinue();
-        this->Internals->Ui.btn_sphtask_restart->setEnabled(false);
-    });
-
-    // SPH中止
-    QObject::connect(this->Internals->Ui.btn_sphtask_end, &QPushButton::clicked, this,[=](){
-        (*sphThread).sphAbort();
-        this->Internals->Ui.btn_sphtask_end->setEnabled(false);
-        this->Internals->Ui.btn_sphtask_start->setEnabled(true);
-    });
-
-    // 后处理
-    QObject::connect(this->Internals->Ui.btn_sphtask_post, &QPushButton::clicked, this,[=](){
-        this->Internals->Ui.btn_sphtask_restart->setEnabled(false);
-        this->Internals->Ui.btn_sphtask_end->setEnabled(false);
-        this->Internals->Ui.btn_sphtask_post->setEnabled(false);
-        (*sphThread).sphPostProcess();
-    });
-
-    // 运行SPH
-    QObject::connect(this->Internals->Ui.btn_sphtask_start, &QPushButton::clicked, this,[=](){
+    // SPH 运行
+    QObject::connect(this->Internals->Ui.btn_sphtask_start, &QPushButton::clicked, this,[&](){
         QString workPath = this->pathConfig->getSphWorkPath();
         QString batName = this->pathConfig->getSphBatName();
 
-        this->sphBtnStart();
+        this->Internals->Ui.sphtask_plainTextEdit->clear();
 
         // 设置bat路径
         (*sphThread).setParameters(workPath, batName);
         (*sphThread).start();
     });
 
+    // 弹出任务操作选择面板
+    QObject::connect(this, &SphDockWidget::showTaskOperation, this, [&](){
+        taskOperation = new TaskOperation(this);
+        QObject::connect(taskOperation, SIGNAL(operation(int)), this, SLOT(sphOperation(int)));
+        taskOperation->show();
+    });
+
+
+    // SPH 中止
+    QObject::connect(this->Internals->Ui.btn_sphtask_end, &QPushButton::clicked, this,[&](){
+        (*sphThread).sphAbort();
+        this->Internals->Ui.btn_sphtask_end->setEnabled(false);
+        this->Internals->Ui.btn_sphtask_start->setEnabled(true);
+        this->Internals->Ui.sphtask_plainTextEdit->clear();
+    });
 }
 
-
-void SphDockWidget::sphBtnReset(){
-    this->Internals->Ui.btn_sphtask_start->setEnabled(true);
-    this->Internals->Ui.btn_sphtask_restart->setEnabled(false);
-    this->Internals->Ui.btn_sphtask_end->setEnabled(false);
-    this->Internals->Ui.btn_sphtask_post->setEnabled(false);
+void SphDockWidget::sphOperation(int choose){
+    if(choose == 1){// SPH 删除结果并重新开始
+        // 开始后 可中止
+        this->Internals->Ui.btn_sphtask_start->setEnabled(false);
+        this->Internals->Ui.btn_sphtask_end->setEnabled(true);
+        (*sphThread).sphContinue();
+    }
+    if(choose == 2){// SPH 中止
+        (*sphThread).sphAbort();
+        // 中止后需再次点击 开始仿真
+        this->Internals->Ui.btn_sphtask_start->setEnabled(true);
+        this->Internals->Ui.btn_sphtask_end->setEnabled(false);
+        this->Internals->Ui.sphtask_plainTextEdit->clear();
+    }
+    if(choose == 3){// SPH 只进行后处理
+        // 后处理必须等待完成
+        this->Internals->Ui.btn_sphtask_start->setEnabled(false);
+        this->Internals->Ui.btn_sphtask_end->setEnabled(false);
+        (*sphThread).sphPostProcess();
+    }
 }
 
-void SphDockWidget::sphBtnStart(){
-    this->Internals->Ui.btn_sphtask_start->setEnabled(false);
-    this->Internals->Ui.btn_sphtask_restart->setEnabled(true);
-    this->Internals->Ui.btn_sphtask_end->setEnabled(true);
-    this->Internals->Ui.btn_sphtask_post->setEnabled(true);
+void SphDockWidget::sphStateChange(StateType state){
+    if(state == state_noWork){
+    }
+    else if(state == state_waitSignal){
+        emit showTaskOperation();
+    }
+    else if(state == state_init){
+    }
+    else if(state == state_compute){
+    }
+    else if(state == state_postProcess){
+    }
+    else if(state == state_finish){
+        this->Internals->Ui.btn_sphtask_start->setEnabled(true);
+        this->Internals->Ui.btn_sphtask_end->setEnabled(false);
+    }
+    else if(state == state_exception){
+    }
 }
 
 void SphDockWidget::widgetConstraint(){
     Ui::SphDockWidget ui = this->Internals->Ui;
 
     ui.simulation_stl_path->setEnabled(false);
-    this->sphBtnReset();
+    ui.simulation_stl_angy->setEnabled(false);
 }
 
 void SphDockWidget::widgetRegExpValidat(){

@@ -26,7 +26,7 @@ void SphThread::init()
     setCurStep(0);
     setMaxStep(0);
     setProgress(0);
-    setState(StateType(0));
+    setState(state_noWork);
     setLabelState("");
     setEndtime("");
 
@@ -39,7 +39,7 @@ void SphThread::initParam()
     setCurStep(0);
     setMaxStep(0);
     setProgress(0);
-    setState(StateType(0));
+    setState(state_noWork);
     setLabelState("");
     setEndtime("");
 }
@@ -70,6 +70,7 @@ void SphThread::setLabelState(QString labelState)
 void SphThread::setState(StateType stateType)
 {
     this->state = stateType;
+    emit threadSig_TaskStateChange(stateType);
     emit threadSig_State(stateText());
 }
 
@@ -261,6 +262,7 @@ QString SphThread::stateText(){
     QString labeltext;
     switch(this->state){
         case state_noWork:          labeltext = "未开始";break;
+        case state_waitSignal:      labeltext = "等待指令";break;
         case state_init:            labeltext = "正在初始化";break;
         case state_compute:         labeltext = "正在计算";break;
         case state_postProcess:     labeltext = "正在生成文件";break;
@@ -281,6 +283,7 @@ void SphThread::run()
 
     //process槽函数 -> this
     connect(this->process, SIGNAL(started()), this, SLOT(sphStarted()));
+    qRegisterMetaType<QProcess::ExitStatus>("QProcess::ExitStatus");
     connect(this->process, SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(sphFinished(int,QProcess::ExitStatus)));
     connect(this->process, SIGNAL(readyReadStandardOutput()), this, SLOT(sphStream()));
 
@@ -291,5 +294,4 @@ void SphThread::run()
     this->process->waitForFinished(-1);
     sleep(2);//等待标准读结束
     this->process->close(); //关闭进程
-    emit threadSig_TaskOver();
 }

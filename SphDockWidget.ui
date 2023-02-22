@@ -1675,7 +1675,12 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>60%</string>
+                  <string>55%</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>67%</string>
                  </property>
                 </item>
                 <item>
@@ -2741,31 +2746,6 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_29">
             <item>
-             <widget class="QPushButton" name="btn_sphtask_restart">
-              <property name="minimumSize">
-               <size>
-                <width>70</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>70</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>9</pointsize>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>重新开始</string>
-              </property>
-             </widget>
-            </item>
-            <item>
              <widget class="QLabel" name="label_90">
               <property name="minimumSize">
                <size>
@@ -2812,31 +2792,6 @@
               </property>
               <property name="text">
                <string>中止计算</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btn_sphtask_post">
-              <property name="minimumSize">
-               <size>
-                <width>70</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>70</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>9</pointsize>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>后处理程序</string>
               </property>
              </widget>
             </item>

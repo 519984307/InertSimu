@@ -29,15 +29,17 @@ void InoutSetting::showParam(){
     this->ui->inout_position_z->setText(QString::number(zone->getCircle().point.z));
 
     // ToEulerAngle here
-//    AxisAngleD axisAngle;
-//    axisAngle.angle = zone->getCircle().rotateAxis.angle;
-//    axisAngle.axis = zone->getCircle().rotateAxis.point2;
-//    Int3 eulerAngle = ToEulerAngle(axisAngle);
+    AxisAngleD axisAngle;
+    axisAngle.angle = zone->getCircle().rotateAxis.angle;
+    axisAngle.axis = zone->getCircle().rotateAxis.point2;
+    axisAngle.axis.x += zone->getCircle().rotateAxis.point1.x;
+    axisAngle.axis.y += zone->getCircle().rotateAxis.point1.y;
+    axisAngle.axis.z += zone->getCircle().rotateAxis.point1.z;
 
-    // use this temporarily
-    this->ui->inout_rotate_x->setText(QString::number(zone->getCircle().rotateAxis.angle - 90));
-    this->ui->inout_rotate_y->setText("0");
-    this->ui->inout_rotate_z->setText("0");
+    Int3 eulerAngle = ToEulerAngle(axisAngle);
+    this->ui->inout_rotate_x->setText(QString::number(eulerAngle.x - 90));
+    this->ui->inout_rotate_y->setText(QString::number(eulerAngle.y));
+    this->ui->inout_rotate_z->setText(QString::number(eulerAngle.z));
 
     if(this->ui->inout_v_mode->currentIndex()==0){
         this->ui->inout_v_velocity->setEnabled(true);
@@ -72,27 +74,17 @@ void InoutSetting::saveParam(){
     circle.direction.x = 0;
 
     // ToAxisAngle here
-//    Int3 eulerAngle;
-//    eulerAngle.x = this->ui->inout_rotate_x->text().toInt() + 90;
-//    eulerAngle.y = this->ui->inout_rotate_x->text().toInt();
-//    eulerAngle.z = this->ui->inout_rotate_x->text().toInt();
-//    AxisAngleD axisAngle = ToAxisAngle(eulerAngle);
-//    circle.rotateAxis.angle = axisAngle.angle;
-//    circle.rotateAxis.point1.x = circle.point.x;
-//    circle.rotateAxis.point1.y = circle.point.y;
-//    circle.rotateAxis.point1.z = circle.point.z;
-//    circle.rotateAxis.point2.x = axisAngle.axis.x;
-//    circle.rotateAxis.point2.y = axisAngle.axis.y;
-//    circle.rotateAxis.point2.z = axisAngle.axis.z;
+    Int3 eulerAngle;
+    eulerAngle.x = this->ui->inout_rotate_x->text().toInt() + 90;
+    eulerAngle.y = this->ui->inout_rotate_y->text().toInt();
+    eulerAngle.z = this->ui->inout_rotate_z->text().toInt();
 
-    // use this temporarily
-    circle.rotateAxis.angle = this->ui->inout_rotate_x->text().toInt() + 90;
-    circle.rotateAxis.point1.x = 0;
-    circle.rotateAxis.point1.y = circle.point.y;
-    circle.rotateAxis.point1.z = circle.point.z;
-    circle.rotateAxis.point2.x = 1;
-    circle.rotateAxis.point2.y = circle.point.y;
-    circle.rotateAxis.point2.z = circle.point.z;
+    AxisAngleD axisAngle = ToAxisAngle(eulerAngle);
+    circle.rotateAxis.angle = axisAngle.angle;
+    circle.rotateAxis.point1 = circle.point;
+    circle.rotateAxis.point2.x = axisAngle.axis.x - circle.point.x;
+    circle.rotateAxis.point2.y = axisAngle.axis.y - circle.point.y;
+    circle.rotateAxis.point2.z = axisAngle.axis.z - circle.point.z;
 
     zone->setCircle(circle);
 }
@@ -100,8 +92,6 @@ void InoutSetting::saveParam(){
 void InoutSetting::widgetConstraint(){
     this->ui->inout_v_filepath->setEnabled(false);
 
-    this->ui->inout_rotate_y->setEnabled(false);
-    this->ui->inout_rotate_z->setEnabled(false);
 }
 
 void InoutSetting::widgetRegExpValidat(){

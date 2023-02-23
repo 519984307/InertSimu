@@ -5,7 +5,7 @@
 #include "SType.h"
 
 typedef struct{
-    int angle;
+    double angle;
     Double3 point1;
     Double3 point2;
 }RotateAxis;

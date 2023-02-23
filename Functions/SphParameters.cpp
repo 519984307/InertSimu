@@ -143,7 +143,7 @@ bool SphParameters::LoadInoutList() {
                         new_Circle.direction.z = subnode.attribute("z").toInt();
                     }
                     if(subnode.tagName() == "rotateaxis") {
-                        new_Circle.rotateAxis.angle = subnode.attribute("angle").toInt();
+                        new_Circle.rotateAxis.angle = subnode.attribute("angle").toDouble();
                         QDomElement subnode_rotate = subnode.firstChildElement();
                         while(!subnode_rotate.isNull()){
                             if(subnode_rotate.tagName() == "point1") {
@@ -279,11 +279,13 @@ bool SphParameters::LoadMainList(){
 
             model->setFilePath(node.attribute("file"));
             model->setMk(node.attribute("mk").toInt());
+            if(!node.hasAttribute("mk")) model->setMk(0);
 
             QDomElement subnode = node.firstChildElement();
             while(!subnode.isNull()){
                 if(subnode.tagName() == "drawscale"){
                     Double3 scale;
+                    scale.x = 0; scale.y = 0; scale.z = 0;
                     scale.x = subnode.attribute("x").toDouble();
                     scale.y = subnode.attribute("y").toDouble();
                     scale.z = subnode.attribute("z").toDouble();
@@ -291,6 +293,7 @@ bool SphParameters::LoadMainList(){
                 }
                 if(subnode.tagName() == "drawrotate"){
                     Int3 rotate;
+                    rotate.x = 0; rotate.y = 0; rotate.z = 0;
                     rotate.x = subnode.attribute("angx").toInt();
                     rotate.y = subnode.attribute("angy").toInt();
                     rotate.z = subnode.attribute("angz").toInt();
@@ -298,6 +301,7 @@ bool SphParameters::LoadMainList(){
                 }
                 if(subnode.tagName() == "drawmove"){
                     Double3 move;
+                    move.x = 0; move.y = 0; move.z = 0;
                     move.x = subnode.attribute("x").toDouble();
                     move.y = subnode.attribute("y").toDouble();
                     move.z = subnode.attribute("z").toDouble();

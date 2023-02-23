@@ -10,6 +10,7 @@ SphParameters::SphParameters(){
     inertGasProperty = NULL;
     inoutList = NULL;
     simulationParam = NULL;
+    mainList = NULL;
     InitVars();
 }
 
@@ -19,6 +20,7 @@ SphParameters::~SphParameters(){
     delete inertGasProperty;    inertGasProperty = NULL;
     delete inoutList;           inoutList = NULL;
     delete simulationParam;     simulationParam = NULL;
+    delete  mainList;           mainList = NULL;
 }
 
 void SphParameters::InitVars(){

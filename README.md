@@ -56,5 +56,6 @@ git update-index --assume-unchanged config.json
 * SPH数据流新增对异常码的匹配
 * 渲染模块自动显示（无需点击可见按钮） .
 * Euler angles of XYZ axis rotations(degrees) 相互转换 Axis-angle(degrees)的代码支持
+* 对paraview的对象属性进行操作，实现导入物体的旋转
 * 
 

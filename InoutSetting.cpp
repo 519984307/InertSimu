@@ -1,4 +1,5 @@
 ﻿#include "InoutSetting.h"
+#include "qmath.h"
 #include "ui_InoutSetting.h"
 #include "InoutZone.h"
 
@@ -147,10 +148,21 @@ QString InoutSetting::on_OpenVelocityFileButton_clicked()
 
 AxisAngleD InoutSetting::ToAxisAngle(Int3 EulerAngle){
     AxisAngleD AxisAngle;
+    double a=EulerAngle.x*M_PI/180;
+    double b=EulerAngle.y*M_PI/180;
+    double c=EulerAngle.z*M_PI/180;
+    AxisAngle.angle=acos(cos(a/2)*cos(b/2)*cos(c/2)+sin(a/2)*sin(b/2)*sin(c/2))*360/M_PI;
+    AxisAngle.axis.x=(sin(a/2)*cos(b/2)*cos(c/2)-cos(a/2)*sin(b/2)*sin(c/2))/sin(AxisAngle.angle*M_PI/360);
+    AxisAngle.axis.y=(cos(a/2)*sin(b/2)*cos(c/2)+sin(a/2)*cos(b/2)*sin(c/2))/sin(AxisAngle.angle*M_PI/360);
+    AxisAngle.axis.z=(cos(a/2)*cos(b/2)*sin(c/2)-sin(a/2)*sin(b/2)*cos(c/2))/sin(AxisAngle.angle*M_PI/360);
     return AxisAngle;
 }
 Int3 InoutSetting::ToEulerAngle(AxisAngleD AxisAngle){
     Int3 EulerAngle;
+    double w=cos(AxisAngle.angle*M_PI/360), x=AxisAngle.axis.x*sin(AxisAngle.angle*M_PI/360), y=AxisAngle.axis.y*sin(AxisAngle.angle*M_PI/360), z=AxisAngle.axis.z*sin(AxisAngle.angle*M_PI/360);
+    EulerAngle.x = (int)(atan2(2 * y * z + 2 * w * x, -2 * x * x - 2 * y* y + 1)*180/M_PI+0.5);
+    EulerAngle.y = (int)(asin(-2 * x * z + 2 * w* y)*180/M_PI+0.5);
+    EulerAngle.z = (int)(atan2(2 * x * y + 2 * w * z, -2 * y*y - 2 * z * z + 1)*180/M_PI+0.5);
     return EulerAngle;
 }
 

@@ -63,7 +63,12 @@ bool SXml::LoadXmlFile(const QString &filename){
     int errline;
     int errcol;
 
-    if (!doc.setContent(&xmlFile,false,&err,&errline,&errcol))
+    QTextStream stream(&xmlFile);
+    stream.setCodec("UTF-8");
+    stream.setRealNumberPrecision(8);
+    QString str = stream.readAll();
+
+    if (!doc.setContent(str,false,&err,&errline,&errcol))
     {
         qDebug() << "XML Load failed";
         qDebug() << "err=" << err << "  errline=" << errline << "  errcol=" << errcol;
@@ -83,6 +88,8 @@ bool SXml::SaveXmlFile(const QString &filename){
     {
         QTextStream outFile(&xmlFile);
         outFile.setCodec("UTF-8");
+        outFile.setRealNumberPrecision(8);
+
         doc.save(outFile, QDomNode::EncodingFromDocument);
         xmlFile.close();
     } else return false;

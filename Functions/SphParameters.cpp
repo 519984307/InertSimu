@@ -366,11 +366,11 @@ bool SphParameters::LoadXml(const QString &path){
             return false;
 
     } catch (...) {
-        qDebug() << "Load Xml failed!";
+        qDebug() << "Load Xml failed! " << path;
         return false;
     }
 
-    qDebug() << "Load Xml successed...";
+    qDebug() << "Load Xml successed... " << path;
     return true;
 }
 
@@ -382,12 +382,12 @@ bool SphParameters::SaveAir(){
     else return false;
 
     while(!node.isNull()){
-        if(node.tagName() == "rhop0") node.setAttribute("value", airProperty->getRhop());
-        if(node.tagName() == "gamma") node.setAttribute("value", airProperty->getGamma());
-        if(node.tagName() == "cs0") node.setAttribute("value", airProperty->getCs());
-        if(node.tagName() == "visco") node.setAttribute("value", airProperty->getRhop());
-        if(node.tagName() == "phasetype") node.setAttribute("value", airProperty->getPhaseType());
-        if(node.tagName() == "oxygen") node.setAttribute("value", airProperty->getOxygenPercentage());
+        if(node.tagName() == "rhop0") node.setAttribute("value", QString::number(airProperty->getRhop()));
+        if(node.tagName() == "gamma") node.setAttribute("value", QString::number(airProperty->getGamma()));
+        if(node.tagName() == "cs0") node.setAttribute("value", QString::number(airProperty->getCs()));
+        if(node.tagName() == "visco") node.setAttribute("value", QString::number(airProperty->getRhop()));
+        if(node.tagName() == "phasetype") node.setAttribute("value", QString::number(airProperty->getPhaseType()));
+        if(node.tagName() == "oxygen") node.setAttribute("value", QString::number(airProperty->getOxygenPercentage()));
         node = node.nextSiblingElement();
     }
     return true;
@@ -401,11 +401,11 @@ bool SphParameters::SaveFuel(){
     else return false;
 
     while(!node.isNull()){
-        if(node.tagName() == "rhop0") node.setAttribute("value", fuelProperty->getRhop());
-        if(node.tagName() == "gamma") node.setAttribute("value", fuelProperty->getGamma());
-        if(node.tagName() == "cs0") node.setAttribute("value", fuelProperty->getCs());
-        if(node.tagName() == "visco") node.setAttribute("value", fuelProperty->getRhop());
-        if(node.tagName() == "phasetype") node.setAttribute("value", fuelProperty->getPhaseType());
+        if(node.tagName() == "rhop0") node.setAttribute("value", QString::number(fuelProperty->getRhop()));
+        if(node.tagName() == "gamma") node.setAttribute("value", QString::number(fuelProperty->getGamma()));
+        if(node.tagName() == "cs0") node.setAttribute("value", QString::number(fuelProperty->getCs()));
+        if(node.tagName() == "visco") node.setAttribute("value", QString::number(fuelProperty->getRhop()));
+        if(node.tagName() == "phasetype") node.setAttribute("value", QString::number(fuelProperty->getPhaseType()));
         node = node.nextSiblingElement();
     }
     return true;
@@ -419,9 +419,9 @@ bool SphParameters::SaveInertGas(){
     else return false;
 
     while(!node.isNull()){
-        if(node.tagName() == "rhop1") node.setAttribute("value", inertGasProperty->getRhop());
-        if(node.tagName() == "gamma1") node.setAttribute("value", inertGasProperty->getGamma());
-        if(node.tagName() == "oxygen") node.setAttribute("value", inertGasProperty->getOxygenPercentage());
+        if(node.tagName() == "rhop1") node.setAttribute("value", QString::number(inertGasProperty->getRhop()));
+        if(node.tagName() == "gamma1") node.setAttribute("value", QString::number(inertGasProperty->getGamma()));
+        if(node.tagName() == "oxygen") node.setAttribute("value", QString::number(inertGasProperty->getOxygenPercentage()));
         node = node.nextSiblingElement();
     }
     return true;
@@ -479,35 +479,35 @@ bool SphParameters::SaveInoutList(){
             QDomElement nnode1 = sxml.doc.createElement("circle");
 
             QDomElement nnode2 = sxml.doc.createElement("point");
-            nnode2.setAttribute("x", inoutZone->getCircle().point.x);
-            nnode2.setAttribute("y", inoutZone->getCircle().point.y);
-            nnode2.setAttribute("z", inoutZone->getCircle().point.z);
+            nnode2.setAttribute("x", QString::number(inoutZone->getCircle().point.x));
+            nnode2.setAttribute("y", QString::number(inoutZone->getCircle().point.y));
+            nnode2.setAttribute("z", QString::number(inoutZone->getCircle().point.z));
             nnode1.appendChild(nnode2);
 
             nnode2 = sxml.doc.createElement("radius");
-            nnode2.setAttribute("v", inoutZone->getCircle().radius);
+            nnode2.setAttribute("v", QString::number(inoutZone->getCircle().radius));
             nnode1.appendChild(nnode2);
 
             nnode2 = sxml.doc.createElement("direction");
-            nnode2.setAttribute("x", inoutZone->getCircle().direction.x);
-            nnode2.setAttribute("y", inoutZone->getCircle().direction.y);
-            nnode2.setAttribute("z", inoutZone->getCircle().direction.z);
+            nnode2.setAttribute("x", QString::number(inoutZone->getCircle().direction.x));
+            nnode2.setAttribute("y", QString::number(inoutZone->getCircle().direction.y));
+            nnode2.setAttribute("z", QString::number(inoutZone->getCircle().direction.z));
             nnode1.appendChild(nnode2);
 
 
             nnode2 = sxml.doc.createElement("rotateaxis");
-            nnode2.setAttribute("angle", inoutZone->getCircle().rotateAxis.angle);
+            nnode2.setAttribute("angle", QString::number(inoutZone->getCircle().rotateAxis.angle));
             {
                 QDomElement nnode3 = sxml.doc.createElement("point1");
-                nnode3.setAttribute("x", inoutZone->getCircle().rotateAxis.point1.x);
-                nnode3.setAttribute("y", inoutZone->getCircle().rotateAxis.point1.y);
-                nnode3.setAttribute("z", inoutZone->getCircle().rotateAxis.point1.z);
+                nnode3.setAttribute("x", QString::number(inoutZone->getCircle().rotateAxis.point1.x));
+                nnode3.setAttribute("y", QString::number(inoutZone->getCircle().rotateAxis.point1.y));
+                nnode3.setAttribute("z", QString::number(inoutZone->getCircle().rotateAxis.point1.z));
                 nnode2.appendChild(nnode3);
 
                 nnode3 = sxml.doc.createElement("point2");
-                nnode3.setAttribute("x", inoutZone->getCircle().rotateAxis.point2.x);
-                nnode3.setAttribute("y", inoutZone->getCircle().rotateAxis.point2.y);
-                nnode3.setAttribute("z", inoutZone->getCircle().rotateAxis.point2.z);
+                nnode3.setAttribute("x", QString::number(inoutZone->getCircle().rotateAxis.point2.x));
+                nnode3.setAttribute("y", QString::number(inoutZone->getCircle().rotateAxis.point2.y));
+                nnode3.setAttribute("z", QString::number(inoutZone->getCircle().rotateAxis.point2.z));
                 nnode2.appendChild(nnode3);
             }
             nnode1.appendChild(nnode2);
@@ -525,7 +525,7 @@ bool SphParameters::SaveInoutList(){
             nnode.appendChild(nnode1);
         } else {
             QDomElement nnode1 = sxml.doc.createElement("velocity");
-            nnode1.setAttribute("v", inoutZone->getImposeVelocity().velocity);
+            nnode1.setAttribute("v", QString::number(inoutZone->getImposeVelocity().velocity));
             nnode.appendChild(nnode1);
         }
         zoneNode.appendChild(nnode);
@@ -542,9 +542,9 @@ bool SphParameters::SaveSimulationParam(){
     else return false;
     while(!node.isNull()){
         if(node.tagName() == "gravity") {
-            node.setAttribute("x", simulationParam->getGravity().x);
-            node.setAttribute("y", simulationParam->getGravity().y);
-            node.setAttribute("z", simulationParam->getGravity().z);
+            node.setAttribute("x", QString::number(simulationParam->getGravity().x));
+            node.setAttribute("y", QString::number(simulationParam->getGravity().y));
+            node.setAttribute("z", QString::number(simulationParam->getGravity().z));
         }
         node = node.nextSiblingElement();
     }
@@ -556,14 +556,14 @@ bool SphParameters::SaveSimulationParam(){
     } else return false;
     while(!node.isNull()){
         if(node.tagName() == "pointmin"){
-            node.setAttribute("x", simulationParam->getPointMin().x);
-            node.setAttribute("y", simulationParam->getPointMin().y);
-            node.setAttribute("z", simulationParam->getPointMin().z);
+            node.setAttribute("x", QString::number(simulationParam->getPointMin().x));
+            node.setAttribute("y", QString::number(simulationParam->getPointMin().y));
+            node.setAttribute("z", QString::number(simulationParam->getPointMin().z));
         }
         if(node.tagName() == "pointmax"){
-            node.setAttribute("x", simulationParam->getPointMax().x);
-            node.setAttribute("y", simulationParam->getPointMax().y);
-            node.setAttribute("z", simulationParam->getPointMax().z);
+            node.setAttribute("x", QString::number(simulationParam->getPointMax().x));
+            node.setAttribute("y", QString::number(simulationParam->getPointMax().y));
+            node.setAttribute("z", QString::number(simulationParam->getPointMax().z));
         }
         node = node.nextSiblingElement();
     }
@@ -591,8 +591,8 @@ bool SphParameters::SaveSimulationParam(){
     if(!node.isNull())  node = node.firstChildElement();
     else return false;
     while(!node.isNull()){
-        if(node.attribute("key") == "TimeMax") node.setAttribute("value", simulationParam->getTimeMax());
-        if(node.attribute("key") == "TimeOut") node.setAttribute("value", simulationParam->getTimeOut());
+        if(node.attribute("key") == "TimeMax") node.setAttribute("value", QString::number(simulationParam->getTimeMax()));
+        if(node.attribute("key") == "TimeOut") node.setAttribute("value", QString::number(simulationParam->getTimeOut()));
         node = node.nextSiblingElement();
     }
     return true;
@@ -628,21 +628,21 @@ bool SphParameters::SaveMainList(){
         nnode.setAttribute("file", model->getFilePath());
 
         QDomElement sub_nnode = sxml.doc.createElement("drawscale");
-        sub_nnode.setAttribute("x", model->getScale().x);
-        sub_nnode.setAttribute("y", model->getScale().y);
-        sub_nnode.setAttribute("z", model->getScale().z);
+        sub_nnode.setAttribute("x", QString::number(model->getScale().x));
+        sub_nnode.setAttribute("y", QString::number(model->getScale().y));
+        sub_nnode.setAttribute("z", QString::number(model->getScale().z));
         nnode.appendChild(sub_nnode);
 
         sub_nnode = sxml.doc.createElement("drawrotate");
-        sub_nnode.setAttribute("angx", model->getRotate().x);
-        sub_nnode.setAttribute("angy", model->getRotate().y);
-        sub_nnode.setAttribute("angz", model->getRotate().z);
+        sub_nnode.setAttribute("angx", QString::number(model->getRotate().x));
+        sub_nnode.setAttribute("angy", QString::number(model->getRotate().y));
+        sub_nnode.setAttribute("angz", QString::number(model->getRotate().z));
         nnode.appendChild(sub_nnode);
 
         sub_nnode = sxml.doc.createElement("drawmove");
-        sub_nnode.setAttribute("x", model->getScale().x);
-        sub_nnode.setAttribute("y", model->getScale().y);
-        sub_nnode.setAttribute("z", model->getScale().z);
+        sub_nnode.setAttribute("x", QString::number(model->getScale().x));
+        sub_nnode.setAttribute("y", QString::number(model->getScale().y));
+        sub_nnode.setAttribute("z", QString::number(model->getScale().z));
         nnode.appendChild(sub_nnode);
 
         node_mainlist.appendChild(nnode);
@@ -654,9 +654,9 @@ bool SphParameters::SaveMainList(){
         node_mainlist.appendChild(nnode);
 
         nnode = sxml.doc.createElement("fillbox");
-        nnode.setAttribute("x", box->getSeed().x);
-        nnode.setAttribute("y", box->getSeed().y);
-        nnode.setAttribute("z", box->getSeed().z);
+        nnode.setAttribute("x", QString::number(box->getSeed().x));
+        nnode.setAttribute("y", QString::number(box->getSeed().y));
+        nnode.setAttribute("z", QString::number(box->getSeed().z));
         nnode.setAttribute("mk", box->getMk());
         nnode.setAttribute("name", box->getName());
 
@@ -665,15 +665,15 @@ bool SphParameters::SaveMainList(){
         nnode.appendChild(sub_nnode);
 
         sub_nnode = sxml.doc.createElement("point");
-        sub_nnode.setAttribute("x", box->getPosition().x);
-        sub_nnode.setAttribute("y", box->getPosition().y);
-        sub_nnode.setAttribute("z", box->getPosition().z);
+        sub_nnode.setAttribute("x", QString::number(box->getPosition().x));
+        sub_nnode.setAttribute("y", QString::number(box->getPosition().y));
+        sub_nnode.setAttribute("z", QString::number(box->getPosition().z));
         nnode.appendChild(sub_nnode);
 
         sub_nnode = sxml.doc.createElement("size");
-        sub_nnode.setAttribute("x", box->getBoxsize().x);
-        sub_nnode.setAttribute("y", box->getBoxsize().y);
-        sub_nnode.setAttribute("z", box->getBoxsize().z);
+        sub_nnode.setAttribute("x", QString::number(box->getBoxsize().x));
+        sub_nnode.setAttribute("y", QString::number(box->getBoxsize().y));
+        sub_nnode.setAttribute("z", QString::number(box->getBoxsize().z));
         nnode.appendChild(sub_nnode);
 
         node_mainlist.appendChild(nnode);
@@ -707,11 +707,11 @@ bool SphParameters::SaveXml(const QString &path){
 
         sxml.SaveXmlFile(path);
     } catch (...) {
-        qDebug() << "Save Xml failed!";
+        qDebug() << "Save Xml failed! " << path;
         return false;
     }
 
-    qDebug() << "Save Xml successed...";
+    qDebug() << "Save Xml successed... " << path;
     return true;
 }
 

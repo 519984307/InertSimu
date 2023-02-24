@@ -205,6 +205,7 @@ void SphDockWidget::saveParam(){
         Model *model = this->sphParam->mainList->getModelList().at(0);
 
         Int3 rotate;
+        rotate.x = 0; rotate.z = 0;
         //rotate.x = ui.simulation_stl_angx->text().toInt();
         rotate.y = ui.simulation_stl_angy->text().toInt();
         //rotate.z = ui.simulation_stl_angz->text().toInt();
@@ -280,14 +281,14 @@ void SphDockWidget::btnEvent(){
     this->sphParam = new SphParameters();
     QObject::connect(this->Internals->Ui.btn_imp_config, &QPushButton::clicked, this,[&](){
         this->sphParam->LoadXml(this->pathConfig->getXmlParh());
-        //this->sphParam->VisualALLProperties();
+//        this->sphParam->VisualALLProperties();
         this->showParam();
     });
 
     // 导出XML配置
     QObject::connect(this->Internals->Ui.btn_save_config, &QPushButton::clicked, this,[&](){
         this->saveParam();
-        this->sphParam->VisualALLProperties();
+//        this->sphParam->VisualALLProperties();
     });
 
     // 一键VTK

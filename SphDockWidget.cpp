@@ -304,7 +304,8 @@ void SphDockWidget::btnEvent(){
         }
     });
 
-    // 快速导入案例结果
+    // Temporary set. 快速导入案例结果
+    // QVector<pqPipelineSource *> should be defined out of this connect and delete object from paraview before next choose.
     QObject::connect(this->Internals->Ui.combo_imp_vtk, QOverload<int>::of(&QComboBox::currentIndexChanged), this,[=](int index){
         QString outPath = this->pathConfig->getTankconfig() + "/Tank_config" + QString::number(index) + "_out";
 

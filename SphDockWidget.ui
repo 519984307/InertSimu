@@ -78,6 +78,11 @@
         <widget class="QComboBox" name="combo_imp_vtk">
          <item>
           <property name="text">
+           <string>快速导入</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>快速导入案例1结果</string>
           </property>
          </item>

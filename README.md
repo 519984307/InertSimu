@@ -5,6 +5,9 @@ Inerting Simulation
 ### Paraview
 Paraview should be built and added to the path.
 Paraview build Link: https://gitlab.kitware.com/paraview/paraview/-/blob/master/Documentation/dev/build.md#windows
+不使用cmake -GNinja 命令，直接利用cmake gui
+使用vs2019打开paraview.sln，分别在debug和release模式下build，将生成的路径添加到环境变量中
+
 
 ### Qt
 choose Qt MSVC2019 64bit to configure this project.

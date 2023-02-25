@@ -75,6 +75,30 @@
         </widget>
        </item>
        <item>
+        <widget class="QComboBox" name="combo_imp_vtk">
+         <item>
+          <property name="text">
+           <string>快速导入案例1结果</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>快速导入案例2结果</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>快速导入案例3结果</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>快速导入案例4结果</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_48">
          <property name="minimumSize">
           <size>

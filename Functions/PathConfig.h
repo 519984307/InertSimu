@@ -21,6 +21,8 @@ private:
     QString sphOutPath;
     QString sphBatName;
 
+    QString tankconfig;
+
 public:
 
     // temporary path configuration load from json file for coding in early stage.
@@ -47,7 +49,7 @@ public:
         if(doc.isObject())
         {
             QJsonObject obj = doc.object();
-            QJsonValue value = obj.value("path");
+            QJsonValue value = obj.value("kang_path");
             if(value.isObject())
             {
                 QJsonObject subobj = value.toObject();
@@ -57,6 +59,8 @@ public:
                 setSphWorkPath(subobj.value("sphWorkPath").toString());
                 setSphOutPath(subobj.value("sphOutPath").toString());
                 setSphBatName(subobj.value("sphBatName").toString());
+
+                setTankconfig(subobj.value("Tank_config").toString());
                 qDebug() << "path set successed";
             }
         }
@@ -103,6 +107,13 @@ public:
     };
     QString getSphBatName(){
         return sphBatName;
+    };
+
+    void setTankconfig(QString path){
+        this->tankconfig = path;
+    };
+    QString getTankconfig(){
+        return tankconfig;
     };
 };
 

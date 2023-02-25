@@ -304,6 +304,43 @@ void SphDockWidget::btnEvent(){
         }
     });
 
+    // 快速导入案例结果
+    QObject::connect(this->Internals->Ui.combo_imp_vtk, QOverload<int>::of(&QComboBox::currentIndexChanged), this,[=](int index){
+        QString outPath = this->pathConfig->getTankconfig() + "/Tank_config" + QString::number(index) + "_out";
+
+        QString basePath_surface = outPath + "/surface";
+        QString preFileName_surface = "Surface_fuel_";
+        QString suffix = "vtk";
+        QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath_surface, preFileName_surface, suffix);
+        QVector<pqPipelineSource *> Qvtkpointer;
+        if(files.size() > 0) {
+            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
+        }
+
+        QString basePath_particles = outPath + "/particles";
+        QString preFileName_PartFluid_air = "PartFluid_air_";
+        QList<QStringList> files1 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_PartFluid_air, suffix);
+        QVector<pqPipelineSource *> Qvtkpointer1;
+        if(files.size() > 0) {
+            Qvtkpointer1 = pqLoadDataReaction::loadFilesForSupportedTypes(files1);  // 直接打开文件内容到渲染窗口
+        }
+
+        QString preFileName_PartFluid_inert = "PartFluid_inert_";
+        QList<QStringList> files2 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_PartFluid_inert, suffix);
+        QVector<pqPipelineSource *> Qvtkpointer2;
+        if(files.size() > 0) {
+            Qvtkpointer2 = pqLoadDataReaction::loadFilesForSupportedTypes(files2);  // 直接打开文件内容到渲染窗口
+        }
+
+        QString preFileName_PartFluid_fuel = "PartFluid_fuel_";
+        QList<QStringList> files3 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_PartFluid_fuel, suffix);
+        QVector<pqPipelineSource *> Qvtkpointer3;
+        if(files.size() > 0) {
+            Qvtkpointer2 = pqLoadDataReaction::loadFilesForSupportedTypes(files3);  // 直接打开文件内容到渲染窗口
+        }
+
+    });
+
     // 导入模型
     QObject::connect(this->Internals->Ui.btn_simulation_stl, &QPushButton::clicked, this,[&](){
         QString modelPath = this->on_OpenModelFilePushButton_clicked();

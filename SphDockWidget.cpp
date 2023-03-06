@@ -424,6 +424,8 @@ void SphDockWidget::widgetConstraint(){
 
     ui.simulation_stl_path->setEnabled(false);
     ui.simulation_stl_angy->setEnabled(false);
+
+    connect(this->Internals->Ui.sphtask_plainTextEdit, SIGNAL(textChanged()), this, SLOT(moveToEnd()));
 }
 
 void SphDockWidget::widgetRegExpValidat(){
@@ -502,6 +504,10 @@ void SphDockWidget::showProgress(int progress) {
 // labelEstimatedEndtime显示 预估结束时间
 void SphDockWidget::showEndtime(QString endtime){
     this->Internals->Ui.sphtask_endtime->setText(endtime);
+}
+
+void SphDockWidget::moveToEnd(){
+    this->Internals->Ui.sphtask_plainTextEdit->moveCursor(QTextCursor::End);
 }
 
 SphDockWidget::~SphDockWidget()

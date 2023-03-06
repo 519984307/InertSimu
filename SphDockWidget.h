@@ -31,6 +31,7 @@ private slots:
     void showEndtime(QString);
     void sphStateChange(StateType);
     void sphOperation(int);
+    void moveToEnd();
 
 signals:
     void showTaskOperation();

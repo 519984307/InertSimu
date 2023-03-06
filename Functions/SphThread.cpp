@@ -248,7 +248,7 @@ void SphThread::sphFinished(int exitCode,QProcess::ExitStatus exitStatus)
 void SphThread::sphStream()
 {
     //能解析转义字符
-    QString outstr = process->readAllStandardOutput().data();
+    QString outstr = QString::fromLocal8Bit(process->readAllStandardOutput().data());
     //cout << outstr.toStdString();
     //强制清空缓冲区
     fflush(stdout);

@@ -12,7 +12,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>81</width>
+    <width>100</width>
     <height>39</height>
    </size>
   </property>
@@ -1523,18 +1523,18 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>40</width>
+                  <width>60</width>
                   <height>16</height>
                  </size>
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>8</pointsize>
+                  <pointsize>9</pointsize>
                   <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
-                 <string>gamma</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;多方指数&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -1884,18 +1884,18 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>40</width>
+                  <width>60</width>
                   <height>16</height>
                  </size>
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>8</pointsize>
+                  <pointsize>9</pointsize>
                   <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
-                 <string>gamma</string>
+                 <string>多方指数</string>
                 </property>
                </widget>
               </item>
@@ -2237,18 +2237,18 @@
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>40</width>
+                  <width>60</width>
                   <height>16</height>
                  </size>
                 </property>
                 <property name="font">
                  <font>
-                  <pointsize>8</pointsize>
+                  <pointsize>9</pointsize>
                   <bold>false</bold>
                  </font>
                 </property>
                 <property name="text">
-                 <string>gamma</string>
+                 <string>多方指数</string>
                 </property>
                </widget>
               </item>

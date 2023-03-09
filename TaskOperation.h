@@ -22,6 +22,8 @@ signals:
 private:
     Ui::TaskOperation *ui;
 
+    void setMessageVisibility();
+
 };
 
 #endif // TASKOPERATION_H

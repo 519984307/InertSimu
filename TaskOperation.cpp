@@ -1,7 +1,7 @@
 ﻿#pragma execution_character_set("utf-8")
 #include "TaskOperation.h"
 #include "FileTools.h"
-#include "PathConfig.h"
+#include "SphDockWidget.h"
 #include "ui_TaskOperation.h"
 #include "QWidget"
 
@@ -10,10 +10,8 @@ TaskOperation::TaskOperation(QWidget *parent) :
     ui(new Ui::TaskOperation)
 {
     ui->setupUi(this);
-
-    this->pathConfig = new PathConfig();
-    this->pathConfig->init();
-    TaskOperation::setMessageVisibility(this->pathConfig->getSphOutPath()+"/data","part","bi4",this->pathConfig->getSphOutPath()+"/particles","PartFluid_","vtk");
+    SphDockWidget sphDockWidget;
+    TaskOperation::setMessageVisibility(sphDockWidget.getpath());
 
     QObject::connect(this->ui->btn_sph_continue, &QPushButton::clicked, this,[&](){
         emit operation(1);
@@ -29,10 +27,10 @@ TaskOperation::TaskOperation(QWidget *parent) :
     });
 }
 
-void TaskOperation::setMessageVisibility(QString path_1, QString contain_1, QString suffix_1,QString path_2, QString contain_2, QString suffix_2)
+void TaskOperation::setMessageVisibility(QString path)
 {
-    int countData=FileTools::CountAllFilesOnCurFolder(path_1,contain_1,suffix_1);
-    int countParticles=FileTools::CountAllFilesOnCurFolder(path_2,contain_2,suffix_2);
+    int countData=FileTools::CountAllFilesOnCurFolder(path+"/data","part","bi4");
+    int countParticles=FileTools::CountAllFilesOnCurFolder(path+"/particles","PartFluid_","vtk");
     if(countData!=countParticles)
     {
         this->ui->sph_label->setText("检测到上次模拟任务有"+QString::number(countData)+"个数据文件。");

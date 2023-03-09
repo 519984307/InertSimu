@@ -3,7 +3,6 @@
 #define TASKOPERATION_H
 
 #include <QDialog>
-#include "PathConfig.h"
 
 namespace Ui {
 class TaskOperation;
@@ -22,9 +21,8 @@ signals:
 
 private:
     Ui::TaskOperation *ui;
-    PathConfig *pathConfig;
 
-    void setMessageVisibility(QString path_1, QString contain_1, QString suffix_1,QString path_2, QString contain_2, QString suffix_2);
+    void setMessageVisibility(QString path);
 
 };
 

@@ -37,7 +37,8 @@ signals:
     void showTaskOperation();
 
 public:
-    Ui::SphDockWidget *ui;
+    Ui::SphDockWidget *ui; 
+    QString getpath();
 
 private:
   Q_DISABLE_COPY(SphDockWidget)

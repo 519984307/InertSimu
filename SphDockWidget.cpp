@@ -308,7 +308,7 @@ void SphDockWidget::btnEvent(){
         QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath, preFileName, suffix);
         QVector<pqPipelineSource *> Qvtkpointer;
         if(files.size() > 0) {
-            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
+//            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
         }
     });
 
@@ -328,44 +328,38 @@ void SphDockWidget::btnEvent(){
             Qvtkpointer0 = pqLoadDataReaction::loadData(files0);  // 直接打开文件内容到渲染窗口
         }
 
-        QString basePath_surface = outPath + "/surface";
-        QString preFileName_surface = "Surface_fuel_";
-        QString suffix = "vtk";
-        QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath_surface, preFileName_surface, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer;
-        if(files.size() > 0) {
-            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
-        }
+//        QString basePath_surface = outPath + "/surface";
+//        QString preFileName_surface = "Surface_fuel_";
+//        QString suffix = "vtk";
+//        QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath_surface, preFileName_surface, suffix);
+//        QVector<pqPipelineSource *> Qvtkpointer;
+//        if(files.size() > 0) {
+//            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
+//        }
 
-        QString basePath_particles = outPath + "/particles";
-        QString preFileName_Particle_air = "Particle_air_";
-        QList<QStringList> files1 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_air, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer1;
-        if(files.size() > 0) {
-            Qvtkpointer1 = pqLoadDataReaction::loadFilesForSupportedTypes(files1);  // 直接打开文件内容到渲染窗口
-        }
+//        QString basePath_particles = outPath + "/particles";
+//        QString preFileName_Particle_air = "Particle_air_";
+//        QList<QStringList> files1 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_air, suffix);
+//        QVector<pqPipelineSource *> Qvtkpointer1;
+//        if(files.size() > 0) {
+//            Qvtkpointer1 = pqLoadDataReaction::loadFilesForSupportedTypes(files1);  // 直接打开文件内容到渲染窗口
+//        }
 
-        QString preFileName_Particle_inert = "Particle_inert_";
-        QList<QStringList> files2 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_inert, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer2;
-        if(files.size() > 0) {
-            Qvtkpointer2 = pqLoadDataReaction::loadFilesForSupportedTypes(files2);  // 直接打开文件内容到渲染窗口
-        }
+//        QString preFileName_Particle_inert = "Particle_inert_";
+//        QList<QStringList> files2 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_inert, suffix);
+//        QVector<pqPipelineSource *> Qvtkpointer2;
+//        if(files.size() > 0) {
+//            Qvtkpointer2 = pqLoadDataReaction::loadFilesForSupportedTypes(files2);  // 直接打开文件内容到渲染窗口
+//        }
 
-        QString preFileName_Particle_fuel = "Particle_fuel_";
-        QList<QStringList> files3 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_fuel, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer3;
-        if(files.size() > 0) {
-            Qvtkpointer3 = pqLoadDataReaction::loadFilesForSupportedTypes(files3);  // 直接打开文件内容到渲染窗口
-        }
+//        QString preFileName_Particle_fuel = "Particle_fuel_";
+//        QList<QStringList> files3 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_fuel, suffix);
+//        QVector<pqPipelineSource *> Qvtkpointer3;
+//        if(files.size() > 0) {
+//            Qvtkpointer3 = pqLoadDataReaction::loadFilesForSupportedTypes(files3);  // 直接打开文件内容到渲染窗口
+//        }
 
-        pqDataRepresentation* representation0 = Qvtkpointer0->getRepresentation(Qvtkpointer0->getViews().at(0));
-        vtkSMPropertyHelper(representation0->getProxy(), "Opacity").Set(0.2);
-        vtkSMPropertyHelper(representation0->getProxy(), "translation.x").Set(1);
 
-        pqDataRepresentation* representation = Qvtkpointer.at(0)->getRepresentation(Qvtkpointer.at(0)->getViews().at(0));
-        vtkSMPropertyHelper(representation->getProxy(), "Opacity").Set(0.4);
-        pqShowHideAllReaction::act(pqShowHideAllReaction::ActionType::Show);
 
 //        vtkSMRenderViewProxy* renderViewProxy = vtkSMRenderViewProxy::New();
 //        renderViewProxy->ResetActiveCameraToPositiveX();
@@ -450,6 +444,14 @@ void SphDockWidget::sphStateChange(StateType state){
 
 void SphDockWidget::widgetConstraint(){
     Ui::SphDockWidget ui = this->Internals->Ui;
+    QRegExp RegEx1("^(\\d|10)$");
+    QRegExp RegEx2("^(\\d|[1-2]\\d)$");
+    QRegExp RegEx3("^(\\d|[1-9]\\d|[100])$");
+    QRegExp RegEx4("^(\\d|[1-9]\\d|[1-9]\\d\\d|[1000])$");
+    QRegExp RegEx5("^-?(\\d|10)(\\.\\d{0,2}?)$");
+    QRegExp RegEx6("^(\\d|[1-2]\\d)(\\.\\d{0,2}?)$");
+    QRegExp RegEx7("^(\\d|[1-9]\\d|[100])(\\.\\d{0,2}?)$");
+    QRegExp RegEx8("^(\\d|[1-9]\\d|[1-9]\\d\\d|[1000])(\\.\\d{0,2}?)$");
 
     ui.simulation_stl_path->setEnabled(false);
     ui.simulation_stl_angy->setEnabled(false);
@@ -513,6 +515,11 @@ QString SphDockWidget::on_OpenModelFilePushButton_clicked()
         qDebug() << "path=" << filePath;
     }
     return filePath;
+}
+
+QString SphDockWidget::getpath(){
+    QString path=this->pathConfig->getSphOutPath();
+    return path;
 }
 
 // textBrowser追加显示文本

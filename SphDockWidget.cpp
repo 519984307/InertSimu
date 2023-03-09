@@ -12,6 +12,14 @@
 #include <crtdbg.h>
 
 #include <pqLoadDataReaction.h>
+#include <pqDeleteReaction.h>
+#include <pqAutoApplyReaction.h>
+#include <pqShowHideAllReaction.h>
+#include <pqDataRepresentation.h>
+#include <pqPipelineSource.h>
+#include <pqActiveObjects.h>
+#include <vtkSMPropertyHelper.h>
+//#include <vtkSMRenderViewProxy.h>
 #include <io.h>
 #include <iostream>
 
@@ -304,10 +312,21 @@ void SphDockWidget::btnEvent(){
         }
     });
 
-    // Temporary set. 快速导入案例结果
     // QVector<pqPipelineSource *> should be defined out of this connect and delete object from paraview before next choose.
-    QObject::connect(this->Internals->Ui.combo_imp_vtk, QOverload<int>::of(&QComboBox::currentIndexChanged), this,[=](int index){
+    QObject::connect(this->Internals->Ui.combo_imp_vtk, QOverload<int>::of(&QComboBox::currentIndexChanged), this,[&](int index){
+        pqDeleteReaction::deleteAll();
+        pqAutoApplyReaction::setAutoApply(true);
+
         QString outPath = this->pathConfig->getTankconfig() + "/Tank_config" + QString::number(index) + "_out";
+        pqPipelineSource * Qvtkpointer0;
+        QString fileName_model = outPath + "/Tank_config" + QString::number(index) + "__Actual.vtk";
+        if(FileTools::fileExist(fileName_model)) {
+            QStringList filemodel;
+            QList<QStringList> files0;
+            filemodel << fileName_model;
+            files0 << filemodel;
+            Qvtkpointer0 = pqLoadDataReaction::loadData(files0);  // 直接打开文件内容到渲染窗口
+        }
 
         QString basePath_surface = outPath + "/surface";
         QString preFileName_surface = "Surface_fuel_";
@@ -319,27 +338,37 @@ void SphDockWidget::btnEvent(){
         }
 
         QString basePath_particles = outPath + "/particles";
-        QString preFileName_PartFluid_air = "PartFluid_air_";
-        QList<QStringList> files1 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_PartFluid_air, suffix);
+        QString preFileName_Particle_air = "Particle_air_";
+        QList<QStringList> files1 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_air, suffix);
         QVector<pqPipelineSource *> Qvtkpointer1;
         if(files.size() > 0) {
             Qvtkpointer1 = pqLoadDataReaction::loadFilesForSupportedTypes(files1);  // 直接打开文件内容到渲染窗口
         }
 
-        QString preFileName_PartFluid_inert = "PartFluid_inert_";
-        QList<QStringList> files2 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_PartFluid_inert, suffix);
+        QString preFileName_Particle_inert = "Particle_inert_";
+        QList<QStringList> files2 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_inert, suffix);
         QVector<pqPipelineSource *> Qvtkpointer2;
         if(files.size() > 0) {
             Qvtkpointer2 = pqLoadDataReaction::loadFilesForSupportedTypes(files2);  // 直接打开文件内容到渲染窗口
         }
 
-        QString preFileName_PartFluid_fuel = "PartFluid_fuel_";
-        QList<QStringList> files3 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_PartFluid_fuel, suffix);
+        QString preFileName_Particle_fuel = "Particle_fuel_";
+        QList<QStringList> files3 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_fuel, suffix);
         QVector<pqPipelineSource *> Qvtkpointer3;
         if(files.size() > 0) {
-            Qvtkpointer2 = pqLoadDataReaction::loadFilesForSupportedTypes(files3);  // 直接打开文件内容到渲染窗口
+            Qvtkpointer3 = pqLoadDataReaction::loadFilesForSupportedTypes(files3);  // 直接打开文件内容到渲染窗口
         }
 
+        pqDataRepresentation* representation0 = Qvtkpointer0->getRepresentation(Qvtkpointer0->getViews().at(0));
+        vtkSMPropertyHelper(representation0->getProxy(), "Opacity").Set(0.2);
+        vtkSMPropertyHelper(representation0->getProxy(), "translation.x").Set(1);
+
+        pqDataRepresentation* representation = Qvtkpointer.at(0)->getRepresentation(Qvtkpointer.at(0)->getViews().at(0));
+        vtkSMPropertyHelper(representation->getProxy(), "Opacity").Set(0.4);
+        pqShowHideAllReaction::act(pqShowHideAllReaction::ActionType::Show);
+
+//        vtkSMRenderViewProxy* renderViewProxy = vtkSMRenderViewProxy::New();
+//        renderViewProxy->ResetActiveCameraToPositiveX();
     });
 
     // 导入模型

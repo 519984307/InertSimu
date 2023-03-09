@@ -15,6 +15,7 @@ public:
     static int CountAllFilesOnCurFolder(QString path, QString contain, QString suffix);
     static QList<QStringList> getLoadMultiDataPath(QString basePath, QString preFileName, QString suffix);
     static bool deleteFiles(QString path);
+    static bool fileExist(QString path);
 
 signals:
 

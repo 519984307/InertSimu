@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 
     // Create the window which initialize all paraview behaviors
     myMainWindow window;
-    window.setWindowTitle("Demo App");
+    window.setWindowTitle("惰化过程仿真软件");
 
     // Load a configuration XML in order to have access to filters and readers
     appCore.loadConfiguration(qApp->applicationDirPath() + "/../ParaViewFilters.xml");

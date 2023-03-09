@@ -8,6 +8,7 @@
 #include <QJsonValue>          // 表示json格式中的一个值
 #include <QFile>               // 用于文件操作
 #include <QDebug>
+#include <QDir>
 
 
 class PathConfig {
@@ -25,46 +26,15 @@ private:
 
 public:
 
-    // temporary path configuration load from json file for coding in early stage.
-    // it should be automatic config after installed
     void init(){
-        Q_INIT_RESOURCE(SPHResource);
-
-        //读json文件
-        QFile file(":/config.json");
-        file.open(QIODevice::ReadOnly | QIODevice::Text);
-        QByteArray data = file.readAll();
-        file.close();
-        Q_CLEANUP_RESOURCE(SPHResource);
-
-        QJsonParseError jError;	//创建QJsonParseError对象
-        //使用QJsonDocument的fromJson函数读取json串，并将QJsonParseError对象传入获取错误值
-        QJsonDocument doc = QJsonDocument::fromJson(data, &jError);
-        //判断QJsonParseError对象获取的error是否包含错误，包含则返回0
-        if(jError.error != QJsonParseError::NoError){
-            qDebug() << jError.error;
-            return ;
-        }
-
-        if(doc.isObject())
-        {
-            QJsonObject obj = doc.object();
-            QJsonValue value = obj.value("kang_path");
-            if(value.isObject())
-            {
-                QJsonObject subobj = value.toObject();
-                setXmlPath(subobj.value("xmlPath").toString());
-                setXmlSavePath(subobj.value("xmlSavePath").toString());
-                setSphBinPath(subobj.value("sphBinPath").toString());
-                setSphWorkPath(subobj.value("sphWorkPath").toString());
-                setSphOutPath(subobj.value("sphOutPath").toString());
-                setSphBatName(subobj.value("sphBatName").toString());
-
-                setTankconfig(subobj.value("Tank_config").toString());
-                qDebug() << "path set successed";
-            }
-        }
-
+        QString currentPath = QDir::currentPath();
+        setSphOutPath(currentPath + "/DualSPHysics/work/01_DamBreak/CaseDambreak_out");
+        setTankconfig(currentPath + "/DualSPHysics/work/caseconfig");
+        setXmlPath(currentPath + "/DualSPHysics/work/caseconfig/Tank_config3_Def.xml");
+        setXmlSavePath(currentPath + "/DualSPHysics/work/caseconfig/Tank_config3_Def.xml");
+        setSphBinPath(currentPath + "/DualSPHysics/bin");
+        setSphWorkPath(currentPath + "/DualSPHysics/work/01_DamBreak");
+        setSphBatName("wCaseDambreak_win64_CPU.bat");
     };
 
     void setXmlPath(QString path){

@@ -17,6 +17,14 @@ bool FileTools::deleteFiles(QString path){
     return true;
 }
 
+bool FileTools::fileExist(QString path){
+    QFileInfo fileInfo(path);
+    if(fileInfo.isFile()){
+        return true;
+    }
+    return false;
+}
+
 
 // path : 路径
 // contain : 文件名包含的字符串

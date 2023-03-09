@@ -456,6 +456,8 @@ void SphDockWidget::widgetConstraint(){
     ui.simulation_stl_path->setEnabled(false);
     ui.simulation_stl_angy->setEnabled(false);
 
+
+
     connect(this->Internals->Ui.sphtask_plainTextEdit, SIGNAL(textChanged()), this, SLOT(moveToEnd()));
 }
 
@@ -463,44 +465,45 @@ void SphDockWidget::widgetRegExpValidat(){
     Ui::SphDockWidget ui = this->Internals->Ui;
 
     // RegExpValidator worked but didn't pass the test
-    QRegExpValidator *reg1 = new QRegExpValidator(QRegExp("^-?(1|0(\\.\\d{1,3})?)$"));
-    QRegExpValidator *reg10 = new QRegExpValidator(QRegExp("^-?(10|\\d?(\\.\\d{1,3})?)$"));
-    QRegExpValidator *reg100 = new QRegExpValidator(QRegExp("^-?(100|[1-9]?\\d(\\.\\d{1,2})?)$"));
-    QRegExpValidator *reg1000 = new QRegExpValidator(QRegExp("^-?(1000|[1-9]?\\d(\\.\\d{1,2})?)$"));
-    QRegExpValidator *reg10000 = new QRegExpValidator(QRegExp("^-?(10000|[1-9]?\\d(\\.\\d{1,2})?)$"));
+    QRegExpValidator *reg1p000 = new QRegExpValidator(QRegExp("^-?(1|0(\\.\\d{0,3})?)$"));
+    QRegExpValidator *reg10p00 = new QRegExpValidator(QRegExp("^(10|d(\\.\\d{0,2})?)$"));
+    QRegExpValidator *regne100p0 = new QRegExpValidator(QRegExp("^-?(100|[1-9]?\\d(\\.\\d{0,1})?)$"));
+    QRegExpValidator *reg100p0 = new QRegExpValidator(QRegExp("^((100)|[1-9]?\\d(\\.\\d{0,1})?)$"));
+    QRegExpValidator *reg100 = new QRegExpValidator(QRegExp("^-?(100|[1-9]?\\d)$"));
+    QRegExpValidator *reg10000 = new QRegExpValidator(QRegExp("^(10000|[1-9]\\d{0,3}|0)$"));
     {
-        ui.simulation_dp->setValidator(reg1);
+        ui.simulation_dp->setValidator(reg1p000);
 
-        ui.simulation_timemax->setValidator(reg1000);
-        ui.simulation_timeout->setValidator(reg10);
+        ui.simulation_timemax->setValidator(reg10000);
+        ui.simulation_timeout->setValidator(reg10p00);
 
-        ui.simulation_g_x->setValidator(reg100);
-        ui.simulation_g_y->setValidator(reg100);
-        ui.simulation_g_z->setValidator(reg100);
+        ui.simulation_g_x->setValidator(regne100p0);
+        ui.simulation_g_y->setValidator(regne100p0);
+        ui.simulation_g_z->setValidator(regne100p0);
 
-        ui.simulation_pointmin_x->setValidator(reg10);
-        ui.simulation_pointmin_y->setValidator(reg10);
-        ui.simulation_pointmin_z->setValidator(reg10);
+        ui.simulation_pointmin_x->setValidator(regne100p0);
+        ui.simulation_pointmin_y->setValidator(regne100p0);
+        ui.simulation_pointmin_z->setValidator(regne100p0);
 
-        ui.simulation_pointmax_x->setValidator(reg10);
-        ui.simulation_pointmax_y->setValidator(reg10);
-        ui.simulation_pointmax_z->setValidator(reg10);
+        ui.simulation_pointmax_x->setValidator(regne100p0);
+        ui.simulation_pointmax_y->setValidator(regne100p0);
+        ui.simulation_pointmax_z->setValidator(regne100p0);
     }
 
     {
         ui.multiphase_air_rhop->setValidator(reg10000);
-        ui.multiphase_air_cs->setValidator(reg1000);
-        ui.multiphase_air_gamma->setValidator(reg100);
+        ui.multiphase_air_cs->setValidator(reg10000);
+        ui.multiphase_air_gamma->setValidator(reg100p0);
         ui.multiphase_air_oxygen->setValidator(reg100);
 
         ui.multiphase_fuel_rhop->setValidator(reg10000);
-        ui.multiphase_fuel_cs->setValidator(reg1000);
-        ui.multiphase_fuel_gamma->setValidator(reg100);
+        ui.multiphase_fuel_cs->setValidator(reg10000);
+        ui.multiphase_fuel_gamma->setValidator(reg100p0);
         //ui.multiphase_fuel_volume->setValidator(reg100);
 
         ui.multiphase_inert_rhop->setValidator(reg10000);
-        ui.multiphase_inert_cs->setValidator(reg1000);
-        ui.multiphase_inert_gamma->setValidator(reg100);
+        ui.multiphase_inert_cs->setValidator(reg10000);
+        ui.multiphase_inert_gamma->setValidator(reg100p0);
         ui.multiphase_inert_oxygen->setValidator(reg100);
     }
 }

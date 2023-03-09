@@ -7,12 +7,26 @@ InoutSetting::InoutSetting(QWidget *parent, InoutZone *iz) :
     QDialog(parent),
     ui(new Ui::InoutSetting)
 {
+    QRegExpValidator *reg100p0 = new QRegExpValidator(QRegExp("^((100|[1-9]?\\d)(\\.\\d{0,1})?)$"));
+    QRegExpValidator *reg1p00 = new QRegExpValidator(QRegExp("^-?(1|0(\\.\\d{0,2})?)$"));
+    QRegExpValidator *regne100p00 = new QRegExpValidator(QRegExp("^-?((100|[1-9]?\\d)(\\.\\d{0,2})?)$"));
+    QRegExpValidator *regne1000 = new QRegExpValidator(QRegExp("^-?(1000|[1-9]\\d{0,2}|0)$"));
+
     ui->setupUi(this);
     this->zone = iz;
     this->widgetConstraint();
     this->widgetRegExpValidat();
     this->btnEvent();
     this->showParam();
+
+    ui->inout_v_velocity->setValidator(reg100p0);
+    ui->inout_radius->setValidator(reg1p00);
+    ui->inout_rotate_x->setValidator(regne1000);
+    ui->inout_rotate_y->setValidator(regne1000);
+    ui->inout_rotate_z->setValidator(regne1000);
+    ui->inout_position_x->setValidator(regne100p00);
+    ui->inout_position_y->setValidator(regne100p00);
+    ui->inout_position_z->setValidator(regne100p00);
 }
 
 void InoutSetting::showParam(){

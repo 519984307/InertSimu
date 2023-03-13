@@ -45,6 +45,8 @@ SphDockWidget::SphDockWidget(QWidget *parent)
 {
     //_ASSERTE(_CrtCheckMemory());
 
+    pqSources = new PQSources();
+
     this->widgetConstraint();
     this->widgetRegExpValidat();
 
@@ -317,72 +319,39 @@ void SphDockWidget::btnEvent(){
         pqDeleteReaction::deleteAll();
         pqAutoApplyReaction::setAutoApply(true);
 
-        QString outPath = this->pathConfig->getTankconfig() + "/Tank_config" + QString::number(index) + "_out";
-        pqPipelineSource * Qvtkpointer0;
-        QString fileName_model = outPath + "/Tank_config" + QString::number(index) + "__Actual.vtk";
-        if(FileTools::fileExist(fileName_model)) {
-            QStringList filemodel;
-            QList<QStringList> files0;
-            filemodel << fileName_model;
-            files0 << filemodel;
-            Qvtkpointer0 = pqLoadDataReaction::loadData(files0);  // 直接打开文件内容到渲染窗口
+        pqSources->init("Tank_config" + QString::number(index), this->pathConfig->getTankconfig());
+        //pqSources->insertModel("model");
+        bool res = pqSources->insertAll("model", "fuelSuf", "fuelPart", "airPart", "inertPart");
+        if(res) {
+            qDebug() << "insert success";
+            pqPipelineSource * Qvtkpointer_model = pqSources->getSource("model").at(0);
+            pqDataRepresentation* representation0 = Qvtkpointer_model->getRepresentation(Qvtkpointer_model->getViews().at(0));
+            // Property name : \pv\Remoting\Views\Resources\views_and_representations.xml
+            vtkSMPropertyHelper(representation0->getProxy(), "Opacity").Set(0.2);
+
+            pqPipelineSource * Qvtkpointer_fuelSur = pqSources->getSource("fuelSuf").at(0);
+            pqDataRepresentation* representation1 = Qvtkpointer_fuelSur->getRepresentation(Qvtkpointer_fuelSur->getViews().at(0));
+            vtkSMPropertyHelper(representation1->getProxy(), "Opacity").Set(0.4);
+
+            // set(*double, count)
+            // double doubleArray[3]={0.5,0.5,0.5};
+            // double *position = doubleArray;
+            // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(position, 3);
+
+            // or set(index, value)
+            // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(0, 0.5);
+            // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(1, 0.5);
+            // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(2, 0.5);
+
+            // vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(0, 0.5);
+            // vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(1, 0.5);
+            // vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(2, 0.5);
+
+            // vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(0, 60);
+            // vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(1, 60);
+            // vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(2, 0);
+
         }
-
-        QString basePath_surface = outPath + "/surface";
-        QString preFileName_surface = "Surface_fuel_";
-        QString suffix = "vtk";
-        QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath_surface, preFileName_surface, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer;
-        if(files.size() > 0) {
-            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
-        }
-
-        QString basePath_particles = outPath + "/particles";
-        QString preFileName_Particle_air = "Particle_air_";
-        QList<QStringList> files1 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_air, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer1;
-        if(files.size() > 0) {
-            Qvtkpointer1 = pqLoadDataReaction::loadFilesForSupportedTypes(files1);  // 直接打开文件内容到渲染窗口
-        }
-
-        QString preFileName_Particle_inert = "Particle_inert_";
-        QList<QStringList> files2 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_inert, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer2;
-        if(files.size() > 0) {
-            Qvtkpointer2 = pqLoadDataReaction::loadFilesForSupportedTypes(files2);  // 直接打开文件内容到渲染窗口
-        }
-
-        QString preFileName_Particle_fuel = "Particle_fuel_";
-        QList<QStringList> files3 = FileTools::getLoadMultiDataPath(basePath_particles, preFileName_Particle_fuel, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer3;
-        if(files.size() > 0) {
-            Qvtkpointer3 = pqLoadDataReaction::loadFilesForSupportedTypes(files3);  // 直接打开文件内容到渲染窗口
-        }
-
-        // Property name : \pv\Remoting\Views\Resources\views_and_representations.xml
-        pqDataRepresentation* representation0 = Qvtkpointer0->getRepresentation(Qvtkpointer0->getViews().at(0));
-        vtkSMPropertyHelper(representation0->getProxy(), "Opacity").Set(0.2);
-
-        // set(*double, count)
-        double doubleArray[3]={0.5,0.5,0.5};
-        double *position = doubleArray;
-        vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(position, 3);
-
-        // or set(index, value)
-        // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(0, 0.5);
-        // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(1, 0.5);
-        // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(2, 0.5);
-
-        vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(0, 0.5);
-        vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(1, 0.5);
-        vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(2, 0.5);
-
-        vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(0, 60);
-        vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(1, 60);
-        vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(2, 0);
-
-        pqDataRepresentation* representation = Qvtkpointer.at(0)->getRepresentation(Qvtkpointer.at(0)->getViews().at(0));
-        vtkSMPropertyHelper(representation->getProxy(), "Opacity").Set(0.4);
         pqShowHideAllReaction::act(pqShowHideAllReaction::ActionType::Show);
     });
 

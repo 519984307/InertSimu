@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.8)
 project(Functions)
 
 find_package(Qt5 COMPONENTS Core Xml REQUIRED)
@@ -20,6 +20,7 @@ add_library(Functions ${Sources} ${Headers} ${QRC_FILES})
 
 target_link_libraries(Functions
   PRIVATE
+  ParaView::pqApplicationComponents
     Qt5::Core
     Qt5::Xml)
 

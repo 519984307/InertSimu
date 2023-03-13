@@ -7,6 +7,7 @@
 #include "SphThread.h"
 #include "InoutSetting.h"
 #include "TaskOperation.h"
+#include "PQSources.h"
 #include <QWidget>
 #include <QFileDialog>
 
@@ -48,6 +49,7 @@ private:
   SphParameters *sphParam;
   PathConfig *pathConfig;
   SphThread *sphThread;
+  PQSources *pqSources;
   QPointer<InoutSetting> inoutSetting;
   QPointer<TaskOperation> taskOperation;
 

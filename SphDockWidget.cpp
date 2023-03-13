@@ -361,7 +361,24 @@ void SphDockWidget::btnEvent(){
 
         pqDataRepresentation* representation0 = Qvtkpointer0->getRepresentation(Qvtkpointer0->getViews().at(0));
         vtkSMPropertyHelper(representation0->getProxy(), "Opacity").Set(0.2);
-//        vtkSMPropertyHelper(representation0->getProxy(), "translation.x").Set(1);
+
+        // set(*double, count)
+        double doubleArray[3]={0.5,0.5,0.5};
+        double *position = doubleArray;
+        vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(position, 3);
+
+        // or set(index, value)
+        // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(0, 0.5);
+        // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(1, 0.5);
+        // vtkSMPropertyHelper(representation0->getProxy(), "Position").Set(2, 0.5);
+
+        vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(0, 0.5);
+        vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(1, 0.5);
+        vtkSMPropertyHelper(representation0->getProxy(), "Scale").Set(2, 0.5);
+
+        vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(0, 60);
+        vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(1, 60);
+        vtkSMPropertyHelper(representation0->getProxy(), "Orientation").Set(2, 0);
 
         pqDataRepresentation* representation = Qvtkpointer.at(0)->getRepresentation(Qvtkpointer.at(0)->getViews().at(0));
         vtkSMPropertyHelper(representation->getProxy(), "Opacity").Set(0.4);

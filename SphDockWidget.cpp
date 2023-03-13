@@ -359,6 +359,7 @@ void SphDockWidget::btnEvent(){
             Qvtkpointer3 = pqLoadDataReaction::loadFilesForSupportedTypes(files3);  // 直接打开文件内容到渲染窗口
         }
 
+        // Property name : \pv\Remoting\Views\Resources\views_and_representations.xml
         pqDataRepresentation* representation0 = Qvtkpointer0->getRepresentation(Qvtkpointer0->getViews().at(0));
         vtkSMPropertyHelper(representation0->getProxy(), "Opacity").Set(0.2);
 

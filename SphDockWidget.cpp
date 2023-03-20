@@ -291,14 +291,14 @@ void SphDockWidget::btnEvent(){
     this->sphParam = new SphParameters();
     QObject::connect(this->Internals->Ui.btn_imp_config, &QPushButton::clicked, this,[&](){
         this->sphParam->LoadXml(this->pathConfig->getXmlParh());
-//        this->sphParam->VisualALLProperties();
+        // this->sphParam->VisualALLProperties();
         this->showParam();
     });
 
     // 导出XML配置
     QObject::connect(this->Internals->Ui.btn_save_config, &QPushButton::clicked, this,[&](){
         this->saveParam();
-//        this->sphParam->VisualALLProperties();
+        // this->sphParam->VisualALLProperties();
     });
 
     // 一键VTK
@@ -310,7 +310,7 @@ void SphDockWidget::btnEvent(){
         QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath, preFileName, suffix);
         QVector<pqPipelineSource *> Qvtkpointer;
         if(files.size() > 0) {
-//            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
+            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
         }
     });
 
@@ -437,19 +437,9 @@ void SphDockWidget::sphStateChange(StateType state){
 
 void SphDockWidget::widgetConstraint(){
     Ui::SphDockWidget ui = this->Internals->Ui;
-    QRegExp RegEx1("^(\\d|10)$");
-    QRegExp RegEx2("^(\\d|[1-2]\\d)$");
-    QRegExp RegEx3("^(\\d|[1-9]\\d|[100])$");
-    QRegExp RegEx4("^(\\d|[1-9]\\d|[1-9]\\d\\d|[1000])$");
-    QRegExp RegEx5("^-?(\\d|10)(\\.\\d{0,2}?)$");
-    QRegExp RegEx6("^(\\d|[1-2]\\d)(\\.\\d{0,2}?)$");
-    QRegExp RegEx7("^(\\d|[1-9]\\d|[100])(\\.\\d{0,2}?)$");
-    QRegExp RegEx8("^(\\d|[1-9]\\d|[1-9]\\d\\d|[1000])(\\.\\d{0,2}?)$");
 
     ui.simulation_stl_path->setEnabled(false);
     ui.simulation_stl_angy->setEnabled(false);
-
-
 
     connect(this->Internals->Ui.sphtask_plainTextEdit, SIGNAL(textChanged()), this, SLOT(moveToEnd()));
 }

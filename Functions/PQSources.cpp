@@ -10,6 +10,7 @@ PQSources::PQSources(){
 }
 
 void PQSources::init(QString taskName, QString workPath){
+    this->sourcesMap.clear();
     this->taskName = taskName;
     this->workPath = workPath;
     this->outPath = workPath + "/" + taskName + "_out";
@@ -102,4 +103,7 @@ bool PQSources::removeSource(QString name){
 
 QVector<pqPipelineSource *> PQSources::getSource(QString name){
     return this->sourcesMap.value(name);
+}
+void PQSources::clearMap(){
+    this->sourcesMap.clear();
 }

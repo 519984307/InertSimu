@@ -13,7 +13,7 @@ class TaskOperation : public QDialog
     Q_OBJECT
 
 public:
-    explicit TaskOperation(QWidget *parent = nullptr);
+    explicit TaskOperation(QWidget *parent = nullptr, QString outPath = nullptr);
     ~TaskOperation();
 
 signals:

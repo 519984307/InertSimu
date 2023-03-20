@@ -5,14 +5,13 @@
 #include "ui_TaskOperation.h"
 #include "QWidget"
 
-TaskOperation::TaskOperation(QWidget *parent) :
+TaskOperation::TaskOperation(QWidget *parent, QString outPath) :
     QDialog(parent),
     ui(new Ui::TaskOperation)
 {
     ui->setupUi(this);
     setWindowFlags((windowFlags() & ~Qt::WindowCloseButtonHint));
-    SphDockWidget sphDockWidget;
-    TaskOperation::setMessageVisibility(sphDockWidget.getpath());
+    TaskOperation::setMessageVisibility(outPath);
 
     QObject::connect(this->ui->btn_sph_continue, &QPushButton::clicked, this,[&](){
         emit operation(1);
@@ -30,20 +29,20 @@ TaskOperation::TaskOperation(QWidget *parent) :
 
 void TaskOperation::setMessageVisibility(QString path)
 {
-    int countData=FileTools::CountAllFilesOnCurFolder(path+"/data","part","bi4");
-    bool fileExist=FileTools::fileExist(path+"/particles");
-    if(fileExist)
-    {
-        this->ui->sph_label->setText("检测到上次模拟任务有"+QString::number(countData)+"个数据文件。");
-        delete this->ui->horizontalLayout_2;
-        this->ui->btn_sph_abort->setVisible(false);
-        this->resize(QSize(320,100));
-    }
-    else
+    qDebug() << path;
+    int countData = FileTools::CountAllFilesOnCurFolder(path+"/data","Part_","bi4");
+    int countPar = FileTools::CountAllFilesOnCurFolder(path+"/particles","PartFluid_","vtk");
+
+    if(abs(countData-countPar) <= 2)
     {
         this->ui->sph_label->setText("检测到上次模拟任务已完成。");
         delete this->ui->horizontalLayout_3;
         this->ui->btn_sph_post->setVisible(false);
+        this->resize(QSize(320,100));
+    } else {
+        this->ui->sph_label->setText("检测到上次模拟任务有"+QString::number(countData-1)+"个数据文件。");
+        delete this->ui->horizontalLayout_2;
+        this->ui->btn_sph_abort->setVisible(false);
         this->resize(QSize(320,100));
     }
 }

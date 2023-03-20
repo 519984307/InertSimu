@@ -19,6 +19,7 @@ public:
 
     QMap<QString, QVector<pqPipelineSource *>> getSourcesMap() const;
     bool removeSource(QString name);
+    void clearMap();
     QVector<pqPipelineSource *> getSource(QString name);
 
     bool insertAll(QString modelName, QString FuelSurName, QString FuelPartName, QString AirPartName, QString InertPartName);

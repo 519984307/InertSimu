@@ -301,19 +301,6 @@ void SphDockWidget::btnEvent(){
         // this->sphParam->VisualALLProperties();
     });
 
-    // 一键VTK
-    QObject::connect(this->Internals->Ui.btn_imp_vtk, &QPushButton::clicked, this,[&](){
-        QString basePath = this->pathConfig->getSphOutPath() + "/surface";
-        QString preFileName = "Surface_";
-        QString suffix = "vtk";
-
-        QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath, preFileName, suffix);
-        QVector<pqPipelineSource *> Qvtkpointer;
-        if(files.size() > 0) {
-            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
-        }
-    });
-
     // QVector<pqPipelineSource *> should be defined out of this connect and delete object from paraview before next choose.
     QObject::connect(this->Internals->Ui.combo_imp_vtk, QOverload<int>::of(&QComboBox::currentIndexChanged), this,[&](int index){
         pqDeleteReaction::deleteAll();
@@ -323,7 +310,6 @@ void SphDockWidget::btnEvent(){
         //pqSources->insertModel("model");
         bool res = pqSources->insertAll("model", "fuelSuf", "fuelPart", "airPart", "inertPart");
         if(res) {
-            qDebug() << "insert success";
             pqPipelineSource * Qvtkpointer_model = pqSources->getSource("model").at(0);
             pqDataRepresentation* representation0 = Qvtkpointer_model->getRepresentation(Qvtkpointer_model->getViews().at(0));
             // Property name : \pv\Remoting\Views\Resources\views_and_representations.xml
@@ -375,7 +361,7 @@ void SphDockWidget::btnEvent(){
 
     // 弹出任务操作选择面板
     QObject::connect(this, &SphDockWidget::showTaskOperation, this, [&](){
-        taskOperation = new TaskOperation(this);
+        taskOperation = new TaskOperation(this, this->pathConfig->getSphOutPath());
         QObject::connect(taskOperation, SIGNAL(operation(int)), this, SLOT(sphOperation(int)));
         taskOperation->show();
     });
@@ -399,6 +385,17 @@ void SphDockWidget::sphOperation(int choose){
     }
     if(choose == 2){// SPH 中止
         (*sphThread).sphAbort();
+        // 展示结果
+        QString basePath = this->pathConfig->getSphOutPath() + "/surface";
+        QString preFileName = "Surface_";
+        QString suffix = "vtk";
+
+        QList<QStringList> files = FileTools::getLoadMultiDataPath(basePath, preFileName, suffix);
+        QVector<pqPipelineSource *> Qvtkpointer;
+        if(files.size() > 0) {
+            Qvtkpointer = pqLoadDataReaction::loadFilesForSupportedTypes(files);  // 直接打开文件内容到渲染窗口
+        }
+
         // 中止后需再次点击 开始仿真
         this->Internals->Ui.btn_sphtask_start->setEnabled(true);
         this->Internals->Ui.btn_sphtask_end->setEnabled(false);

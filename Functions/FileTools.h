@@ -16,6 +16,7 @@ public:
     static QList<QStringList> getLoadMultiDataPath(QString basePath, QString preFileName, QString suffix);
     static bool deleteFiles(QString path);
     static bool fileExist(QString path);
+    static bool dirExist(QString path);
 
 signals:
 

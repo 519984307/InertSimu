@@ -17,6 +17,14 @@ bool FileTools::deleteFiles(QString path){
     return true;
 }
 
+bool FileTools::dirExist(QString path){
+    QDir qdir(path);
+    if(qdir.exists()){
+        return true;
+    }
+    return false;
+}
+
 bool FileTools::fileExist(QString path){
     QFileInfo fileInfo(path);
     if(fileInfo.isFile()){
